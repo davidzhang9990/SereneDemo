@@ -1143,6 +1143,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.GenreColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -1965,6 +1968,18 @@
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <Content Include="wwwroot\Content\site\site.default.less" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.GenreRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.GenreService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\Genre\GenreIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\Genre\GenreDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\Genre\GenreGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.GenreForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -1982,6 +1997,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_191600_GenreTable.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_184800_MovieKind.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_130000_Movie.cs" />
     <Compile Include="Modules\Administration\AdministrationNavigation.cs" />
@@ -2369,6 +2385,12 @@
     <Compile Include="Modules\Default\Movie\MovieColumns.cs" />
     <Compile Include="Modules\Default\Movie\MovieForm.cs" />
     <Compile Include="Modules\Default\DefaultNavigation.cs" />
+    <Compile Include="Modules\Default\Genre\GenreRow.cs" />
+    <Compile Include="Modules\Default\Genre\GenreRepository.cs" />
+    <Compile Include="Modules\Default\Genre\GenreEndpoint.cs" />
+    <Compile Include="Modules\Default\Genre\GenrePage.cs" />
+    <Compile Include="Modules\Default\Genre\GenreColumns.cs" />
+    <Compile Include="Modules\Default\Genre\GenreForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

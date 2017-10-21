@@ -1,0 +1,22 @@
+﻿
+namespace BowenSerene.Default.Columns
+{
+    using Serenity;
+    using Serenity.ComponentModel;
+    using Serenity.Data;
+    using System;
+    using System.ComponentModel;
+    using System.Collections.Generic;
+    using System.IO;
+
+    [ColumnsScript("Default.Genre")]
+    [BasedOnRow(typeof(Entities.GenreRow))]
+    public class GenreColumns
+    {
+        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
+        public Int32 GenreId { get; set; }
+        [EditLink]
+        public String Name { get; set; }
+        public DateTime CreateDate { get; set; }
+    }
+}

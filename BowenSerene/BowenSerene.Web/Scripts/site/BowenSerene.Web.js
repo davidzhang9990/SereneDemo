@@ -682,6 +682,72 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
+        var GenreForm = (function (_super) {
+            __extends(GenreForm, _super);
+            function GenreForm() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            return GenreForm;
+        }(Serenity.PrefixedContext));
+        GenreForm.formKey = 'Default.Genre';
+        Default.GenreForm = GenreForm;
+        [['Name', function () { return Serenity.StringEditor; }], ['CreateDate', function () { return Serenity.DateEditor; }]].forEach(function (x) { return Object.defineProperty(GenreForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var GenreRow;
+        (function (GenreRow) {
+            GenreRow.idProperty = 'GenreId';
+            GenreRow.nameProperty = 'Name';
+            GenreRow.localTextPrefix = 'Default.Genre';
+            GenreRow.lookupKey = 'Default.Genre';
+            function getLookup() {
+                return Q.getLookup('Default.Genre');
+            }
+            GenreRow.getLookup = getLookup;
+            var Fields;
+            (function (Fields) {
+            })(Fields = GenreRow.Fields || (GenreRow.Fields = {}));
+            [
+                'GenreId',
+                'Name',
+                'CreateDate'
+            ].forEach(function (x) { return Fields[x] = x; });
+        })(GenreRow = Default.GenreRow || (Default.GenreRow = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var GenreService;
+        (function (GenreService) {
+            GenreService.baseUrl = 'Default/Genre';
+            var Methods;
+            (function (Methods) {
+            })(Methods = GenreService.Methods || (GenreService.Methods = {}));
+            [
+                'Create',
+                'Update',
+                'Delete',
+                'Retrieve',
+                'List'
+            ].forEach(function (x) {
+                GenreService[x] = function (r, s, o) {
+                    return Q.serviceRequest(GenreService.baseUrl + '/' + x, r, s, o);
+                };
+                Methods[x] = GenreService.baseUrl + '/' + x;
+            });
+        })(GenreService = Default.GenreService || (Default.GenreService = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
         var MovieForm = (function (_super) {
             __extends(MovieForm, _super);
             function MovieForm() {
@@ -691,7 +757,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         MovieForm.formKey = 'Default.Movie';
         Default.MovieForm = MovieForm;
-        [['Title', function () { return Serenity.StringEditor; }], ['Description', function () { return Serenity.TextAreaEditor; }], ['Storyline', function () { return Serenity.TextAreaEditor; }], ['Year', function () { return Serenity.IntegerEditor; }], ['ReleaseDate', function () { return Serenity.DateEditor; }], ['Kind', function () { return Serenity.EnumEditor; }], ['Runtime', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(MovieForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['Title', function () { return Serenity.StringEditor; }], ['Description', function () { return Serenity.TextAreaEditor; }], ['Storyline', function () { return Serenity.TextAreaEditor; }], ['Year', function () { return Serenity.IntegerEditor; }], ['ReleaseDate', function () { return Serenity.DateEditor; }], ['GenreId', function () { return Serenity.LookupEditor; }], ['Kind', function () { return Serenity.EnumEditor; }], ['Runtime', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(MovieForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -727,7 +793,9 @@ var BowenSerene;
                 'Year',
                 'ReleaseDate',
                 'Runtime',
-                'Kind'
+                'Kind',
+                'GenreId',
+                'GenreName'
             ].forEach(function (x) { return Fields[x] = x; });
         })(MovieRow = Default.MovieRow || (Default.MovieRow = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
@@ -8370,6 +8438,53 @@ var BowenSerene;
         }());
         Common.UserPreferenceStorage = UserPreferenceStorage;
     })(Common = BowenSerene.Common || (BowenSerene.Common = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var GenreDialog = (function (_super) {
+            __extends(GenreDialog, _super);
+            function GenreDialog() {
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.form = new Default.GenreForm(_this.idPrefix);
+                return _this;
+            }
+            GenreDialog.prototype.getFormKey = function () { return Default.GenreForm.formKey; };
+            GenreDialog.prototype.getIdProperty = function () { return Default.GenreRow.idProperty; };
+            GenreDialog.prototype.getLocalTextPrefix = function () { return Default.GenreRow.localTextPrefix; };
+            GenreDialog.prototype.getNameProperty = function () { return Default.GenreRow.nameProperty; };
+            GenreDialog.prototype.getService = function () { return Default.GenreService.baseUrl; };
+            return GenreDialog;
+        }(Serenity.EntityDialog));
+        GenreDialog = __decorate([
+            Serenity.Decorators.registerClass(),
+            Serenity.Decorators.responsive()
+        ], GenreDialog);
+        Default.GenreDialog = GenreDialog;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var GenreGrid = (function (_super) {
+            __extends(GenreGrid, _super);
+            function GenreGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            GenreGrid.prototype.getColumnsKey = function () { return 'Default.Genre'; };
+            GenreGrid.prototype.getDialogType = function () { return Default.GenreDialog; };
+            GenreGrid.prototype.getIdProperty = function () { return Default.GenreRow.idProperty; };
+            GenreGrid.prototype.getLocalTextPrefix = function () { return Default.GenreRow.localTextPrefix; };
+            GenreGrid.prototype.getService = function () { return Default.GenreService.baseUrl; };
+            return GenreGrid;
+        }(Serenity.EntityGrid));
+        GenreGrid = __decorate([
+            Serenity.Decorators.registerClass()
+        ], GenreGrid);
+        Default.GenreGrid = GenreGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
 (function (BowenSerene) {

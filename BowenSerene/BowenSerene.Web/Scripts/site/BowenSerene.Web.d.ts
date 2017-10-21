@@ -634,6 +634,53 @@ declare namespace BowenSerene.Common {
 declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
+    class GenreForm extends Serenity.PrefixedContext {
+        static formKey: string;
+    }
+    interface GenreForm {
+        Name: Serenity.StringEditor;
+        CreateDate: Serenity.DateEditor;
+    }
+}
+declare namespace BowenSerene.Default {
+    interface GenreRow {
+        GenreId?: number;
+        Name?: string;
+        CreateDate?: string;
+    }
+    namespace GenreRow {
+        const idProperty = "GenreId";
+        const nameProperty = "Name";
+        const localTextPrefix = "Default.Genre";
+        const lookupKey = "Default.Genre";
+        function getLookup(): Q.Lookup<GenreRow>;
+        namespace Fields {
+            const GenreId: string;
+            const Name: string;
+            const CreateDate: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    namespace GenreService {
+        const baseUrl = "Default/Genre";
+        function Create(request: Serenity.SaveRequest<GenreRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Update(request: Serenity.SaveRequest<GenreRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<GenreRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<GenreRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        namespace Methods {
+            const Create: string;
+            const Update: string;
+            const Delete: string;
+            const Retrieve: string;
+            const List: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+}
+declare namespace BowenSerene.Default {
     class MovieForm extends Serenity.PrefixedContext {
         static formKey: string;
     }
@@ -643,6 +690,7 @@ declare namespace BowenSerene.Default {
         Storyline: Serenity.TextAreaEditor;
         Year: Serenity.IntegerEditor;
         ReleaseDate: Serenity.DateEditor;
+        GenreId: Serenity.LookupEditor;
         Kind: Serenity.EnumEditor;
         Runtime: Serenity.IntegerEditor;
     }
@@ -664,6 +712,8 @@ declare namespace BowenSerene.Default {
         ReleaseDate?: string;
         Runtime?: number;
         Kind?: MovieKind;
+        GenreId?: number;
+        GenreName?: string;
     }
     namespace MovieRow {
         const idProperty = "MovieId";
@@ -678,6 +728,8 @@ declare namespace BowenSerene.Default {
             const ReleaseDate: string;
             const Runtime: string;
             const Kind: string;
+            const GenreId: string;
+            const GenreName: string;
         }
     }
 }
@@ -4081,6 +4133,26 @@ declare namespace BowenSerene.Common {
     class UserPreferenceStorage implements Serenity.SettingStorage {
         getItem(key: string): string;
         setItem(key: string, data: string): void;
+    }
+}
+declare namespace BowenSerene.Default {
+    class GenreDialog extends Serenity.EntityDialog<GenreRow, any> {
+        protected getFormKey(): string;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getNameProperty(): string;
+        protected getService(): string;
+        protected form: GenreForm;
+    }
+}
+declare namespace BowenSerene.Default {
+    class GenreGrid extends Serenity.EntityGrid<GenreRow, any> {
+        protected getColumnsKey(): string;
+        protected getDialogType(): typeof GenreDialog;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getService(): string;
+        constructor(container: JQuery);
     }
 }
 declare namespace BowenSerene.Default {

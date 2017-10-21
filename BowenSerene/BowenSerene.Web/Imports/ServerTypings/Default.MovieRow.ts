@@ -8,6 +8,8 @@
         ReleaseDate?: string;
         Runtime?: number;
         Kind?: MovieKind;
+        GenreId?: number;
+        GenreName?: string;
     }
 
     export namespace MovieRow {
@@ -24,6 +26,8 @@
             export declare const ReleaseDate: string;
             export declare const Runtime: string;
             export declare const Kind: string;
+            export declare const GenreId: string;
+            export declare const GenreName: string;
         }
 
         [
@@ -34,7 +38,9 @@
             'Year', 
             'ReleaseDate', 
             'Runtime', 
-            'Kind'
+            'Kind', 
+            'GenreId', 
+            'GenreName'
         ].forEach(x => (<any>Fields)[x] = x);
     }
 }

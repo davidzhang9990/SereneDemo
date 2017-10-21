@@ -71,6 +71,21 @@ namespace BowenSerene.Default.Entities
             set { Fields.Kind[this] = (Int32?)value; }
         }
 
+        [DisplayName("Genre"), ForeignKey("Genre", "GenreId"), LeftJoin("g")]
+        [LookupEditor(typeof(GenreRow), InplaceAdd = true)]
+        public Int32? GenreId
+        {
+            get { return Fields.GenreId[this]; }
+            set { Fields.GenreId[this] = value; }
+        }
+
+        [DisplayName("Genre"), Expression("g.Name")]
+        public String GenreName
+        {
+            get { return Fields.GenreName[this]; }
+            set { Fields.GenreName[this] = value; }
+        }
+
         IIdField IIdRow.IdField
         {
             get { return Fields.MovieId; }
@@ -98,6 +113,8 @@ namespace BowenSerene.Default.Entities
             public DateTimeField ReleaseDate;
             public Int32Field Runtime;
             public Int32Field Kind;
+            public Int32Field GenreId;
+            public StringField GenreName;
 
             public RowFields()
                 : base()
