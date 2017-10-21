@@ -1,0 +1,22 @@
+管理员身份打开 cmd 命令提示符
+cmd# sqllocaldb info
+cmd# sqllocaldb v
+
+#Microsoft SQL Server 2014 (12.0.2000.8)
+#Microsoft SQL Server 2016 (13.0.1601.5)
+
+数据库连接错误解决方案：PDF(p17-p18)
+
+本地化语言配置：PDF(p27)
+
+#Grid 组件使用的是 SlickGrid
+https://github.com/mleibman/SlickGrid
+https://github.com/6pac/SlickGrid/wiki
+
+#自动生成的代码结构
+实体（entity）
+仓储（repository）
+页面（page）
+终结点（endpoint）
+网格列表（grid）
+表单（form）

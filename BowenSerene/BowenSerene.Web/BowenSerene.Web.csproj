@@ -1143,6 +1143,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieKind.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Northwind.CustomerGrossSalesRow.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -1946,6 +1952,19 @@
     <TypeScriptCompile Include="Modules\Meeting\MeetingType\MeetingTypeGrid.ts" />
     <TypeScriptCompile Include="Modules\Meeting\MeetingType\MeetingTypeDialog.ts" />
     <TypeScriptCompile Include="Scripts\typings\serenity\Serenity.CoreLib.d.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\Movie\MovieIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\Movie\MovieDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\Movie\MovieGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="wwwroot\Content\site\site.default.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -1963,6 +1982,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_184800_MovieKind.cs" />
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_130000_Movie.cs" />
     <Compile Include="Modules\Administration\AdministrationNavigation.cs" />
     <Compile Include="Modules\Administration\Language\LanguageLookup.cs" />
     <Compile Include="Modules\Administration\RolePermission\RolePermissionUpdateRequest.cs" />
@@ -2015,6 +2036,7 @@
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesListRequest.cs" />
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesEndpoint.cs" />
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesRepository.cs" />
+    <Compile Include="Modules\Default\Movie\MovieKind.cs" />
     <Compile Include="Modules\Northwind\Customer\CustomerGrossSalesRow.cs" />
     <Compile Include="Modules\BasicSamples\Grids\VSGalleryQA\VSGalleryQAColumns.cs" />
     <Compile Include="Modules\BasicSamples\Grids\VSGalleryQA\VSGalleryQAParser.cs" />
@@ -2340,6 +2362,13 @@
     <Compile Include="Modules\Meeting\MeetingType\MeetingTypeRepository.cs" />
     <Compile Include="Modules\Meeting\MeetingType\MeetingTypeEndpoint.cs" />
     <Compile Include="Modules\Meeting\MeetingType\MeetingTypePage.cs" />
+    <Compile Include="Modules\Default\Movie\MovieRow.cs" />
+    <Compile Include="Modules\Default\Movie\MovieRepository.cs" />
+    <Compile Include="Modules\Default\Movie\MovieEndpoint.cs" />
+    <Compile Include="Modules\Default\Movie\MoviePage.cs" />
+    <Compile Include="Modules\Default\Movie\MovieColumns.cs" />
+    <Compile Include="Modules\Default\Movie\MovieForm.cs" />
+    <Compile Include="Modules\Default\DefaultNavigation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

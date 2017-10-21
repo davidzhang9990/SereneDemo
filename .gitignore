@@ -8,6 +8,8 @@
 
 dev_log/
 .idea/
+/bin/
+/obj/
 
 # User-specific files
 *.suo

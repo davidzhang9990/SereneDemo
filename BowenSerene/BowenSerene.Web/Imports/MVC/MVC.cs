@@ -289,6 +289,15 @@ namespace MVC
             {
                 public const string ReportPage = "~/Modules/Common/Reporting/ReportPage.cshtml";
             }
+
+        }
+
+        public static class Default
+        {
+            public static class Movie
+            {
+                public const string MovieIndex = "~/Modules/Default/Movie/MovieIndex.cshtml";
+            }
         }
 
         public static class Errors
