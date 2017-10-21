@@ -632,6 +632,12 @@ declare namespace BowenSerene.Common {
     }
 }
 declare namespace BowenSerene.Default {
+    enum Gender {
+        Male = 1,
+        Female = 2,
+    }
+}
+declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
     class GenreForm extends Serenity.PrefixedContext {
@@ -681,6 +687,80 @@ declare namespace BowenSerene.Default {
 declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
+    class MovieCastForm extends Serenity.PrefixedContext {
+        static formKey: string;
+    }
+    interface MovieCastForm {
+        MovieId: Serenity.IntegerEditor;
+        PersonId: Serenity.IntegerEditor;
+        Character: Serenity.StringEditor;
+    }
+}
+declare namespace BowenSerene.Default {
+    interface MovieCastRow {
+        MovieCastId?: number;
+        MovieId?: number;
+        PersonId?: number;
+        Character?: string;
+        MovieTitle?: string;
+        MovieDescription?: string;
+        MovieStoryline?: string;
+        MovieYear?: number;
+        MovieReleaseDate?: string;
+        MovieRuntime?: number;
+        MovieKind?: number;
+        PersonFirstname?: string;
+        PersonLastname?: string;
+        PersonBirthDate?: string;
+        PersonBirthPlace?: string;
+        PersonGender?: number;
+        PersonHeight?: number;
+    }
+    namespace MovieCastRow {
+        const idProperty = "MovieCastId";
+        const nameProperty = "Character";
+        const localTextPrefix = "Default.MovieCast";
+        namespace Fields {
+            const MovieCastId: string;
+            const MovieId: string;
+            const PersonId: string;
+            const Character: string;
+            const MovieTitle: string;
+            const MovieDescription: string;
+            const MovieStoryline: string;
+            const MovieYear: string;
+            const MovieReleaseDate: string;
+            const MovieRuntime: string;
+            const MovieKind: string;
+            const PersonFirstname: string;
+            const PersonLastname: string;
+            const PersonBirthDate: string;
+            const PersonBirthPlace: string;
+            const PersonGender: string;
+            const PersonHeight: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    namespace MovieCastService {
+        const baseUrl = "Default/MovieCast";
+        function Create(request: Serenity.SaveRequest<MovieCastRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Update(request: Serenity.SaveRequest<MovieCastRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<MovieCastRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<MovieCastRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        namespace Methods {
+            const Create: string;
+            const Update: string;
+            const Delete: string;
+            const Retrieve: string;
+            const List: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+}
+declare namespace BowenSerene.Default {
     class MovieForm extends Serenity.PrefixedContext {
         static formKey: string;
     }
@@ -690,9 +770,43 @@ declare namespace BowenSerene.Default {
         Storyline: Serenity.TextAreaEditor;
         Year: Serenity.IntegerEditor;
         ReleaseDate: Serenity.DateEditor;
-        GenreId: Serenity.LookupEditor;
         Kind: Serenity.EnumEditor;
+        GenreList: Serenity.LookupEditor;
         Runtime: Serenity.IntegerEditor;
+    }
+}
+declare namespace BowenSerene.Default {
+    interface MovieGenresRow {
+        MovieGenreId?: number;
+        MovieId?: number;
+        GenreId?: number;
+        MovieTitle?: string;
+        MovieDescription?: string;
+        MovieStoryline?: string;
+        MovieYear?: number;
+        MovieReleaseDate?: string;
+        MovieRuntime?: number;
+        MovieKind?: number;
+        GenreName?: string;
+        GenreCreateDate?: string;
+    }
+    namespace MovieGenresRow {
+        const idProperty = "MovieGenreId";
+        const localTextPrefix = "Default.MovieGenres";
+        namespace Fields {
+            const MovieGenreId: string;
+            const MovieId: string;
+            const GenreId: string;
+            const MovieTitle: string;
+            const MovieDescription: string;
+            const MovieStoryline: string;
+            const MovieYear: string;
+            const MovieReleaseDate: string;
+            const MovieRuntime: string;
+            const MovieKind: string;
+            const GenreName: string;
+            const GenreCreateDate: string;
+        }
     }
 }
 declare namespace BowenSerene.Default {
@@ -712,8 +826,7 @@ declare namespace BowenSerene.Default {
         ReleaseDate?: string;
         Runtime?: number;
         Kind?: MovieKind;
-        GenreId?: number;
-        GenreName?: string;
+        GenreList?: number[];
     }
     namespace MovieRow {
         const idProperty = "MovieId";
@@ -728,8 +841,7 @@ declare namespace BowenSerene.Default {
             const ReleaseDate: string;
             const Runtime: string;
             const Kind: string;
-            const GenreId: string;
-            const GenreName: string;
+            const GenreList: string;
         }
     }
 }
@@ -741,6 +853,67 @@ declare namespace BowenSerene.Default {
         function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<MovieRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<MovieRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        namespace Methods {
+            const Create: string;
+            const Update: string;
+            const Delete: string;
+            const Retrieve: string;
+            const List: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+}
+declare namespace BowenSerene.Default {
+    class PersonForm extends Serenity.PrefixedContext {
+        static formKey: string;
+    }
+    interface PersonForm {
+        Firstname: Serenity.StringEditor;
+        Lastname: Serenity.StringEditor;
+        BirthDate: Serenity.DateEditor;
+        BirthPlace: Serenity.StringEditor;
+        Gender: Serenity.EnumEditor;
+        Height: Serenity.IntegerEditor;
+    }
+}
+declare namespace BowenSerene.Default {
+    interface PersonRow {
+        PersonId?: number;
+        Firstname?: string;
+        Lastname?: string;
+        BirthDate?: string;
+        BirthPlace?: string;
+        Gender?: Gender;
+        Height?: number;
+        Fullname?: string;
+    }
+    namespace PersonRow {
+        const idProperty = "PersonId";
+        const nameProperty = "Fullname";
+        const localTextPrefix = "Default.Person";
+        const lookupKey = "Default.Person";
+        function getLookup(): Q.Lookup<PersonRow>;
+        namespace Fields {
+            const PersonId: string;
+            const Firstname: string;
+            const Lastname: string;
+            const BirthDate: string;
+            const BirthPlace: string;
+            const Gender: string;
+            const Height: string;
+            const Fullname: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    namespace PersonService {
+        const baseUrl = "Default/Person";
+        function Create(request: Serenity.SaveRequest<PersonRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Update(request: Serenity.SaveRequest<PersonRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<PersonRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<PersonRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         namespace Methods {
             const Create: string;
             const Update: string;
@@ -4156,6 +4329,11 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
+    class GenreListFormatter implements Slick.Formatter {
+        format(ctx: Slick.FormatterContext): string;
+    }
+}
+declare namespace BowenSerene.Default {
     class MovieDialog extends Serenity.EntityDialog<MovieRow, any> {
         protected getFormKey(): string;
         protected getIdProperty(): string;
@@ -4174,6 +4352,26 @@ declare namespace BowenSerene.Default {
         protected getService(): string;
         constructor(container: JQuery);
         protected getQuickSearchFields(): Serenity.QuickSearchField[];
+    }
+}
+declare namespace BowenSerene.Default {
+    class PersonDialog extends Serenity.EntityDialog<PersonRow, any> {
+        protected getFormKey(): string;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getNameProperty(): string;
+        protected getService(): string;
+        protected form: PersonForm;
+    }
+}
+declare namespace BowenSerene.Default {
+    class PersonGrid extends Serenity.EntityGrid<PersonRow, any> {
+        protected getColumnsKey(): string;
+        protected getDialogType(): typeof PersonDialog;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getService(): string;
+        constructor(container: JQuery);
     }
 }
 declare namespace BowenSerene.Meeting {

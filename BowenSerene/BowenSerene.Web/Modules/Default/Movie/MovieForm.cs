@@ -20,8 +20,8 @@ namespace BowenSerene.Default.Forms
         public String Storyline { get; set; }
         public Int32 Year { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public Int32 GenreId { get; set; }
         public MovieKind Kind { get; set; }
+        public List<Int32> GenreList { get; set; }
         [DisplayName("Runtime in minutes"),Width(150),AlignCenter]
         public Int32 Runtime { get; set; }
     }

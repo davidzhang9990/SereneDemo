@@ -1143,13 +1143,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.Gender.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.GenreColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieCastColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieKind.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PersonColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Northwind.CustomerGrossSalesRow.ts">
@@ -1398,6 +1407,7 @@
     <TypeScriptCompile Include="Modules\Common\Reporting\ReportDialog.ts" />
     <TypeScriptCompile Include="Modules\Common\ScriptInitialization.ts" />
     <TypeScriptCompile Include="Modules\Common\UserPreference\UserPreferenceStorage.ts" />
+    <TypeScriptCompile Include="Modules\Default\Movie\GenreListFormatter.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ChangePassword\ChangePasswordPanel.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ForgotPassword\ForgotPasswordPanel.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ResetPassword\ResetPasswordPanel.ts" />
@@ -1980,6 +1990,30 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.GenreForm.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieGenresRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PersonRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PersonService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\Person\PersonIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\Person\PersonDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\Person\PersonGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PersonForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieCastRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieCastService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieCastForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -1997,6 +2031,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Imports\ClientTypes\Default.GenreListFormatterAttribute.cs">
+      <DependentUpon>ClientTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_221100_PersonAndMovieCast.cs" />
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_212400_MovieGenres.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_191600_GenreTable.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_184800_MovieKind.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_130000_Movie.cs" />
@@ -2053,6 +2092,7 @@
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesEndpoint.cs" />
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesRepository.cs" />
     <Compile Include="Modules\Default\Movie\MovieKind.cs" />
+    <Compile Include="Modules\Default\Person\Gender.cs" />
     <Compile Include="Modules\Northwind\Customer\CustomerGrossSalesRow.cs" />
     <Compile Include="Modules\BasicSamples\Grids\VSGalleryQA\VSGalleryQAColumns.cs" />
     <Compile Include="Modules\BasicSamples\Grids\VSGalleryQA\VSGalleryQAParser.cs" />
@@ -2391,6 +2431,19 @@
     <Compile Include="Modules\Default\Genre\GenrePage.cs" />
     <Compile Include="Modules\Default\Genre\GenreColumns.cs" />
     <Compile Include="Modules\Default\Genre\GenreForm.cs" />
+    <Compile Include="Modules\Default\MovieGenres\MovieGenresRow.cs" />
+    <Compile Include="Modules\Default\MovieGenres\MovieGenresRepository.cs" />
+    <Compile Include="Modules\Default\Person\PersonRow.cs" />
+    <Compile Include="Modules\Default\Person\PersonRepository.cs" />
+    <Compile Include="Modules\Default\Person\PersonEndpoint.cs" />
+    <Compile Include="Modules\Default\Person\PersonPage.cs" />
+    <Compile Include="Modules\Default\Person\PersonColumns.cs" />
+    <Compile Include="Modules\Default\Person\PersonForm.cs" />
+    <Compile Include="Modules\Default\MovieCast\MovieCastRow.cs" />
+    <Compile Include="Modules\Default\MovieCast\MovieCastRepository.cs" />
+    <Compile Include="Modules\Default\MovieCast\MovieCastEndpoint.cs" />
+    <Compile Include="Modules\Default\MovieCast\MovieCastColumns.cs" />
+    <Compile Include="Modules\Default\MovieCast\MovieCastForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

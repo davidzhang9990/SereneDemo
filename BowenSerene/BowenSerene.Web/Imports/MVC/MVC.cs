@@ -303,6 +303,11 @@ namespace MVC
             {
                 public const string MovieIndex = "~/Modules/Default/Movie/MovieIndex.cshtml";
             }
+
+            public static class Person
+            {
+                public const string PersonIndex = "~/Modules/Default/Person/PersonIndex.cshtml";
+            }
         }
 
         public static class Errors

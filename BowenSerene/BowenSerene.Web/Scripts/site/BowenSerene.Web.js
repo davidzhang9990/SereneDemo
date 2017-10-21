@@ -682,6 +682,18 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
+        var Gender;
+        (function (Gender) {
+            Gender[Gender["Male"] = 1] = "Male";
+            Gender[Gender["Female"] = 2] = "Female";
+        })(Gender = Default.Gender || (Default.Gender = {}));
+        Serenity.Decorators.registerEnum(Gender, 'MovieDB.Gender');
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
         var GenreForm = (function (_super) {
             __extends(GenreForm, _super);
             function GenreForm() {
@@ -748,6 +760,81 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
+        var MovieCastForm = (function (_super) {
+            __extends(MovieCastForm, _super);
+            function MovieCastForm() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            return MovieCastForm;
+        }(Serenity.PrefixedContext));
+        MovieCastForm.formKey = 'Default.MovieCast';
+        Default.MovieCastForm = MovieCastForm;
+        [['MovieId', function () { return Serenity.IntegerEditor; }], ['PersonId', function () { return Serenity.IntegerEditor; }], ['Character', function () { return Serenity.StringEditor; }]].forEach(function (x) { return Object.defineProperty(MovieCastForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var MovieCastRow;
+        (function (MovieCastRow) {
+            MovieCastRow.idProperty = 'MovieCastId';
+            MovieCastRow.nameProperty = 'Character';
+            MovieCastRow.localTextPrefix = 'Default.MovieCast';
+            var Fields;
+            (function (Fields) {
+            })(Fields = MovieCastRow.Fields || (MovieCastRow.Fields = {}));
+            [
+                'MovieCastId',
+                'MovieId',
+                'PersonId',
+                'Character',
+                'MovieTitle',
+                'MovieDescription',
+                'MovieStoryline',
+                'MovieYear',
+                'MovieReleaseDate',
+                'MovieRuntime',
+                'MovieKind',
+                'PersonFirstname',
+                'PersonLastname',
+                'PersonBirthDate',
+                'PersonBirthPlace',
+                'PersonGender',
+                'PersonHeight'
+            ].forEach(function (x) { return Fields[x] = x; });
+        })(MovieCastRow = Default.MovieCastRow || (Default.MovieCastRow = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var MovieCastService;
+        (function (MovieCastService) {
+            MovieCastService.baseUrl = 'Default/MovieCast';
+            var Methods;
+            (function (Methods) {
+            })(Methods = MovieCastService.Methods || (MovieCastService.Methods = {}));
+            [
+                'Create',
+                'Update',
+                'Delete',
+                'Retrieve',
+                'List'
+            ].forEach(function (x) {
+                MovieCastService[x] = function (r, s, o) {
+                    return Q.serviceRequest(MovieCastService.baseUrl + '/' + x, r, s, o);
+                };
+                Methods[x] = MovieCastService.baseUrl + '/' + x;
+            });
+        })(MovieCastService = Default.MovieCastService || (Default.MovieCastService = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
         var MovieForm = (function (_super) {
             __extends(MovieForm, _super);
             function MovieForm() {
@@ -757,7 +844,35 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         MovieForm.formKey = 'Default.Movie';
         Default.MovieForm = MovieForm;
-        [['Title', function () { return Serenity.StringEditor; }], ['Description', function () { return Serenity.TextAreaEditor; }], ['Storyline', function () { return Serenity.TextAreaEditor; }], ['Year', function () { return Serenity.IntegerEditor; }], ['ReleaseDate', function () { return Serenity.DateEditor; }], ['GenreId', function () { return Serenity.LookupEditor; }], ['Kind', function () { return Serenity.EnumEditor; }], ['Runtime', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(MovieForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['Title', function () { return Serenity.StringEditor; }], ['Description', function () { return Serenity.TextAreaEditor; }], ['Storyline', function () { return Serenity.TextAreaEditor; }], ['Year', function () { return Serenity.IntegerEditor; }], ['ReleaseDate', function () { return Serenity.DateEditor; }], ['Kind', function () { return Serenity.EnumEditor; }], ['GenreList', function () { return Serenity.LookupEditor; }], ['Runtime', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(MovieForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var MovieGenresRow;
+        (function (MovieGenresRow) {
+            MovieGenresRow.idProperty = 'MovieGenreId';
+            MovieGenresRow.localTextPrefix = 'Default.MovieGenres';
+            var Fields;
+            (function (Fields) {
+            })(Fields = MovieGenresRow.Fields || (MovieGenresRow.Fields = {}));
+            [
+                'MovieGenreId',
+                'MovieId',
+                'GenreId',
+                'MovieTitle',
+                'MovieDescription',
+                'MovieStoryline',
+                'MovieYear',
+                'MovieReleaseDate',
+                'MovieRuntime',
+                'MovieKind',
+                'GenreName',
+                'GenreCreateDate'
+            ].forEach(function (x) { return Fields[x] = x; });
+        })(MovieGenresRow = Default.MovieGenresRow || (Default.MovieGenresRow = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -794,8 +909,7 @@ var BowenSerene;
                 'ReleaseDate',
                 'Runtime',
                 'Kind',
-                'GenreId',
-                'GenreName'
+                'GenreList'
             ].forEach(function (x) { return Fields[x] = x; });
         })(MovieRow = Default.MovieRow || (Default.MovieRow = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
@@ -823,6 +937,77 @@ var BowenSerene;
                 Methods[x] = MovieService.baseUrl + '/' + x;
             });
         })(MovieService = Default.MovieService || (Default.MovieService = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PersonForm = (function (_super) {
+            __extends(PersonForm, _super);
+            function PersonForm() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            return PersonForm;
+        }(Serenity.PrefixedContext));
+        PersonForm.formKey = 'Default.Person';
+        Default.PersonForm = PersonForm;
+        [['Firstname', function () { return Serenity.StringEditor; }], ['Lastname', function () { return Serenity.StringEditor; }], ['BirthDate', function () { return Serenity.DateEditor; }], ['BirthPlace', function () { return Serenity.StringEditor; }], ['Gender', function () { return Serenity.EnumEditor; }], ['Height', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(PersonForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PersonRow;
+        (function (PersonRow) {
+            PersonRow.idProperty = 'PersonId';
+            PersonRow.nameProperty = 'Fullname';
+            PersonRow.localTextPrefix = 'Default.Person';
+            PersonRow.lookupKey = 'Default.Person';
+            function getLookup() {
+                return Q.getLookup('Default.Person');
+            }
+            PersonRow.getLookup = getLookup;
+            var Fields;
+            (function (Fields) {
+            })(Fields = PersonRow.Fields || (PersonRow.Fields = {}));
+            [
+                'PersonId',
+                'Firstname',
+                'Lastname',
+                'BirthDate',
+                'BirthPlace',
+                'Gender',
+                'Height',
+                'Fullname'
+            ].forEach(function (x) { return Fields[x] = x; });
+        })(PersonRow = Default.PersonRow || (Default.PersonRow = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PersonService;
+        (function (PersonService) {
+            PersonService.baseUrl = 'Default/Person';
+            var Methods;
+            (function (Methods) {
+            })(Methods = PersonService.Methods || (PersonService.Methods = {}));
+            [
+                'Create',
+                'Update',
+                'Delete',
+                'Retrieve',
+                'List'
+            ].forEach(function (x) {
+                PersonService[x] = function (r, s, o) {
+                    return Q.serviceRequest(PersonService.baseUrl + '/' + x, r, s, o);
+                };
+                Methods[x] = PersonService.baseUrl + '/' + x;
+            });
+        })(PersonService = Default.PersonService || (Default.PersonService = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -8490,6 +8675,33 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
+        var GenreListFormatter = (function () {
+            function GenreListFormatter() {
+            }
+            GenreListFormatter.prototype.format = function (ctx) {
+                var idList = ctx.value;
+                if (!idList || !idList.length)
+                    return "";
+                var byId = Default.GenreRow.getLookup().itemById;
+                return idList.map(function (x) {
+                    var g = byId[x];
+                    if (!g)
+                        return x.toString();
+                    return Q.htmlEncode(g.Name);
+                }).join(", ");
+            };
+            return GenreListFormatter;
+        }());
+        GenreListFormatter = __decorate([
+            Serenity.Decorators.registerFormatter()
+        ], GenreListFormatter);
+        Default.GenreListFormatter = GenreListFormatter;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
         var MovieDialog = (function (_super) {
             __extends(MovieDialog, _super);
             function MovieDialog() {
@@ -8544,6 +8756,53 @@ var BowenSerene;
             Serenity.Decorators.registerClass()
         ], MovieGrid);
         Default.MovieGrid = MovieGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PersonDialog = (function (_super) {
+            __extends(PersonDialog, _super);
+            function PersonDialog() {
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.form = new Default.PersonForm(_this.idPrefix);
+                return _this;
+            }
+            PersonDialog.prototype.getFormKey = function () { return Default.PersonForm.formKey; };
+            PersonDialog.prototype.getIdProperty = function () { return Default.PersonRow.idProperty; };
+            PersonDialog.prototype.getLocalTextPrefix = function () { return Default.PersonRow.localTextPrefix; };
+            PersonDialog.prototype.getNameProperty = function () { return Default.PersonRow.nameProperty; };
+            PersonDialog.prototype.getService = function () { return Default.PersonService.baseUrl; };
+            return PersonDialog;
+        }(Serenity.EntityDialog));
+        PersonDialog = __decorate([
+            Serenity.Decorators.registerClass(),
+            Serenity.Decorators.responsive()
+        ], PersonDialog);
+        Default.PersonDialog = PersonDialog;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PersonGrid = (function (_super) {
+            __extends(PersonGrid, _super);
+            function PersonGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            PersonGrid.prototype.getColumnsKey = function () { return 'Default.Person'; };
+            PersonGrid.prototype.getDialogType = function () { return Default.PersonDialog; };
+            PersonGrid.prototype.getIdProperty = function () { return Default.PersonRow.idProperty; };
+            PersonGrid.prototype.getLocalTextPrefix = function () { return Default.PersonRow.localTextPrefix; };
+            PersonGrid.prototype.getService = function () { return Default.PersonService.baseUrl; };
+            return PersonGrid;
+        }(Serenity.EntityGrid));
+        PersonGrid = __decorate([
+            Serenity.Decorators.registerClass()
+        ], PersonGrid);
+        Default.PersonGrid = PersonGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;

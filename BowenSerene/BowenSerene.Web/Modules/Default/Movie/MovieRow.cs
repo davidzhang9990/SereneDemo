@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace BowenSerene.Default.Entities
 {
     using Serenity;
@@ -71,19 +73,13 @@ namespace BowenSerene.Default.Entities
             set { Fields.Kind[this] = (Int32?)value; }
         }
 
-        [DisplayName("Genre"), ForeignKey("Genre", "GenreId"), LeftJoin("g")]
-        [LookupEditor(typeof(GenreRow), InplaceAdd = true)]
-        public Int32? GenreId
+        [DisplayName("Genres")]
+        [LookupEditor(typeof(GenreRow), Multiple = true), ClientSide]
+        [LinkingSetRelation(typeof(MovieGenresRow), "MovieId", "GenreId")]
+        public List<Int32> GenreList
         {
-            get { return Fields.GenreId[this]; }
-            set { Fields.GenreId[this] = value; }
-        }
-
-        [DisplayName("Genre"), Expression("g.Name")]
-        public String GenreName
-        {
-            get { return Fields.GenreName[this]; }
-            set { Fields.GenreName[this] = value; }
+            get { return Fields.GenreList[this]; }
+            set { Fields.GenreList[this] = value; }
         }
 
         IIdField IIdRow.IdField
@@ -113,8 +109,7 @@ namespace BowenSerene.Default.Entities
             public DateTimeField ReleaseDate;
             public Int32Field Runtime;
             public Int32Field Kind;
-            public Int32Field GenreId;
-            public StringField GenreName;
+            public ListField<Int32> GenreList;
 
             public RowFields()
                 : base()
