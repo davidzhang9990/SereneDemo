@@ -40,3 +40,5 @@ IfDatabase("SqlServer", "SqlServer2000", "SqlServerCe")
 .Delete.ForeignKey("FK_Movie_GenreId").OnTable("Movie");
 IfDatabase("SqlServer", "SqlServer2000", "SqlServerCe")
 .Delete.Column("GenreId").FromTable("Movie");
+
+PAGE 214 多租户设置角色管理页面
