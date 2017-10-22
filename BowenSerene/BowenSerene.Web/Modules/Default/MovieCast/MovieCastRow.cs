@@ -10,7 +10,7 @@ namespace BowenSerene.Default.Entities
     using System.IO;
 
     [ConnectionKey("Default"), TableName("[dbo].[MovieCast]")]
-    [DisplayName("Movie Cast"), InstanceName("Movie Cast"), TwoLevelCached]
+    [DisplayName("Movie Cast"), InstanceName("Cast"), TwoLevelCached]
     [ReadPermission("Administration:General")]
     [ModifyPermission("Administration:General")]
     public sealed class MovieCastRow : Row, IIdRow, INameRow
@@ -29,7 +29,8 @@ namespace BowenSerene.Default.Entities
             set { Fields.MovieId[this] = value; }
         }
 
-        [DisplayName("Person"), NotNull, ForeignKey("[dbo].[Person]", "PersonId"), LeftJoin("jPerson"), TextualField("PersonFirstname")]
+        [DisplayName("Actor/Actress"), NotNull, ForeignKey("[dbo].[Person]", "PersonId"), LeftJoin("jPerson"), TextualField("PersonFirstname")]
+        [LookupEditor(typeof(PersonRow))]
         public Int32? PersonId
         {
             get { return Fields.PersonId[this]; }
@@ -97,6 +98,14 @@ namespace BowenSerene.Default.Entities
             get { return Fields.PersonLastname[this]; }
             set { Fields.PersonLastname[this] = value; }
         }
+
+        [DisplayName("Actor/Actress"), Expression("(jPerson.Firstname + ' ' + jPerson.Lastname )")]
+        public String PersonFullname
+        {
+            get { return Fields.PersonFullname[this]; }
+            set { Fields.PersonFullname[this] = value; }
+        }
+
         [DisplayName("Person Birth Date"), Expression("jPerson.[BirthDate]")]
         public DateTime? PersonBirthDate
         {
@@ -155,6 +164,7 @@ namespace BowenSerene.Default.Entities
 
             public StringField PersonFirstname;
             public StringField PersonLastname;
+            public StringField PersonFullname;
             public DateTimeField PersonBirthDate;
             public StringField PersonBirthPlace;
             public Int32Field PersonGender;

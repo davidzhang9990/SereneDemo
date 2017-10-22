@@ -13,7 +13,6 @@ namespace BowenSerene.Default.Forms
     [BasedOnRow(typeof(Entities.MovieCastRow))]
     public class MovieCastForm
     {
-        public Int32 MovieId { get; set; }
         public Int32 PersonId { get; set; }
         public String Character { get; set; }
     }

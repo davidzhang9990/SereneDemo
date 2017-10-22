@@ -13,6 +13,7 @@
         MovieKind?: number;
         PersonFirstname?: string;
         PersonLastname?: string;
+        PersonFullname?: string;
         PersonBirthDate?: string;
         PersonBirthPlace?: string;
         PersonGender?: number;
@@ -38,6 +39,7 @@
             export declare const MovieKind: string;
             export declare const PersonFirstname: string;
             export declare const PersonLastname: string;
+            export declare const PersonFullname: string;
             export declare const PersonBirthDate: string;
             export declare const PersonBirthPlace: string;
             export declare const PersonGender: string;
@@ -58,6 +60,7 @@
             'MovieKind', 
             'PersonFirstname', 
             'PersonLastname', 
+            'PersonFullname', 
             'PersonBirthDate', 
             'PersonBirthPlace', 
             'PersonGender', 

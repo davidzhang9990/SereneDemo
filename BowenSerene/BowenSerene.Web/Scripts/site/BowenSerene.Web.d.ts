@@ -691,8 +691,7 @@ declare namespace BowenSerene.Default {
         static formKey: string;
     }
     interface MovieCastForm {
-        MovieId: Serenity.IntegerEditor;
-        PersonId: Serenity.IntegerEditor;
+        PersonId: Serenity.LookupEditor;
         Character: Serenity.StringEditor;
     }
 }
@@ -711,6 +710,7 @@ declare namespace BowenSerene.Default {
         MovieKind?: number;
         PersonFirstname?: string;
         PersonLastname?: string;
+        PersonFullname?: string;
         PersonBirthDate?: string;
         PersonBirthPlace?: string;
         PersonGender?: number;
@@ -734,6 +734,7 @@ declare namespace BowenSerene.Default {
             const MovieKind: string;
             const PersonFirstname: string;
             const PersonLastname: string;
+            const PersonFullname: string;
             const PersonBirthDate: string;
             const PersonBirthPlace: string;
             const PersonGender: string;
@@ -767,6 +768,7 @@ declare namespace BowenSerene.Default {
     interface MovieForm {
         Title: Serenity.StringEditor;
         Description: Serenity.TextAreaEditor;
+        CastList: MovieCastEditor;
         Storyline: Serenity.TextAreaEditor;
         Year: Serenity.IntegerEditor;
         ReleaseDate: Serenity.DateEditor;
@@ -827,6 +829,7 @@ declare namespace BowenSerene.Default {
         Runtime?: number;
         Kind?: MovieKind;
         GenreList?: number[];
+        CastList?: MovieCastRow[];
     }
     namespace MovieRow {
         const idProperty = "MovieId";
@@ -842,6 +845,7 @@ declare namespace BowenSerene.Default {
             const Runtime: string;
             const Kind: string;
             const GenreList: string;
+            const CastList: string;
         }
     }
 }
@@ -4352,6 +4356,25 @@ declare namespace BowenSerene.Default {
         protected getService(): string;
         constructor(container: JQuery);
         protected getQuickSearchFields(): Serenity.QuickSearchField[];
+    }
+}
+declare namespace BowenSerene.Default {
+    class MovieCastEditDialog extends Common.GridEditorDialog<MovieCastRow> {
+        protected getFormKey(): string;
+        protected getNameProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected form: MovieCastForm;
+        constructor();
+    }
+}
+declare namespace BowenSerene.Default {
+    class MovieCastEditor extends Common.GridEditorBase<MovieCastRow> {
+        protected validateEntity(row: MovieCastRow, id: number): boolean;
+        protected getColumnsKey(): string;
+        protected getLocalTextPrefix(): string;
+        protected getDialogType(): typeof MovieCastEditDialog;
+        constructor(container: JQuery);
+        protected getAddButtonCaption(): string;
     }
 }
 declare namespace BowenSerene.Default {

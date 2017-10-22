@@ -769,7 +769,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         MovieCastForm.formKey = 'Default.MovieCast';
         Default.MovieCastForm = MovieCastForm;
-        [['MovieId', function () { return Serenity.IntegerEditor; }], ['PersonId', function () { return Serenity.IntegerEditor; }], ['Character', function () { return Serenity.StringEditor; }]].forEach(function (x) { return Object.defineProperty(MovieCastForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['PersonId', function () { return Serenity.LookupEditor; }], ['Character', function () { return Serenity.StringEditor; }]].forEach(function (x) { return Object.defineProperty(MovieCastForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -798,6 +798,7 @@ var BowenSerene;
                 'MovieKind',
                 'PersonFirstname',
                 'PersonLastname',
+                'PersonFullname',
                 'PersonBirthDate',
                 'PersonBirthPlace',
                 'PersonGender',
@@ -844,7 +845,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         MovieForm.formKey = 'Default.Movie';
         Default.MovieForm = MovieForm;
-        [['Title', function () { return Serenity.StringEditor; }], ['Description', function () { return Serenity.TextAreaEditor; }], ['Storyline', function () { return Serenity.TextAreaEditor; }], ['Year', function () { return Serenity.IntegerEditor; }], ['ReleaseDate', function () { return Serenity.DateEditor; }], ['Kind', function () { return Serenity.EnumEditor; }], ['GenreList', function () { return Serenity.LookupEditor; }], ['Runtime', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(MovieForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['Title', function () { return Serenity.StringEditor; }], ['Description', function () { return Serenity.TextAreaEditor; }], ['CastList', function () { return Default.MovieCastEditor; }], ['Storyline', function () { return Serenity.TextAreaEditor; }], ['Year', function () { return Serenity.IntegerEditor; }], ['ReleaseDate', function () { return Serenity.DateEditor; }], ['Kind', function () { return Serenity.EnumEditor; }], ['GenreList', function () { return Serenity.LookupEditor; }], ['Runtime', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(MovieForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -909,7 +910,8 @@ var BowenSerene;
                 'ReleaseDate',
                 'Runtime',
                 'Kind',
-                'GenreList'
+                'GenreList',
+                'CastList'
             ].forEach(function (x) { return Fields[x] = x; });
         })(MovieRow = Default.MovieRow || (Default.MovieRow = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
@@ -8756,6 +8758,65 @@ var BowenSerene;
             Serenity.Decorators.registerClass()
         ], MovieGrid);
         Default.MovieGrid = MovieGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+/// <reference path="../../Common/Helpers/GridEditorDialog.ts" />
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var MovieCastEditDialog = (function (_super) {
+            __extends(MovieCastEditDialog, _super);
+            function MovieCastEditDialog() {
+                var _this = _super.call(this) || this;
+                _this.form = new Default.MovieCastForm(_this.idPrefix);
+                return _this;
+            }
+            MovieCastEditDialog.prototype.getFormKey = function () { return Default.MovieCastForm.formKey; };
+            MovieCastEditDialog.prototype.getNameProperty = function () { return Default.MovieCastRow.nameProperty; };
+            MovieCastEditDialog.prototype.getLocalTextPrefix = function () { return Default.MovieCastRow.localTextPrefix; };
+            return MovieCastEditDialog;
+        }(BowenSerene.Common.GridEditorDialog));
+        MovieCastEditDialog = __decorate([
+            Serenity.Decorators.registerClass()
+        ], MovieCastEditDialog);
+        Default.MovieCastEditDialog = MovieCastEditDialog;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+/// <reference path="../../Common/Helpers/GridEditorBase.ts" />
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var MovieCastEditor = (function (_super) {
+            __extends(MovieCastEditor, _super);
+            function MovieCastEditor(container) {
+                return _super.call(this, container) || this;
+            }
+            MovieCastEditor.prototype.validateEntity = function (row, id) {
+                if (!_super.prototype.validateEntity.call(this, row, id))
+                    return false;
+                row.PersonFullname = Default.PersonRow.getLookup().itemById[row.PersonId].Fullname;
+                return true;
+            };
+            MovieCastEditor.prototype.getColumnsKey = function () {
+                return "Default.MovieCast";
+            };
+            MovieCastEditor.prototype.getLocalTextPrefix = function () {
+                return Default.MovieCastRow.localTextPrefix;
+            };
+            MovieCastEditor.prototype.getDialogType = function () {
+                return Default.MovieCastEditDialog;
+            };
+            MovieCastEditor.prototype.getAddButtonCaption = function () {
+                return "Add";
+            };
+            return MovieCastEditor;
+        }(BowenSerene.Common.GridEditorBase));
+        MovieCastEditor = __decorate([
+            Serenity.Decorators.registerEditor()
+        ], MovieCastEditor);
+        Default.MovieCastEditor = MovieCastEditor;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
