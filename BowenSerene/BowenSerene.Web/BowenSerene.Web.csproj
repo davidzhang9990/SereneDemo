@@ -2044,6 +2044,7 @@
     <Compile Include="Imports\ClientTypes\Default.MovieCastEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171022_192100_PersonMovieImages.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_221100_PersonAndMovieCast.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_212400_MovieGenres.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_191600_GenreTable.cs" />

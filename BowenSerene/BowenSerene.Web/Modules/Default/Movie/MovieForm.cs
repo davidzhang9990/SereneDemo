@@ -24,6 +24,8 @@ namespace BowenSerene.Default.Forms
         [TextAreaEditor(Rows = 8)]
         public String Storyline { get; set; }
         public Int32 Year { get; set; }
+        public String PrimaryImage { get; set; }
+        public String GalleryImages { get; set; }
         public DateTime ReleaseDate { get; set; }
         public MovieKind Kind { get; set; }
         public List<Int32> GenreList { get; set; }

@@ -20,3 +20,10 @@ https://github.com/6pac/SlickGrid/wiki
 终结点（endpoint）
 网格列表（grid）
 表单（form）
+
+你可以通过 web.config 文件的 appSettings 节点下的 UploadSettings 配置，把 保存上传文件的根目录 (App_Data/upload) 修改为任意文件目录。
+ ~  FilenameFormat 的末尾是自动命名方案的快捷方式 
+ {1:00000}/{0:00000000}_{2} 。
+在这里，参数 {0} 替换为记录的标识，如，PersonID。
+参数 {1} 是 1000 以内的整数标识。 这对在一个目录中的保存文件数进行限制是很 有帮助的。
+参数 {2} 是一个唯一的字符串，例如 6l55nk6v2tiyi，它用于为每个上传文件生成一 个新的文件名，这有助于避免客户端缓存所造成的问题。

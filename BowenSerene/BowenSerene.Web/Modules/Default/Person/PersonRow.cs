@@ -37,7 +37,7 @@ namespace BowenSerene.Default.Entities
             set { Fields.Lastname[this] = value; }
         }
 
-        [DisplayName("Full Name"),Expression("(t0.Firstname + ' ' + t0.Lastname)"), QuickSearch]
+        [DisplayName("Full Name"), Expression("(t0.Firstname + ' ' + t0.Lastname)"), QuickSearch]
         public String Fullname
         {
             get { return Fields.Fullname[this]; }
@@ -72,6 +72,20 @@ namespace BowenSerene.Default.Entities
             set { Fields.Height[this] = value; }
         }
 
+        [DisplayName("Primary Image"), Size(100), ImageUploadEditor(FilenameFormat = "Person/PrimaryImage/~")]
+        public string PrimaryImage
+        {
+            get { return Fields.PrimaryImage[this]; }
+            set { Fields.PrimaryImage[this] = value; }
+        }
+
+        [DisplayName("Gallery Images"), MultipleImageUploadEditor(FilenameFormat = "Person/GalleryImages/~")]
+        public string GalleryImages
+        {
+            get { return Fields.GalleryImages[this]; }
+            set { Fields.GalleryImages[this] = value; }
+        }
+
         IIdField IIdRow.IdField
         {
             get { return Fields.PersonId; }
@@ -99,6 +113,8 @@ namespace BowenSerene.Default.Entities
             public Int32Field Gender;
             public Int32Field Height;
             public StringField Fullname;
+            public StringField PrimaryImage;
+            public StringField GalleryImages;
 
             public RowFields()
                 : base()
