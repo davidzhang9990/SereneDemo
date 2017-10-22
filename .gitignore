@@ -10,6 +10,7 @@ dev_log/
 .idea/
 /bin/
 /obj/
+/App_Data/
 
 # User-specific files
 *.suo
