@@ -8,6 +8,8 @@
         Gender?: Gender;
         Height?: number;
         Fullname?: string;
+        PrimaryImage?: string;
+        GalleryImages?: string;
     }
 
     export namespace PersonRow {
@@ -29,6 +31,8 @@
             export declare const Gender: string;
             export declare const Height: string;
             export declare const Fullname: string;
+            export declare const PrimaryImage: string;
+            export declare const GalleryImages: string;
         }
 
         [
@@ -39,7 +43,9 @@
             'BirthPlace', 
             'Gender', 
             'Height', 
-            'Fullname'
+            'Fullname', 
+            'PrimaryImage', 
+            'GalleryImages'
         ].forEach(x => (<any>Fields)[x] = x);
     }
 }

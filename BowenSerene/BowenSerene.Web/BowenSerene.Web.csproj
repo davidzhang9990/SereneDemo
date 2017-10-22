@@ -1164,6 +1164,9 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PersonMovieColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.TenantsColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Northwind.CustomerGrossSalesRow.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -2021,6 +2024,18 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieCastForm.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.TenantsRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.TenantsService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\Tenants\TenantsIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\Tenants\TenantsDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\Tenants\TenantsGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.TenantsForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -2044,12 +2059,14 @@
     <Compile Include="Imports\ClientTypes\Default.MovieCastEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171022_194700_MultiTenant.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171022_192100_PersonMovieImages.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_221100_PersonAndMovieCast.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_212400_MovieGenres.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_191600_GenreTable.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_184800_MovieKind.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_130000_Movie.cs" />
+    <Compile Include="Migrations\NorthwindDB\NorthwindDB_20171022_195900_MultiTenant.cs" />
     <Compile Include="Modules\Administration\AdministrationNavigation.cs" />
     <Compile Include="Modules\Administration\Language\LanguageLookup.cs" />
     <Compile Include="Modules\Administration\RolePermission\RolePermissionUpdateRequest.cs" />
@@ -2456,6 +2473,12 @@
     <Compile Include="Modules\Default\MovieCast\MovieCastEndpoint.cs" />
     <Compile Include="Modules\Default\MovieCast\MovieCastColumns.cs" />
     <Compile Include="Modules\Default\MovieCast\MovieCastForm.cs" />
+    <Compile Include="Modules\Default\Tenants\TenantsRow.cs" />
+    <Compile Include="Modules\Default\Tenants\TenantsRepository.cs" />
+    <Compile Include="Modules\Default\Tenants\TenantsEndpoint.cs" />
+    <Compile Include="Modules\Default\Tenants\TenantsPage.cs" />
+    <Compile Include="Modules\Default\Tenants\TenantsColumns.cs" />
+    <Compile Include="Modules\Default\Tenants\TenantsForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

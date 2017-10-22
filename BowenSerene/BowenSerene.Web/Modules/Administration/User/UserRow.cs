@@ -1,6 +1,7 @@
 ﻿
 namespace BowenSerene.Administration.Entities
 {
+    using Default.Entities;
     using Serenity.ComponentModel;
     using Serenity.Data;
     using Serenity.Data.Mapping;
@@ -98,6 +99,21 @@ namespace BowenSerene.Administration.Entities
             set { Fields.LastDirectoryUpdate[this] = value; }
         }
 
+        [DisplayName("Tenant"), ForeignKey("Tenants", "TenantId"), LeftJoin("tnt")]
+        [LookupEditor(typeof(TenantsRow))]
+        public Int32? TenantId
+        {
+            get { return Fields.TenantId[this]; }
+            set { Fields.TenantId[this] = value; }
+        }
+
+        [DisplayName("Tenant"), Expression("tnt.TenantName")]
+        public String TenantName
+        {
+            get { return Fields.TenantName[this]; }
+            set { Fields.TenantName[this] = value; }
+        }
+
         IIdField IIdRow.IdField
         {
             get { return Fields.UserId; }
@@ -131,6 +147,8 @@ namespace BowenSerene.Administration.Entities
             public StringField Email;
             public StringField UserImage;
             public DateTimeField LastDirectoryUpdate;
+            public Int32Field TenantId;
+            public StringField TenantName;
             public Int16Field IsActive;
 
             public StringField Password;

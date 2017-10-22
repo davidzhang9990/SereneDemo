@@ -308,6 +308,11 @@ namespace MVC
             {
                 public const string PersonIndex = "~/Modules/Default/Person/PersonIndex.cshtml";
             }
+
+            public static class Tenants
+            {
+                public const string TenantsIndex = "~/Modules/Default/Tenants/TenantsIndex.cshtml";
+            }
         }
 
         public static class Errors

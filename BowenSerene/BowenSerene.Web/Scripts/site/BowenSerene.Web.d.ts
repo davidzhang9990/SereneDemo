@@ -771,6 +771,8 @@ declare namespace BowenSerene.Default {
         CastList: MovieCastEditor;
         Storyline: Serenity.TextAreaEditor;
         Year: Serenity.IntegerEditor;
+        PrimaryImage: Serenity.ImageUploadEditor;
+        GalleryImages: Serenity.MultipleImageUploadEditor;
         ReleaseDate: Serenity.DateEditor;
         Kind: Serenity.EnumEditor;
         GenreList: Serenity.LookupEditor;
@@ -830,6 +832,8 @@ declare namespace BowenSerene.Default {
         Kind?: MovieKind;
         GenreList?: number[];
         CastList?: MovieCastRow[];
+        PrimaryImage?: string;
+        GalleryImages?: string;
     }
     namespace MovieRow {
         const idProperty = "MovieId";
@@ -846,6 +850,8 @@ declare namespace BowenSerene.Default {
             const Kind: string;
             const GenreList: string;
             const CastList: string;
+            const PrimaryImage: string;
+            const GalleryImages: string;
         }
     }
 }
@@ -875,6 +881,8 @@ declare namespace BowenSerene.Default {
     interface PersonForm {
         Firstname: Serenity.StringEditor;
         Lastname: Serenity.StringEditor;
+        PrimaryImage: Serenity.ImageUploadEditor;
+        GalleryImages: Serenity.MultipleImageUploadEditor;
         BirthDate: Serenity.DateEditor;
         BirthPlace: Serenity.StringEditor;
         Gender: Serenity.EnumEditor;
@@ -893,6 +901,8 @@ declare namespace BowenSerene.Default {
         Gender?: Gender;
         Height?: number;
         Fullname?: string;
+        PrimaryImage?: string;
+        GalleryImages?: string;
     }
     namespace PersonRow {
         const idProperty = "PersonId";
@@ -909,6 +919,8 @@ declare namespace BowenSerene.Default {
             const Gender: string;
             const Height: string;
             const Fullname: string;
+            const PrimaryImage: string;
+            const GalleryImages: string;
         }
     }
 }
@@ -920,6 +932,48 @@ declare namespace BowenSerene.Default {
         function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<PersonRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<PersonRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        namespace Methods {
+            const Create: string;
+            const Update: string;
+            const Delete: string;
+            const Retrieve: string;
+            const List: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+}
+declare namespace BowenSerene.Default {
+    class TenantsForm extends Serenity.PrefixedContext {
+        static formKey: string;
+    }
+    interface TenantsForm {
+        TenantName: Serenity.StringEditor;
+    }
+}
+declare namespace BowenSerene.Default {
+    interface TenantsRow {
+        TenantId?: number;
+        TenantName?: string;
+    }
+    namespace TenantsRow {
+        const idProperty = "TenantId";
+        const nameProperty = "TenantName";
+        const localTextPrefix = "Default.Tenants";
+        namespace Fields {
+            const TenantId: string;
+            const TenantName: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    namespace TenantsService {
+        const baseUrl = "Default/Tenants";
+        function Create(request: Serenity.SaveRequest<TenantsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Update(request: Serenity.SaveRequest<TenantsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<TenantsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<TenantsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         namespace Methods {
             const Create: string;
             const Update: string;
@@ -4415,6 +4469,26 @@ declare namespace BowenSerene.Default {
         protected getGridCanLoad(): boolean;
         private _personID;
         personID: number;
+    }
+}
+declare namespace BowenSerene.Default {
+    class TenantsDialog extends Serenity.EntityDialog<TenantsRow, any> {
+        protected getFormKey(): string;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getNameProperty(): string;
+        protected getService(): string;
+        protected form: TenantsForm;
+    }
+}
+declare namespace BowenSerene.Default {
+    class TenantsGrid extends Serenity.EntityGrid<TenantsRow, any> {
+        protected getColumnsKey(): string;
+        protected getDialogType(): typeof TenantsDialog;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getService(): string;
+        constructor(container: JQuery);
     }
 }
 declare namespace BowenSerene.Meeting {

@@ -845,7 +845,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         MovieForm.formKey = 'Default.Movie';
         Default.MovieForm = MovieForm;
-        [['Title', function () { return Serenity.StringEditor; }], ['Description', function () { return Serenity.TextAreaEditor; }], ['CastList', function () { return Default.MovieCastEditor; }], ['Storyline', function () { return Serenity.TextAreaEditor; }], ['Year', function () { return Serenity.IntegerEditor; }], ['ReleaseDate', function () { return Serenity.DateEditor; }], ['Kind', function () { return Serenity.EnumEditor; }], ['GenreList', function () { return Serenity.LookupEditor; }], ['Runtime', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(MovieForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['Title', function () { return Serenity.StringEditor; }], ['Description', function () { return Serenity.TextAreaEditor; }], ['CastList', function () { return Default.MovieCastEditor; }], ['Storyline', function () { return Serenity.TextAreaEditor; }], ['Year', function () { return Serenity.IntegerEditor; }], ['PrimaryImage', function () { return Serenity.ImageUploadEditor; }], ['GalleryImages', function () { return Serenity.MultipleImageUploadEditor; }], ['ReleaseDate', function () { return Serenity.DateEditor; }], ['Kind', function () { return Serenity.EnumEditor; }], ['GenreList', function () { return Serenity.LookupEditor; }], ['Runtime', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(MovieForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -911,7 +911,9 @@ var BowenSerene;
                 'Runtime',
                 'Kind',
                 'GenreList',
-                'CastList'
+                'CastList',
+                'PrimaryImage',
+                'GalleryImages'
             ].forEach(function (x) { return Fields[x] = x; });
         })(MovieRow = Default.MovieRow || (Default.MovieRow = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
@@ -954,7 +956,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         PersonForm.formKey = 'Default.Person';
         Default.PersonForm = PersonForm;
-        [['Firstname', function () { return Serenity.StringEditor; }], ['Lastname', function () { return Serenity.StringEditor; }], ['BirthDate', function () { return Serenity.DateEditor; }], ['BirthPlace', function () { return Serenity.StringEditor; }], ['Gender', function () { return Serenity.EnumEditor; }], ['Height', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(PersonForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['Firstname', function () { return Serenity.StringEditor; }], ['Lastname', function () { return Serenity.StringEditor; }], ['PrimaryImage', function () { return Serenity.ImageUploadEditor; }], ['GalleryImages', function () { return Serenity.MultipleImageUploadEditor; }], ['BirthDate', function () { return Serenity.DateEditor; }], ['BirthPlace', function () { return Serenity.StringEditor; }], ['Gender', function () { return Serenity.EnumEditor; }], ['Height', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(PersonForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -982,7 +984,9 @@ var BowenSerene;
                 'BirthPlace',
                 'Gender',
                 'Height',
-                'Fullname'
+                'Fullname',
+                'PrimaryImage',
+                'GalleryImages'
             ].forEach(function (x) { return Fields[x] = x; });
         })(PersonRow = Default.PersonRow || (Default.PersonRow = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
@@ -1010,6 +1014,66 @@ var BowenSerene;
                 Methods[x] = PersonService.baseUrl + '/' + x;
             });
         })(PersonService = Default.PersonService || (Default.PersonService = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var TenantsForm = (function (_super) {
+            __extends(TenantsForm, _super);
+            function TenantsForm() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            return TenantsForm;
+        }(Serenity.PrefixedContext));
+        TenantsForm.formKey = 'Default.Tenants';
+        Default.TenantsForm = TenantsForm;
+        [['TenantName', function () { return Serenity.StringEditor; }]].forEach(function (x) { return Object.defineProperty(TenantsForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var TenantsRow;
+        (function (TenantsRow) {
+            TenantsRow.idProperty = 'TenantId';
+            TenantsRow.nameProperty = 'TenantName';
+            TenantsRow.localTextPrefix = 'Default.Tenants';
+            var Fields;
+            (function (Fields) {
+            })(Fields = TenantsRow.Fields || (TenantsRow.Fields = {}));
+            [
+                'TenantId',
+                'TenantName'
+            ].forEach(function (x) { return Fields[x] = x; });
+        })(TenantsRow = Default.TenantsRow || (Default.TenantsRow = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var TenantsService;
+        (function (TenantsService) {
+            TenantsService.baseUrl = 'Default/Tenants';
+            var Methods;
+            (function (Methods) {
+            })(Methods = TenantsService.Methods || (TenantsService.Methods = {}));
+            [
+                'Create',
+                'Update',
+                'Delete',
+                'Retrieve',
+                'List'
+            ].forEach(function (x) {
+                TenantsService[x] = function (r, s, o) {
+                    return Q.serviceRequest(TenantsService.baseUrl + '/' + x, r, s, o);
+                };
+                Methods[x] = TenantsService.baseUrl + '/' + x;
+            });
+        })(TenantsService = Default.TenantsService || (Default.TenantsService = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -8919,6 +8983,53 @@ var BowenSerene;
             Serenity.Decorators.registerClass()
         ], PersonMovieGrid);
         Default.PersonMovieGrid = PersonMovieGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var TenantsDialog = (function (_super) {
+            __extends(TenantsDialog, _super);
+            function TenantsDialog() {
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.form = new Default.TenantsForm(_this.idPrefix);
+                return _this;
+            }
+            TenantsDialog.prototype.getFormKey = function () { return Default.TenantsForm.formKey; };
+            TenantsDialog.prototype.getIdProperty = function () { return Default.TenantsRow.idProperty; };
+            TenantsDialog.prototype.getLocalTextPrefix = function () { return Default.TenantsRow.localTextPrefix; };
+            TenantsDialog.prototype.getNameProperty = function () { return Default.TenantsRow.nameProperty; };
+            TenantsDialog.prototype.getService = function () { return Default.TenantsService.baseUrl; };
+            return TenantsDialog;
+        }(Serenity.EntityDialog));
+        TenantsDialog = __decorate([
+            Serenity.Decorators.registerClass(),
+            Serenity.Decorators.responsive()
+        ], TenantsDialog);
+        Default.TenantsDialog = TenantsDialog;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var TenantsGrid = (function (_super) {
+            __extends(TenantsGrid, _super);
+            function TenantsGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            TenantsGrid.prototype.getColumnsKey = function () { return 'Default.Tenants'; };
+            TenantsGrid.prototype.getDialogType = function () { return Default.TenantsDialog; };
+            TenantsGrid.prototype.getIdProperty = function () { return Default.TenantsRow.idProperty; };
+            TenantsGrid.prototype.getLocalTextPrefix = function () { return Default.TenantsRow.localTextPrefix; };
+            TenantsGrid.prototype.getService = function () { return Default.TenantsService.baseUrl; };
+            return TenantsGrid;
+        }(Serenity.EntityGrid));
+        TenantsGrid = __decorate([
+            Serenity.Decorators.registerClass()
+        ], TenantsGrid);
+        Default.TenantsGrid = TenantsGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;

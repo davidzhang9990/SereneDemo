@@ -27,3 +27,16 @@ https://github.com/6pac/SlickGrid/wiki
 在这里，参数 {0} 替换为记录的标识，如，PersonID。
 参数 {1} 是 1000 以内的整数标识。 这对在一个目录中的保存文件数进行限制是很 有帮助的。
 参数 {2} 是一个唯一的字符串，例如 6l55nk6v2tiyi，它用于为每个上传文件生成一 个新的文件名，这有助于避免客户端缓存所造成的问题。
+
+
+ IfDatabase("SqlServer", "SqlServer2000", "SqlServerCe")
+.Execute.Sql(
+              @"INSERT INTO MovieGenres (MovieId, GenreId) 
+                    SELECT m.MovieId, m.GenreId 
+                    FROM Movie m
+                    WHERE m.GenreId IS NOT NULL");
+
+IfDatabase("SqlServer", "SqlServer2000", "SqlServerCe")
+.Delete.ForeignKey("FK_Movie_GenreId").OnTable("Movie");
+IfDatabase("SqlServer", "SqlServer2000", "SqlServerCe")
+.Delete.Column("GenreId").FromTable("Movie");
