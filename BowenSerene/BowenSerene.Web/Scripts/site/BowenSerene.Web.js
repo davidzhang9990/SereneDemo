@@ -218,7 +218,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         UserForm.formKey = 'Administration.User';
         Administration.UserForm = UserForm;
-        [['Username', function () { return Serenity.StringEditor; }], ['DisplayName', function () { return Serenity.StringEditor; }], ['Email', function () { return Serenity.EmailEditor; }], ['UserImage', function () { return Serenity.ImageUploadEditor; }], ['Password', function () { return Serenity.PasswordEditor; }], ['PasswordConfirm', function () { return Serenity.PasswordEditor; }], ['Source', function () { return Serenity.StringEditor; }]].forEach(function (x) { return Object.defineProperty(UserForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['Username', function () { return Serenity.StringEditor; }], ['DisplayName', function () { return Serenity.StringEditor; }], ['Email', function () { return Serenity.EmailEditor; }], ['UserImage', function () { return Serenity.ImageUploadEditor; }], ['Password', function () { return Serenity.PasswordEditor; }], ['PasswordConfirm', function () { return Serenity.PasswordEditor; }], ['Source', function () { return Serenity.StringEditor; }], ['TenantId', function () { return Serenity.LookupEditor; }]].forEach(function (x) { return Object.defineProperty(UserForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Administration = BowenSerene.Administration || (BowenSerene.Administration = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -339,6 +339,8 @@ var BowenSerene;
                 'Email',
                 'UserImage',
                 'LastDirectoryUpdate',
+                'TenantId',
+                'TenantName',
                 'IsActive',
                 'Password',
                 'PasswordConfirm',
@@ -1041,6 +1043,11 @@ var BowenSerene;
             TenantsRow.idProperty = 'TenantId';
             TenantsRow.nameProperty = 'TenantName';
             TenantsRow.localTextPrefix = 'Default.Tenants';
+            TenantsRow.lookupKey = 'Administration.Tenant';
+            function getLookup() {
+                return Q.getLookup('Administration.Tenant');
+            }
+            TenantsRow.getLookup = getLookup;
             var Fields;
             (function (Fields) {
             })(Fields = TenantsRow.Fields || (TenantsRow.Fields = {}));
@@ -3549,6 +3556,12 @@ var BowenSerene;
             UserDialog.prototype.getLocalTextPrefix = function () { return Administration.UserRow.localTextPrefix; };
             UserDialog.prototype.getNameProperty = function () { return Administration.UserRow.nameProperty; };
             UserDialog.prototype.getService = function () { return Administration.UserService.baseUrl; };
+            UserDialog.prototype.getPropertyItems = function () {
+                var items = _super.prototype.getPropertyItems.call(this);
+                if (!BowenSerene.Authorization.hasPermission("Administration:Tenants"))
+                    items = items.filter(function (x) { return x.name != Administration.UserRow.Fields.TenantId; });
+                return items;
+            };
             UserDialog.prototype.getToolbarButtons = function () {
                 var _this = this;
                 var buttons = _super.prototype.getToolbarButtons.call(this);

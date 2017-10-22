@@ -8,6 +8,11 @@
         export const idProperty = 'TenantId';
         export const nameProperty = 'TenantName';
         export const localTextPrefix = 'Default.Tenants';
+        export const lookupKey = 'Administration.Tenant';
+
+        export function getLookup(): Q.Lookup<TenantsRow> {
+            return Q.getLookup<TenantsRow>('Administration.Tenant');
+        }
 
         export namespace Fields {
             export declare const TenantId: string;

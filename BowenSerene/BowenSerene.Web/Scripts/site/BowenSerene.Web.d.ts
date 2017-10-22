@@ -187,6 +187,7 @@ declare namespace BowenSerene.Administration {
         Password: Serenity.PasswordEditor;
         PasswordConfirm: Serenity.PasswordEditor;
         Source: Serenity.StringEditor;
+        TenantId: Serenity.LookupEditor;
     }
 }
 declare namespace BowenSerene.Administration {
@@ -299,6 +300,8 @@ declare namespace BowenSerene.Administration {
         Email?: string;
         UserImage?: string;
         LastDirectoryUpdate?: string;
+        TenantId?: number;
+        TenantName?: string;
         IsActive?: number;
         Password?: string;
         PasswordConfirm?: string;
@@ -324,6 +327,8 @@ declare namespace BowenSerene.Administration {
             const Email: string;
             const UserImage: string;
             const LastDirectoryUpdate: string;
+            const TenantId: string;
+            const TenantName: string;
             const IsActive: string;
             const Password: string;
             const PasswordConfirm: string;
@@ -960,6 +965,8 @@ declare namespace BowenSerene.Default {
         const idProperty = "TenantId";
         const nameProperty = "TenantName";
         const localTextPrefix = "Default.Tenants";
+        const lookupKey = "Administration.Tenant";
+        function getLookup(): Q.Lookup<TenantsRow>;
         namespace Fields {
             const TenantId: string;
             const TenantName: string;
@@ -3170,6 +3177,7 @@ declare namespace BowenSerene.Administration {
         protected getService(): string;
         protected form: UserForm;
         constructor();
+        protected getPropertyItems(): Serenity.PropertyItem[];
         protected getToolbarButtons(): Serenity.ToolButton[];
         protected updateInterface(): void;
         protected afterLoadEntity(): void;
