@@ -39,49 +39,49 @@ namespace BowenSerene.Default.Repositories
 
         private class MySaveHandler : SaveRequestHandler<MyRow>
         {
-            protected override void AfterSave()
-            {
-                base.AfterSave();
-                if (Row.CastList != null)
-                {
-                    var mc = Entities.MovieCastRow.Fields;
-                    var oldList = IsCreate ? null : Connection.List<Entities.MovieCastRow>(mc.MovieId == this.Row.MovieId.Value);
-                    new Common.DetailListSaveHandler<Entities.MovieCastRow>(oldList, Row.CastList, x => x.MovieId = Row.MovieId.Value).Process(this.UnitOfWork);
-                }
-            }
+//            protected override void AfterSave()
+//            {
+//                base.AfterSave();
+//                if (Row.CastList != null)
+//                {
+//                    var mc = Entities.MovieCastRow.Fields;
+//                    var oldList = IsCreate ? null : Connection.List<Entities.MovieCastRow>(mc.MovieId == this.Row.MovieId.Value);
+//                    new Common.DetailListSaveHandler<Entities.MovieCastRow>(oldList, Row.CastList, x => x.MovieId = Row.MovieId.Value).Process(this.UnitOfWork);
+//                }
+//            }
         }
 
         private class MyDeleteHandler : DeleteRequestHandler<MyRow>
         {
-            protected override void OnBeforeDelete()
-            {
-                base.OnBeforeDelete();
-                var mc = Entities.MovieCastRow.Fields;
-                foreach (var detailID in Connection.Query<Int32>(new SqlQuery()
-                        .From(mc)
-                        .Select(mc.MovieCastId)
-                        .Where(mc.MovieId == Row.MovieId.Value)))
-                {
-                    new DeleteRequestHandler<Entities.MovieCastRow>().Process(this.UnitOfWork,
-                        new DeleteRequest
-                        {
-                            EntityId = detailID
-                        });
-                }
-            }
+//            protected override void OnBeforeDelete()
+//            {
+//                base.OnBeforeDelete();
+//                var mc = Entities.MovieCastRow.Fields;
+//                foreach (var detailID in Connection.Query<Int32>(new SqlQuery()
+//                        .From(mc)
+//                        .Select(mc.MovieCastId)
+//                        .Where(mc.MovieId == Row.MovieId.Value)))
+//                {
+//                    new DeleteRequestHandler<Entities.MovieCastRow>().Process(this.UnitOfWork,
+//                        new DeleteRequest
+//                        {
+//                            EntityId = detailID
+//                        });
+//                }
+//            }
         }
 
         private class MyRetrieveHandler : RetrieveRequestHandler<MyRow>
         {
-            protected override void OnReturn()
-            {
-                base.OnReturn();
-                var mc = Entities.MovieCastRow.Fields;
-                Row.CastList = Connection.List<Entities.MovieCastRow>(q => q
-                    .SelectTableFields()
-                    .Select(mc.PersonFullname)
-                    .Where(mc.MovieId == Row.MovieId.Value));
-            }
+//            protected override void OnReturn()
+//            {
+//                base.OnReturn();
+//                var mc = Entities.MovieCastRow.Fields;
+//                Row.CastList = Connection.List<Entities.MovieCastRow>(q => q
+//                    .SelectTableFields()
+//                    .Select(mc.PersonFullname)
+//                    .Where(mc.MovieId == Row.MovieId.Value));
+//            }
         }
         private class MyListHandler : ListRequestHandler<MyRow> { }
     }

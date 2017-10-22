@@ -1,13 +1,9 @@
 ﻿
 namespace BowenSerene.Default.Columns
 {
-    using Serenity;
     using Serenity.ComponentModel;
-    using Serenity.Data;
     using System;
     using System.ComponentModel;
-    using System.Collections.Generic;
-    using System.IO;
 
     [ColumnsScript("Default.Person")]
     [BasedOnRow(typeof(Entities.PersonRow))]

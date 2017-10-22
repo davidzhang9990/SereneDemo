@@ -8826,8 +8826,12 @@ var BowenSerene;
         var PersonDialog = (function (_super) {
             __extends(PersonDialog, _super);
             function PersonDialog() {
-                var _this = _super !== null && _super.apply(this, arguments) || this;
+                var _this = _super.call(this) || this;
                 _this.form = new Default.PersonForm(_this.idPrefix);
+                _this.moviesGrid = new Default.PersonMovieGrid(_this.byId("MoviesGrid"));
+                _this.tabs.on('tabsactivate', function (e, i) {
+                    _this.arrange();
+                });
                 return _this;
             }
             PersonDialog.prototype.getFormKey = function () { return Default.PersonForm.formKey; };
@@ -8835,6 +8839,10 @@ var BowenSerene;
             PersonDialog.prototype.getLocalTextPrefix = function () { return Default.PersonRow.localTextPrefix; };
             PersonDialog.prototype.getNameProperty = function () { return Default.PersonRow.nameProperty; };
             PersonDialog.prototype.getService = function () { return Default.PersonService.baseUrl; };
+            PersonDialog.prototype.afterLoadEntity = function () {
+                _super.prototype.afterLoadEntity.call(this);
+                this.moviesGrid.personID = this.entityId;
+            };
             return PersonDialog;
         }(Serenity.EntityDialog));
         PersonDialog = __decorate([
@@ -8864,6 +8872,53 @@ var BowenSerene;
             Serenity.Decorators.registerClass()
         ], PersonGrid);
         Default.PersonGrid = PersonGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PersonMovieGrid = (function (_super) {
+            __extends(PersonMovieGrid, _super);
+            function PersonMovieGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            PersonMovieGrid.prototype.getColumnsKey = function () { return "Default.PersonMovie"; };
+            PersonMovieGrid.prototype.getIdProperty = function () { return Default.MovieCastRow.idProperty; };
+            PersonMovieGrid.prototype.getLocalTextPrefix = function () { return Default.MovieCastRow.localTextPrefix; };
+            PersonMovieGrid.prototype.getService = function () { return Default.MovieCastService.baseUrl; };
+            PersonMovieGrid.prototype.getButtons = function () {
+                return null;
+            };
+            PersonMovieGrid.prototype.getInitialTitle = function () {
+                return null;
+            };
+            PersonMovieGrid.prototype.usePager = function () {
+                return false;
+            };
+            PersonMovieGrid.prototype.getGridCanLoad = function () {
+                return this.personID != null;
+            };
+            Object.defineProperty(PersonMovieGrid.prototype, "personID", {
+                get: function () {
+                    return this._personID;
+                },
+                set: function (value) {
+                    if (this._personID != value) {
+                        this._personID = value;
+                        this.setEquality(Default.MovieCastRow.Fields.PersonId, value);
+                        this.refresh();
+                    }
+                },
+                enumerable: true,
+                configurable: true
+            });
+            return PersonMovieGrid;
+        }(Serenity.EntityGrid));
+        PersonMovieGrid = __decorate([
+            Serenity.Decorators.registerClass()
+        ], PersonMovieGrid);
+        Default.PersonMovieGrid = PersonMovieGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;

@@ -882,6 +882,8 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
+}
+declare namespace BowenSerene.Default {
     interface PersonRow {
         PersonId?: number;
         Firstname?: string;
@@ -4385,6 +4387,9 @@ declare namespace BowenSerene.Default {
         protected getNameProperty(): string;
         protected getService(): string;
         protected form: PersonForm;
+        private moviesGrid;
+        constructor();
+        protected afterLoadEntity(): void;
     }
 }
 declare namespace BowenSerene.Default {
@@ -4395,6 +4400,21 @@ declare namespace BowenSerene.Default {
         protected getLocalTextPrefix(): string;
         protected getService(): string;
         constructor(container: JQuery);
+    }
+}
+declare namespace BowenSerene.Default {
+    class PersonMovieGrid extends Serenity.EntityGrid<MovieCastRow, any> {
+        protected getColumnsKey(): string;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getService(): string;
+        constructor(container: JQuery);
+        protected getButtons(): any;
+        protected getInitialTitle(): any;
+        protected usePager(): boolean;
+        protected getGridCanLoad(): boolean;
+        private _personID;
+        personID: number;
     }
 }
 declare namespace BowenSerene.Meeting {
