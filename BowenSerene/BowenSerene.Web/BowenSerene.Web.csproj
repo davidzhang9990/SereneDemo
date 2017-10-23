@@ -2119,6 +2119,7 @@
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesListRequest.cs" />
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesEndpoint.cs" />
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesRepository.cs" />
+    <Compile Include="Modules\Texts.cs" />
     <Compile Include="Modules\Default\Movie\MovieKind.cs" />
     <Compile Include="Modules\Default\Person\Gender.cs" />
     <Compile Include="Modules\Default\Person\PersonMovieColumns.cs" />
@@ -2285,7 +2286,7 @@
     <Compile Include="Modules\Northwind\NorthwindTexts.cs" />
     <Compile Include="Modules\Organization\OrganizationPermissionKeys.cs" />
     <Compile Include="Modules\Organization\OrganizationNavigation.cs" />
-    <Compile Include="Modules\Texts.cs" />
+    <Compile Include="Modules\Common\AuditBehavior.cs" />
     <Compile Include="Modules\Membership\Account\AccountPage.cs" />
     <Compile Include="Modules\Administration\User\Authentication\AuthorizationService.cs" />
     <Compile Include="Modules\Administration\User\Authentication\PermissionService.cs" />

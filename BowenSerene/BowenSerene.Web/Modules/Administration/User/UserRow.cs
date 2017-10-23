@@ -7,18 +7,27 @@ namespace BowenSerene.Administration.Entities
     using Serenity.Data.Mapping;
     using System;
     using System.ComponentModel;
+    using Modules.Common.BaseClass;
 
     [ConnectionKey("Default"), TableName("Users"), DisplayName("Users"), InstanceName("User"), TwoLevelCached]
     [ReadPermission(PermissionKeys.Security)]
     [ModifyPermission(PermissionKeys.Security)]
     [LookupScript("Administration.User", Permission = PermissionKeys.Security)]
-    public sealed class UserRow : LoggingRow, IIdRow, INameRow, IIsActiveRow
+    public sealed class UserRow : LoggingRow, IIdRow, INameRow, IIsActiveRow, IAuditLog
     {
         [DisplayName("User Id"), Identity]
         public Int32? UserId
         {
             get { return Fields.UserId[this]; }
             set { Fields.UserId[this] = value; }
+        }
+
+        [NotNull, Insertable(false), Updatable(false), IgnoreAuditLog]
+        [ForeignKey("[dbo].[Users]", "Id"), LeftJoin("jCreatedByUserDetails"), TextualField("CreatedByUserName")]
+        public Int32? InsertUserId
+        {
+            get { return Fields.InsertUserId[this]; }
+            set { Fields.InsertUserId[this] = value; }
         }
 
         [DisplayName("Username"), Size(100), NotNull, QuickSearch, LookupInclude]

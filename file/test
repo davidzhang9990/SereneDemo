@@ -41,4 +41,7 @@ IfDatabase("SqlServer", "SqlServer2000", "SqlServerCe")
 IfDatabase("SqlServer", "SqlServer2000", "SqlServerCe")
 .Delete.Column("GenreId").FromTable("Movie");
 
+#增加操作日志
+https://github.com/volkanceylan/Serenity/wiki/Audit-Log-for-Insert-Update-and-Delete-using-Single-Table
+
 PAGE 214 多租户设置角色管理页面
