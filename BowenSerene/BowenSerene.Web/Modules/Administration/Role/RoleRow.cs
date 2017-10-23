@@ -6,18 +6,27 @@ namespace BowenSerene.Administration.Entities
     using Serenity.Data.Mapping;
     using System;
     using System.ComponentModel;
+    using Modules.Common.BaseClass;
 
     [ConnectionKey("Default"), DisplayName("Roles"), InstanceName("Role"), TwoLevelCached]
     [ReadPermission(PermissionKeys.Security)]
     [ModifyPermission(PermissionKeys.Security)]
     [LookupScript("Administration.Role")]
-    public sealed class RoleRow : Row, IIdRow, INameRow
+    public sealed class RoleRow : LoggingRow, IIdRow, INameRow, IAuditLog
     {
         [DisplayName("Role Id"), Identity, ForeignKey("Roles", "RoleId"), LeftJoin("jRole")]
         public Int32? RoleId
         {
             get { return Fields.RoleId[this]; }
             set { Fields.RoleId[this] = value; }
+        }
+
+        [NotNull, Insertable(false), Updatable(false), IgnoreAuditLog]
+        [ForeignKey("[dbo].[Users]", "Id"), LeftJoin("jCreatedByUserDetails"), TextualField("CreatedByUserName")]
+        public Int32? InsertUserId
+        {
+            get { return Fields.InsertUserId[this]; }
+            set { Fields.InsertUserId[this] = value; }
         }
 
         [DisplayName("Role Name"), Size(100), NotNull, QuickSearch]
@@ -45,7 +54,7 @@ namespace BowenSerene.Administration.Entities
         {
         }
 
-        public class RowFields : RowFieldsBase
+        public class RowFields : LoggingRowFields
         {
             public Int32Field RoleId;
             public StringField RoleName;

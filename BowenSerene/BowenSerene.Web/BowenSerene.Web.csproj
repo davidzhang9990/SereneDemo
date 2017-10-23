@@ -2059,6 +2059,7 @@
     <Compile Include="Imports\ClientTypes\Default.MovieCastEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171023_085300_UserRoleUpdateDate.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171022_194700_MultiTenant.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171022_192100_PersonMovieImages.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_221100_PersonAndMovieCast.cs" />

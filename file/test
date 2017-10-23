@@ -44,4 +44,8 @@ IfDatabase("SqlServer", "SqlServer2000", "SqlServerCe")
 #增加操作日志
 https://github.com/volkanceylan/Serenity/wiki/Audit-Log-for-Insert-Update-and-Delete-using-Single-Table
 
+#操作功能DEMO
+https://github.com/volkanceylan/Serenity/wiki
+
+
 PAGE 214 多租户设置角色管理页面
