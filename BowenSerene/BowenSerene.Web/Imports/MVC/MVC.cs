@@ -309,6 +309,16 @@ namespace MVC
                 public const string PersonIndex = "~/Modules/Default/Person/PersonIndex.cshtml";
             }
 
+            public static class PurchaseOrder
+            {
+                public const string PurchaseOrderIndex = "~/Modules/Default/PurchaseOrder/PurchaseOrderIndex.cshtml";
+            }
+
+            public static class PurchaseOrderDetail
+            {
+                public const string PurchaseOrderDetailIndex = "~/Modules/Default/PurchaseOrderDetail/PurchaseOrderDetailIndex.cshtml";
+            }
+
             public static class Tenants
             {
                 public const string TenantsIndex = "~/Modules/Default/Tenants/TenantsIndex.cshtml";
