@@ -110,6 +110,10 @@ declare namespace BowenSerene.Administration {
     interface RoleRow {
         RoleId?: number;
         RoleName?: string;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
     }
     namespace RoleRow {
         const idProperty = "RoleId";
@@ -120,6 +124,10 @@ declare namespace BowenSerene.Administration {
         namespace Fields {
             const RoleId: string;
             const RoleName: string;
+            const InsertUserId: string;
+            const InsertDate: string;
+            const UpdateUserId: string;
+            const UpdateDate: string;
         }
     }
 }
@@ -4393,7 +4401,12 @@ declare namespace BowenSerene.Default {
         protected getIdProperty(): string;
         protected getLocalTextPrefix(): string;
         protected getService(): string;
+        protected createSlickGrid(): Slick.Grid;
         constructor(container: JQuery);
+        protected createPDFButton(): void;
+        protected addDropdownOption(element: JQuery, id: string, title: string, image?: string): void;
+        protected createDropdownList(element: JQuery, id: string, classUL: string): void;
+        protected createFirstButton(element: JQuery, title: string, id: string): void;
     }
 }
 declare namespace BowenSerene.Default {

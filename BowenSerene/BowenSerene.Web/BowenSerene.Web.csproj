@@ -512,6 +512,7 @@
     <Content Include="Content\serenity\serenity.css" />
     <Content Include="Content\simple-line-icons.css" />
     <Content Include="Content\site\images\accordion-arrows.png" />
+    <Content Include="Scripts\SlickGrid\Plugins\slick.autocolumnsize.js" />
     <Content Include="wkhtmltopdf-license.txt" />
     <EmbeddedResource Include="Migrations\NorthwindDB\NorthwindDBScript_Sqlite.sql" />
     <Content Include="Content\slick-default-theme.css" />
@@ -2036,6 +2037,7 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.TenantsForm.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Scripts\typings\SlickGrid\slick.autocolumnsize.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

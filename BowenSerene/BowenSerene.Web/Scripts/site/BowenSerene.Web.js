@@ -153,7 +153,11 @@ var BowenSerene;
             })(Fields = RoleRow.Fields || (RoleRow.Fields = {}));
             [
                 'RoleId',
-                'RoleName'
+                'RoleName',
+                'InsertUserId',
+                'InsertDate',
+                'UpdateUserId',
+                'UpdateDate'
             ].forEach(function (x) { return Fields[x] = x; });
         })(RoleRow = Administration.RoleRow || (Administration.RoleRow = {}));
     })(Administration = BowenSerene.Administration || (BowenSerene.Administration = {}));
@@ -8735,13 +8739,64 @@ var BowenSerene;
         var GenreGrid = (function (_super) {
             __extends(GenreGrid, _super);
             function GenreGrid(container) {
-                return _super.call(this, container) || this;
+                var _this = _super.call(this, container) || this;
+                _this.createPDFButton();
+                return _this;
             }
             GenreGrid.prototype.getColumnsKey = function () { return 'Default.Genre'; };
             GenreGrid.prototype.getDialogType = function () { return Default.GenreDialog; };
             GenreGrid.prototype.getIdProperty = function () { return Default.GenreRow.idProperty; };
             GenreGrid.prototype.getLocalTextPrefix = function () { return Default.GenreRow.localTextPrefix; };
             GenreGrid.prototype.getService = function () { return Default.GenreService.baseUrl; };
+            GenreGrid.prototype.createSlickGrid = function () {
+                var grid = _super.prototype.createSlickGrid.call(this);
+                var autoSize = new Slick.AutoColumnSize(true); // *** If you want to make it autoresize when grid is loaded, use: new Slick.AutoColumnSize(true);
+                grid.registerPlugin(autoSize);
+                return grid;
+            };
+            GenreGrid.prototype.createPDFButton = function () {
+                var _this = this;
+                $(".tool-buttons").children("div").children("div").append("<div id='btnPDFGroup' class='btn-group'></div>");
+                this.createFirstButton($(".btn-group"), "PDF", "PDFview");
+                this.createDropdownList($(".btn-group"), "dropdownlistID", "dropdownMenu");
+                this.addDropdownOption($(".dropdownMenu"), "PDFprint", "Print PDF", "printer.png");
+                this.addDropdownOption($(".dropdownMenu"), "PDFfile", "Download PDF", "Download.png");
+                $("#PDFview").click(function (e) {
+                    BowenSerene.Common.PdfExportHelper.exportToPdf({
+                        grid: _this,
+                        onViewSubmit: function () { return _this.onViewSubmit(); },
+                        output: "newwindow"
+                    });
+                });
+                $("#PDFprint").click(function (e) {
+                    BowenSerene.Common.PdfExportHelper.exportToPdf({
+                        grid: _this,
+                        onViewSubmit: function () { return _this.onViewSubmit(); },
+                        output: "newwindow",
+                        autoPrint: true
+                    });
+                });
+                $("#PDFfile").click(function (e) {
+                    BowenSerene.Common.PdfExportHelper.exportToPdf({
+                        grid: _this,
+                        onViewSubmit: function () { return _this.onViewSubmit(); },
+                        output: "file"
+                    });
+                });
+            };
+            GenreGrid.prototype.addDropdownOption = function (element, id, title, image) {
+                if (image === undefined)
+                    element.append("<li id='" + id + "'><a haref='#'><span>" + title + "</span></a></li>");
+                else
+                    element.append("<li id='" + id + "'><a haref='#'><span><img src='..//Content//serenity//images//" + image + "'>" + title + "</span></a></li>");
+            };
+            GenreGrid.prototype.createDropdownList = function (element, id, classUL) {
+                element.append("<button id='" + id + "' type='button' class='btn btn-sm dropdown-toggle tool-button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><span class='caret'></span><span class='sr-only'>Toggle Dropdown</span></button>");
+                element.append("<ul class='dropdown-menu " + classUL + "'>");
+            };
+            GenreGrid.prototype.createFirstButton = function (element, title, id) {
+                element.append("<button type='button' id='" + id + "' class='btn btn-sm tool-button'><span class='button-inner'></span>" + title + "</button>");
+            };
             return GenreGrid;
         }(Serenity.EntityGrid));
         GenreGrid = __decorate([
