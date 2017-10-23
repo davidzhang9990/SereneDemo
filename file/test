@@ -49,3 +49,23 @@ https://github.com/volkanceylan/Serenity/wiki
 
 
 PAGE 214 多租户设置角色管理页面
+
+#P274 增加行内删除按钮
+
+#487 在服务端控制加载，显示隐藏列
+
+#图标
+http://thesabbir.github.io/simple-line-icons/
+https://fortawesome.github.io/Font-Awesome/icons/
+
+#快速添加按钮 InplaceAdd = true
+
+#设置窗体的显示类型 xxxDialog.ts
+@Serenity.Decorators.panel()  #table
+@Serenity.Decorators.responsive() #dialog
+
+#表单页分 tab
+xxxForm.cs 属性前 加   
+[Tab("General")]
+[Category("Order")]
+等属性
