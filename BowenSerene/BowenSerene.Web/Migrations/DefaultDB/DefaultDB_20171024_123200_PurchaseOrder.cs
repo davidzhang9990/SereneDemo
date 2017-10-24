@@ -18,7 +18,7 @@ namespace BowenSerene.Migrations.DefaultDB
                 .ForeignKey("FK_PurchaseOrder_SupplierId", "Suppliers", "SupplierId")
                 .WithColumn("LetterNumber").AsString(100).Nullable()
                  .WithColumn("AgentNumber").AsString(100).Nullable()
-                  .WithColumn("PayWay").AsInt16().NotNullable()
+                  .WithColumn("PayWay").AsInt16().Nullable()
                   .WithColumn("Behalf").AsString(100).Nullable()
                    .WithColumn("BillLadingNumber").AsString(100).Nullable()
                     .WithColumn("BillLadingDate").AsDateTime().Nullable()

@@ -9,22 +9,16 @@ namespace BowenSerene.Default.Columns
     using System.Collections.Generic;
     using System.IO;
 
-    [ColumnsScript("Default.Suppliers")]
-    [BasedOnRow(typeof(Entities.SuppliersRow))]
-    public class SuppliersColumns
+    [ColumnsScript("Default.PurchaseOrder")]
+    [BasedOnRow(typeof(Entities.PurchaseOrderRow))]
+    public class PurchaseOrderColumns
     {
-       
-        public String Name { get; set; }
-
         [EditLink]
         public String Number { get; set; }
-
-        public String Suffix { get; set; }
-        public String Country { get; set; }
-        public String Place { get; set; }
-
-        public Int16 IsActive { get; set; }
-
+        public Int16 Type { get; set; }
+        public DateTime PurchaseDate { get; set; }
+        public String SupplierName { get; set; }
+        public Int16 Status { get; set; }
         public String Notes { get; set; }
     }
 }

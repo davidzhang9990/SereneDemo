@@ -1168,6 +1168,21 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductsColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchasePayWay.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseShareType.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseType.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.RowActive.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -2071,6 +2086,30 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.SuppliersForm.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\PurchaseOrder\PurchaseOrderIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\PurchaseOrder\PurchaseOrderDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\PurchaseOrder\PurchaseOrderGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -2158,6 +2197,7 @@
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesEndpoint.cs" />
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesRepository.cs" />
     <Compile Include="Modules\Common\RowActive.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseEnum.cs" />
     <Compile Include="Modules\Texts.cs" />
     <Compile Include="Modules\Default\Movie\MovieKind.cs" />
     <Compile Include="Modules\Default\Person\Gender.cs" />
@@ -2531,6 +2571,18 @@
     <Compile Include="Modules\Default\Suppliers\SuppliersPage.cs" />
     <Compile Include="Modules\Default\Suppliers\SuppliersColumns.cs" />
     <Compile Include="Modules\Default\Suppliers\SuppliersForm.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderRow.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderRepository.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderEndpoint.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderPage.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderColumns.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderForm.cs" />
+    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailRow.cs" />
+    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailRepository.cs" />
+    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailEndpoint.cs" />
+    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailPage.cs" />
+    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailColumns.cs" />
+    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

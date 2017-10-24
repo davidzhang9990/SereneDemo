@@ -15,6 +15,7 @@ namespace BowenSerene.Default.Entities
     [DisplayName("供应商列表"), InstanceName("供应商"), TwoLevelCached]
     [ReadPermission("Administration:General")]
     [ModifyPermission("Administration:General")]
+    [LookupScript("Default.Suppliers")]
     public sealed class SuppliersRow : LoggingRow, IIdRow, INameRow, IIsActiveRow
     {
         [DisplayName("Supplier Id"), PrimaryKey]
@@ -24,18 +25,18 @@ namespace BowenSerene.Default.Entities
             set { Fields.SupplierId[this] = value; }
         }
 
-        [DisplayName("编号"), Size(100), NotNull, QuickSearch]
-        public String Number
-        {
-            get { return Fields.Number[this]; }
-            set { Fields.Number[this] = value; }
-        }
-
         [DisplayName("名称"), Size(100), NotNull, QuickSearch]
         public String Name
         {
             get { return Fields.Name[this]; }
             set { Fields.Name[this] = value; }
+        }
+
+        [DisplayName("编号"), Size(100), NotNull, QuickSearch]
+        public String Number
+        {
+            get { return Fields.Number[this]; }
+            set { Fields.Number[this] = value; }
         }
 
         [DisplayName("地区"), Size(100), NotNull]

@@ -7,17 +7,23 @@
         Suffix?: string;
         Place?: string;
         Notes?: string;
-        IsActive?: number;
-        InsertDate?: string;
+        IsActive?: RowActive;
         InsertUserId?: number;
-        UpdateDate?: string;
+        InsertDate?: string;
         UpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace SuppliersRow {
         export const idProperty = 'SupplierId';
+        export const isActiveProperty = 'IsActive';
         export const nameProperty = 'Number';
         export const localTextPrefix = 'Default.Suppliers';
+        export const lookupKey = 'Default.Suppliers';
+
+        export function getLookup(): Q.Lookup<SuppliersRow> {
+            return Q.getLookup<SuppliersRow>('Default.Suppliers');
+        }
 
         export namespace Fields {
             export declare const SupplierId: string;
@@ -28,10 +34,10 @@
             export declare const Place: string;
             export declare const Notes: string;
             export declare const IsActive: string;
-            export declare const InsertDate: string;
             export declare const InsertUserId: string;
-            export declare const UpdateDate: string;
+            export declare const InsertDate: string;
             export declare const UpdateUserId: string;
+            export declare const UpdateDate: string;
         }
 
         [
@@ -43,10 +49,10 @@
             'Place', 
             'Notes', 
             'IsActive', 
-            'InsertDate', 
             'InsertUserId', 
-            'UpdateDate', 
-            'UpdateUserId'
+            'InsertDate', 
+            'UpdateUserId', 
+            'UpdateDate'
         ].forEach(x => (<any>Fields)[x] = x);
     }
 }

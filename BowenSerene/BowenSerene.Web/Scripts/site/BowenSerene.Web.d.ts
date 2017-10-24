@@ -1021,6 +1021,332 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
+}
+declare namespace BowenSerene.Default {
+}
+declare namespace BowenSerene.Default {
+    class PurchaseOrderDetailForm extends Serenity.PrefixedContext {
+        static formKey: string;
+    }
+    interface PurchaseOrderDetailForm {
+        ParentId: Serenity.StringEditor;
+        Container: Serenity.StringEditor;
+        BlockNumber: Serenity.StringEditor;
+        ProductId: Serenity.StringEditor;
+        Quantity: Serenity.IntegerEditor;
+        Length: Serenity.IntegerEditor;
+        Width: Serenity.IntegerEditor;
+        Height: Serenity.IntegerEditor;
+        Thick: Serenity.DecimalEditor;
+        Size: Serenity.DecimalEditor;
+        Weight: Serenity.DecimalEditor;
+        Volume: Serenity.DecimalEditor;
+        AutoQuantity: Serenity.IntegerEditor;
+        AutoLength: Serenity.IntegerEditor;
+        AutoWidth: Serenity.IntegerEditor;
+        AutoHeight: Serenity.IntegerEditor;
+        AutoSize: Serenity.DecimalEditor;
+        AutoWeight: Serenity.DecimalEditor;
+        AutoVolume: Serenity.DecimalEditor;
+        IsStock: Serenity.IntegerEditor;
+        StockDate: Serenity.DateEditor;
+        IsAssign: Serenity.IntegerEditor;
+        AssignDate: Serenity.DateEditor;
+        IsAssignOrder: Serenity.IntegerEditor;
+        AssignOrderDate: Serenity.DateEditor;
+        IsFinishType: Serenity.IntegerEditor;
+        Notes: Serenity.StringEditor;
+        SortCode: Serenity.IntegerEditor;
+        InsertDate: Serenity.DateEditor;
+        InsertUserId: Serenity.IntegerEditor;
+        UpdateDate: Serenity.DateEditor;
+        UpdateUserId: Serenity.IntegerEditor;
+    }
+}
+declare namespace BowenSerene.Default {
+    interface PurchaseOrderDetailRow {
+        PurchaseOrderDetailId?: string;
+        ParentId?: string;
+        Container?: string;
+        BlockNumber?: string;
+        ProductId?: string;
+        Quantity?: number;
+        Length?: number;
+        Width?: number;
+        Height?: number;
+        Thick?: number;
+        Size?: number;
+        Weight?: number;
+        Volume?: number;
+        AutoQuantity?: number;
+        AutoLength?: number;
+        AutoWidth?: number;
+        AutoHeight?: number;
+        AutoSize?: number;
+        AutoWeight?: number;
+        AutoVolume?: number;
+        IsStock?: number;
+        StockDate?: string;
+        IsAssign?: number;
+        AssignDate?: string;
+        IsAssignOrder?: number;
+        AssignOrderDate?: string;
+        IsFinishType?: number;
+        Notes?: string;
+        SortCode?: number;
+        InsertDate?: string;
+        InsertUserId?: number;
+        UpdateDate?: string;
+        UpdateUserId?: number;
+        ParentNumber?: string;
+        ParentType?: number;
+        ParentShareType?: number;
+        ParentPurchaseDate?: string;
+        ParentSupplierId?: string;
+        ParentLetterNumber?: string;
+        ParentAgentNumber?: string;
+        ParentPayWay?: number;
+        ParentBehalf?: string;
+        ParentBillLadingNumber?: string;
+        ParentBillLadingDate?: string;
+        ParentArrivalDate?: string;
+        ParentCompanyShip?: string;
+        ParentPortDepart?: string;
+        ParentPortDest?: string;
+        ParentPriceTerms?: string;
+        ParentAttachment?: string;
+        ParentNotes?: string;
+        ParentStatus?: number;
+        ParentInsertDate?: string;
+        ParentInsertUserId?: number;
+        ParentUpdateDate?: string;
+        ParentUpdateUserId?: number;
+        ProductNumber?: string;
+        ProductName?: string;
+        ProductDensity?: number;
+        ProductPlace?: string;
+        ProductAttach?: string;
+        ProductIsActive?: number;
+        ProductInsertDate?: string;
+        ProductInsertUserId?: number;
+        ProductUpdateDate?: string;
+        ProductUpdateUserId?: number;
+    }
+    namespace PurchaseOrderDetailRow {
+        const idProperty = "PurchaseOrderDetailId";
+        const nameProperty = "Container";
+        const localTextPrefix = "Default.PurchaseOrderDetail";
+        namespace Fields {
+            const PurchaseOrderDetailId: string;
+            const ParentId: string;
+            const Container: string;
+            const BlockNumber: string;
+            const ProductId: string;
+            const Quantity: string;
+            const Length: string;
+            const Width: string;
+            const Height: string;
+            const Thick: string;
+            const Size: string;
+            const Weight: string;
+            const Volume: string;
+            const AutoQuantity: string;
+            const AutoLength: string;
+            const AutoWidth: string;
+            const AutoHeight: string;
+            const AutoSize: string;
+            const AutoWeight: string;
+            const AutoVolume: string;
+            const IsStock: string;
+            const StockDate: string;
+            const IsAssign: string;
+            const AssignDate: string;
+            const IsAssignOrder: string;
+            const AssignOrderDate: string;
+            const IsFinishType: string;
+            const Notes: string;
+            const SortCode: string;
+            const InsertDate: string;
+            const InsertUserId: string;
+            const UpdateDate: string;
+            const UpdateUserId: string;
+            const ParentNumber: string;
+            const ParentType: string;
+            const ParentShareType: string;
+            const ParentPurchaseDate: string;
+            const ParentSupplierId: string;
+            const ParentLetterNumber: string;
+            const ParentAgentNumber: string;
+            const ParentPayWay: string;
+            const ParentBehalf: string;
+            const ParentBillLadingNumber: string;
+            const ParentBillLadingDate: string;
+            const ParentArrivalDate: string;
+            const ParentCompanyShip: string;
+            const ParentPortDepart: string;
+            const ParentPortDest: string;
+            const ParentPriceTerms: string;
+            const ParentAttachment: string;
+            const ParentNotes: string;
+            const ParentStatus: string;
+            const ParentInsertDate: string;
+            const ParentInsertUserId: string;
+            const ParentUpdateDate: string;
+            const ParentUpdateUserId: string;
+            const ProductNumber: string;
+            const ProductName: string;
+            const ProductDensity: string;
+            const ProductPlace: string;
+            const ProductAttach: string;
+            const ProductIsActive: string;
+            const ProductInsertDate: string;
+            const ProductInsertUserId: string;
+            const ProductUpdateDate: string;
+            const ProductUpdateUserId: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    namespace PurchaseOrderDetailService {
+        const baseUrl = "Default/PurchaseOrderDetail";
+        function Create(request: Serenity.SaveRequest<PurchaseOrderDetailRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Update(request: Serenity.SaveRequest<PurchaseOrderDetailRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<PurchaseOrderDetailRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<PurchaseOrderDetailRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        namespace Methods {
+            const Create: string;
+            const Update: string;
+            const Delete: string;
+            const Retrieve: string;
+            const List: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    class PurchaseOrderForm extends Serenity.PrefixedContext {
+        static formKey: string;
+    }
+    interface PurchaseOrderForm {
+        Number: Serenity.StringEditor;
+        Type: Serenity.EnumEditor;
+        ShareType: Serenity.EnumEditor;
+        PurchaseDate: Serenity.DateEditor;
+        SupplierId: Serenity.LookupEditor;
+        PayWay: Serenity.EnumEditor;
+        Notes: Serenity.TextAreaEditor;
+        LetterNumber: Serenity.StringEditor;
+        AgentNumber: Serenity.StringEditor;
+        Behalf: Serenity.StringEditor;
+        BillLadingNumber: Serenity.StringEditor;
+        BillLadingDate: Serenity.DateEditor;
+        ArrivalDate: Serenity.DateEditor;
+        CompanyShip: Serenity.StringEditor;
+        PortDepart: Serenity.StringEditor;
+        PortDest: Serenity.StringEditor;
+        PriceTerms: Serenity.StringEditor;
+        Attachment: Serenity.StringEditor;
+    }
+}
+declare namespace BowenSerene.Default {
+    interface PurchaseOrderRow {
+        PurchaseOrderId?: string;
+        Number?: string;
+        Type?: PurchaseType;
+        ShareType?: PurchaseShareType;
+        PurchaseDate?: string;
+        SupplierId?: string;
+        LetterNumber?: string;
+        AgentNumber?: string;
+        PayWay?: PurchasePayWay;
+        Behalf?: string;
+        BillLadingNumber?: string;
+        BillLadingDate?: string;
+        ArrivalDate?: string;
+        CompanyShip?: string;
+        PortDepart?: string;
+        PortDest?: string;
+        PriceTerms?: string;
+        Attachment?: string;
+        Notes?: string;
+        Status?: number;
+        SupplierName?: string;
+        SupplierSuffix?: string;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
+    }
+    namespace PurchaseOrderRow {
+        const idProperty = "PurchaseOrderId";
+        const nameProperty = "Number";
+        const localTextPrefix = "Default.PurchaseOrder";
+        namespace Fields {
+            const PurchaseOrderId: string;
+            const Number: string;
+            const Type: string;
+            const ShareType: string;
+            const PurchaseDate: string;
+            const SupplierId: string;
+            const LetterNumber: string;
+            const AgentNumber: string;
+            const PayWay: string;
+            const Behalf: string;
+            const BillLadingNumber: string;
+            const BillLadingDate: string;
+            const ArrivalDate: string;
+            const CompanyShip: string;
+            const PortDepart: string;
+            const PortDest: string;
+            const PriceTerms: string;
+            const Attachment: string;
+            const Notes: string;
+            const Status: string;
+            const SupplierName: string;
+            const SupplierSuffix: string;
+            const InsertUserId: string;
+            const InsertDate: string;
+            const UpdateUserId: string;
+            const UpdateDate: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    namespace PurchaseOrderService {
+        const baseUrl = "Default/PurchaseOrder";
+        function Create(request: Serenity.SaveRequest<PurchaseOrderRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Update(request: Serenity.SaveRequest<PurchaseOrderRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<PurchaseOrderRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<PurchaseOrderRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        namespace Methods {
+            const Create: string;
+            const Update: string;
+            const Delete: string;
+            const Retrieve: string;
+            const List: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    enum PurchasePayWay {
+        VolumeShare = 1,
+        WeightShare = 2,
+    }
+}
+declare namespace BowenSerene.Default {
+    enum PurchaseShareType {
+        VolumeShare = 1,
+        WeightShare = 2,
+    }
+}
+declare namespace BowenSerene.Default {
+    enum PurchaseType {
+        Stone = 0,
+        Slab = 1,
+    }
+}
+declare namespace BowenSerene.Default {
     enum RowActive {
         Locked = 0,
         Active = 1,
@@ -1035,15 +1361,11 @@ declare namespace BowenSerene.Default {
     interface SuppliersForm {
         Number: Serenity.StringEditor;
         Name: Serenity.StringEditor;
-        Country: Serenity.StringEditor;
         Suffix: Serenity.StringEditor;
+        Country: Serenity.StringEditor;
         Place: Serenity.StringEditor;
-        Notes: Serenity.StringEditor;
-        IsActive: Serenity.IntegerEditor;
-        InsertDate: Serenity.DateEditor;
-        InsertUserId: Serenity.IntegerEditor;
-        UpdateDate: Serenity.DateEditor;
-        UpdateUserId: Serenity.IntegerEditor;
+        IsActive: Serenity.EnumEditor;
+        Notes: Serenity.TextAreaEditor;
     }
 }
 declare namespace BowenSerene.Default {
@@ -1055,16 +1377,19 @@ declare namespace BowenSerene.Default {
         Suffix?: string;
         Place?: string;
         Notes?: string;
-        IsActive?: number;
-        InsertDate?: string;
+        IsActive?: RowActive;
         InsertUserId?: number;
-        UpdateDate?: string;
+        InsertDate?: string;
         UpdateUserId?: number;
+        UpdateDate?: string;
     }
     namespace SuppliersRow {
         const idProperty = "SupplierId";
+        const isActiveProperty = "IsActive";
         const nameProperty = "Number";
         const localTextPrefix = "Default.Suppliers";
+        const lookupKey = "Default.Suppliers";
+        function getLookup(): Q.Lookup<SuppliersRow>;
         namespace Fields {
             const SupplierId: string;
             const Number: string;
@@ -1074,10 +1399,10 @@ declare namespace BowenSerene.Default {
             const Place: string;
             const Notes: string;
             const IsActive: string;
-            const InsertDate: string;
             const InsertUserId: string;
-            const UpdateDate: string;
+            const InsertDate: string;
             const UpdateUserId: string;
+            const UpdateDate: string;
         }
     }
 }
@@ -4650,6 +4975,46 @@ declare namespace BowenSerene.Default {
     class ProductsGrid extends Serenity.EntityGrid<ProductsRow, any> {
         protected getColumnsKey(): string;
         protected getDialogType(): typeof ProductsDialog;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getService(): string;
+        constructor(container: JQuery);
+    }
+}
+declare namespace BowenSerene.Default {
+    class PurchaseOrderDialog extends Serenity.EntityDialog<PurchaseOrderRow, any> {
+        protected getFormKey(): string;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getNameProperty(): string;
+        protected getService(): string;
+        protected form: PurchaseOrderForm;
+    }
+}
+declare namespace BowenSerene.Default {
+    class PurchaseOrderGrid extends Serenity.EntityGrid<PurchaseOrderRow, any> {
+        protected getColumnsKey(): string;
+        protected getDialogType(): typeof PurchaseOrderDialog;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getService(): string;
+        constructor(container: JQuery);
+    }
+}
+declare namespace BowenSerene.Default {
+    class PurchaseOrderDetailDialog extends Serenity.EntityDialog<PurchaseOrderDetailRow, any> {
+        protected getFormKey(): string;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getNameProperty(): string;
+        protected getService(): string;
+        protected form: PurchaseOrderDetailForm;
+    }
+}
+declare namespace BowenSerene.Default {
+    class PurchaseOrderDetailGrid extends Serenity.EntityGrid<PurchaseOrderDetailRow, any> {
+        protected getColumnsKey(): string;
+        protected getDialogType(): typeof PurchaseOrderDetailDialog;
         protected getIdProperty(): string;
         protected getLocalTextPrefix(): string;
         protected getService(): string;

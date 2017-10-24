@@ -1096,6 +1096,250 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
+        var PurchaseOrderDetailForm = (function (_super) {
+            __extends(PurchaseOrderDetailForm, _super);
+            function PurchaseOrderDetailForm() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            return PurchaseOrderDetailForm;
+        }(Serenity.PrefixedContext));
+        PurchaseOrderDetailForm.formKey = 'Default.PurchaseOrderDetail';
+        Default.PurchaseOrderDetailForm = PurchaseOrderDetailForm;
+        [['ParentId', function () { return Serenity.StringEditor; }], ['Container', function () { return Serenity.StringEditor; }], ['BlockNumber', function () { return Serenity.StringEditor; }], ['ProductId', function () { return Serenity.StringEditor; }], ['Quantity', function () { return Serenity.IntegerEditor; }], ['Length', function () { return Serenity.IntegerEditor; }], ['Width', function () { return Serenity.IntegerEditor; }], ['Height', function () { return Serenity.IntegerEditor; }], ['Thick', function () { return Serenity.DecimalEditor; }], ['Size', function () { return Serenity.DecimalEditor; }], ['Weight', function () { return Serenity.DecimalEditor; }], ['Volume', function () { return Serenity.DecimalEditor; }], ['AutoQuantity', function () { return Serenity.IntegerEditor; }], ['AutoLength', function () { return Serenity.IntegerEditor; }], ['AutoWidth', function () { return Serenity.IntegerEditor; }], ['AutoHeight', function () { return Serenity.IntegerEditor; }], ['AutoSize', function () { return Serenity.DecimalEditor; }], ['AutoWeight', function () { return Serenity.DecimalEditor; }], ['AutoVolume', function () { return Serenity.DecimalEditor; }], ['IsStock', function () { return Serenity.IntegerEditor; }], ['StockDate', function () { return Serenity.DateEditor; }], ['IsAssign', function () { return Serenity.IntegerEditor; }], ['AssignDate', function () { return Serenity.DateEditor; }], ['IsAssignOrder', function () { return Serenity.IntegerEditor; }], ['AssignOrderDate', function () { return Serenity.DateEditor; }], ['IsFinishType', function () { return Serenity.IntegerEditor; }], ['Notes', function () { return Serenity.StringEditor; }], ['SortCode', function () { return Serenity.IntegerEditor; }], ['InsertDate', function () { return Serenity.DateEditor; }], ['InsertUserId', function () { return Serenity.IntegerEditor; }], ['UpdateDate', function () { return Serenity.DateEditor; }], ['UpdateUserId', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderDetailForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseOrderDetailRow;
+        (function (PurchaseOrderDetailRow) {
+            PurchaseOrderDetailRow.idProperty = 'PurchaseOrderDetailId';
+            PurchaseOrderDetailRow.nameProperty = 'Container';
+            PurchaseOrderDetailRow.localTextPrefix = 'Default.PurchaseOrderDetail';
+            var Fields;
+            (function (Fields) {
+            })(Fields = PurchaseOrderDetailRow.Fields || (PurchaseOrderDetailRow.Fields = {}));
+            [
+                'PurchaseOrderDetailId',
+                'ParentId',
+                'Container',
+                'BlockNumber',
+                'ProductId',
+                'Quantity',
+                'Length',
+                'Width',
+                'Height',
+                'Thick',
+                'Size',
+                'Weight',
+                'Volume',
+                'AutoQuantity',
+                'AutoLength',
+                'AutoWidth',
+                'AutoHeight',
+                'AutoSize',
+                'AutoWeight',
+                'AutoVolume',
+                'IsStock',
+                'StockDate',
+                'IsAssign',
+                'AssignDate',
+                'IsAssignOrder',
+                'AssignOrderDate',
+                'IsFinishType',
+                'Notes',
+                'SortCode',
+                'InsertDate',
+                'InsertUserId',
+                'UpdateDate',
+                'UpdateUserId',
+                'ParentNumber',
+                'ParentType',
+                'ParentShareType',
+                'ParentPurchaseDate',
+                'ParentSupplierId',
+                'ParentLetterNumber',
+                'ParentAgentNumber',
+                'ParentPayWay',
+                'ParentBehalf',
+                'ParentBillLadingNumber',
+                'ParentBillLadingDate',
+                'ParentArrivalDate',
+                'ParentCompanyShip',
+                'ParentPortDepart',
+                'ParentPortDest',
+                'ParentPriceTerms',
+                'ParentAttachment',
+                'ParentNotes',
+                'ParentStatus',
+                'ParentInsertDate',
+                'ParentInsertUserId',
+                'ParentUpdateDate',
+                'ParentUpdateUserId',
+                'ProductNumber',
+                'ProductName',
+                'ProductDensity',
+                'ProductPlace',
+                'ProductAttach',
+                'ProductIsActive',
+                'ProductInsertDate',
+                'ProductInsertUserId',
+                'ProductUpdateDate',
+                'ProductUpdateUserId'
+            ].forEach(function (x) { return Fields[x] = x; });
+        })(PurchaseOrderDetailRow = Default.PurchaseOrderDetailRow || (Default.PurchaseOrderDetailRow = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseOrderDetailService;
+        (function (PurchaseOrderDetailService) {
+            PurchaseOrderDetailService.baseUrl = 'Default/PurchaseOrderDetail';
+            var Methods;
+            (function (Methods) {
+            })(Methods = PurchaseOrderDetailService.Methods || (PurchaseOrderDetailService.Methods = {}));
+            [
+                'Create',
+                'Update',
+                'Delete',
+                'Retrieve',
+                'List'
+            ].forEach(function (x) {
+                PurchaseOrderDetailService[x] = function (r, s, o) {
+                    return Q.serviceRequest(PurchaseOrderDetailService.baseUrl + '/' + x, r, s, o);
+                };
+                Methods[x] = PurchaseOrderDetailService.baseUrl + '/' + x;
+            });
+        })(PurchaseOrderDetailService = Default.PurchaseOrderDetailService || (Default.PurchaseOrderDetailService = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseOrderForm = (function (_super) {
+            __extends(PurchaseOrderForm, _super);
+            function PurchaseOrderForm() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            return PurchaseOrderForm;
+        }(Serenity.PrefixedContext));
+        PurchaseOrderForm.formKey = 'Default.PurchaseOrder';
+        Default.PurchaseOrderForm = PurchaseOrderForm;
+        [['Number', function () { return Serenity.StringEditor; }], ['Type', function () { return Serenity.EnumEditor; }], ['ShareType', function () { return Serenity.EnumEditor; }], ['PurchaseDate', function () { return Serenity.DateEditor; }], ['SupplierId', function () { return Serenity.LookupEditor; }], ['PayWay', function () { return Serenity.EnumEditor; }], ['Notes', function () { return Serenity.TextAreaEditor; }], ['LetterNumber', function () { return Serenity.StringEditor; }], ['AgentNumber', function () { return Serenity.StringEditor; }], ['Behalf', function () { return Serenity.StringEditor; }], ['BillLadingNumber', function () { return Serenity.StringEditor; }], ['BillLadingDate', function () { return Serenity.DateEditor; }], ['ArrivalDate', function () { return Serenity.DateEditor; }], ['CompanyShip', function () { return Serenity.StringEditor; }], ['PortDepart', function () { return Serenity.StringEditor; }], ['PortDest', function () { return Serenity.StringEditor; }], ['PriceTerms', function () { return Serenity.StringEditor; }], ['Attachment', function () { return Serenity.StringEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseOrderRow;
+        (function (PurchaseOrderRow) {
+            PurchaseOrderRow.idProperty = 'PurchaseOrderId';
+            PurchaseOrderRow.nameProperty = 'Number';
+            PurchaseOrderRow.localTextPrefix = 'Default.PurchaseOrder';
+            var Fields;
+            (function (Fields) {
+            })(Fields = PurchaseOrderRow.Fields || (PurchaseOrderRow.Fields = {}));
+            [
+                'PurchaseOrderId',
+                'Number',
+                'Type',
+                'ShareType',
+                'PurchaseDate',
+                'SupplierId',
+                'LetterNumber',
+                'AgentNumber',
+                'PayWay',
+                'Behalf',
+                'BillLadingNumber',
+                'BillLadingDate',
+                'ArrivalDate',
+                'CompanyShip',
+                'PortDepart',
+                'PortDest',
+                'PriceTerms',
+                'Attachment',
+                'Notes',
+                'Status',
+                'SupplierName',
+                'SupplierSuffix',
+                'InsertUserId',
+                'InsertDate',
+                'UpdateUserId',
+                'UpdateDate'
+            ].forEach(function (x) { return Fields[x] = x; });
+        })(PurchaseOrderRow = Default.PurchaseOrderRow || (Default.PurchaseOrderRow = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseOrderService;
+        (function (PurchaseOrderService) {
+            PurchaseOrderService.baseUrl = 'Default/PurchaseOrder';
+            var Methods;
+            (function (Methods) {
+            })(Methods = PurchaseOrderService.Methods || (PurchaseOrderService.Methods = {}));
+            [
+                'Create',
+                'Update',
+                'Delete',
+                'Retrieve',
+                'List'
+            ].forEach(function (x) {
+                PurchaseOrderService[x] = function (r, s, o) {
+                    return Q.serviceRequest(PurchaseOrderService.baseUrl + '/' + x, r, s, o);
+                };
+                Methods[x] = PurchaseOrderService.baseUrl + '/' + x;
+            });
+        })(PurchaseOrderService = Default.PurchaseOrderService || (Default.PurchaseOrderService = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchasePayWay;
+        (function (PurchasePayWay) {
+            PurchasePayWay[PurchasePayWay["VolumeShare"] = 1] = "VolumeShare";
+            PurchasePayWay[PurchasePayWay["WeightShare"] = 2] = "WeightShare";
+        })(PurchasePayWay = Default.PurchasePayWay || (Default.PurchasePayWay = {}));
+        Serenity.Decorators.registerEnum(PurchasePayWay, 'Purchase.PayWay');
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseShareType;
+        (function (PurchaseShareType) {
+            PurchaseShareType[PurchaseShareType["VolumeShare"] = 1] = "VolumeShare";
+            PurchaseShareType[PurchaseShareType["WeightShare"] = 2] = "WeightShare";
+        })(PurchaseShareType = Default.PurchaseShareType || (Default.PurchaseShareType = {}));
+        Serenity.Decorators.registerEnum(PurchaseShareType, 'Purchase.ShareType');
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseType;
+        (function (PurchaseType) {
+            PurchaseType[PurchaseType["Stone"] = 0] = "Stone";
+            PurchaseType[PurchaseType["Slab"] = 1] = "Slab";
+        })(PurchaseType = Default.PurchaseType || (Default.PurchaseType = {}));
+        Serenity.Decorators.registerEnum(PurchaseType, 'Purchase.Type');
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
         var RowActive;
         (function (RowActive) {
             RowActive[RowActive["Locked"] = 0] = "Locked";
@@ -1117,7 +1361,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         SuppliersForm.formKey = 'Default.Suppliers';
         Default.SuppliersForm = SuppliersForm;
-        [['Number', function () { return Serenity.StringEditor; }], ['Name', function () { return Serenity.StringEditor; }], ['Country', function () { return Serenity.StringEditor; }], ['Suffix', function () { return Serenity.StringEditor; }], ['Place', function () { return Serenity.StringEditor; }], ['Notes', function () { return Serenity.StringEditor; }], ['IsActive', function () { return Serenity.IntegerEditor; }], ['InsertDate', function () { return Serenity.DateEditor; }], ['InsertUserId', function () { return Serenity.IntegerEditor; }], ['UpdateDate', function () { return Serenity.DateEditor; }], ['UpdateUserId', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(SuppliersForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['Number', function () { return Serenity.StringEditor; }], ['Name', function () { return Serenity.StringEditor; }], ['Suffix', function () { return Serenity.StringEditor; }], ['Country', function () { return Serenity.StringEditor; }], ['Place', function () { return Serenity.StringEditor; }], ['IsActive', function () { return Serenity.EnumEditor; }], ['Notes', function () { return Serenity.TextAreaEditor; }]].forEach(function (x) { return Object.defineProperty(SuppliersForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -1127,8 +1371,14 @@ var BowenSerene;
         var SuppliersRow;
         (function (SuppliersRow) {
             SuppliersRow.idProperty = 'SupplierId';
+            SuppliersRow.isActiveProperty = 'IsActive';
             SuppliersRow.nameProperty = 'Number';
             SuppliersRow.localTextPrefix = 'Default.Suppliers';
+            SuppliersRow.lookupKey = 'Default.Suppliers';
+            function getLookup() {
+                return Q.getLookup('Default.Suppliers');
+            }
+            SuppliersRow.getLookup = getLookup;
             var Fields;
             (function (Fields) {
             })(Fields = SuppliersRow.Fields || (SuppliersRow.Fields = {}));
@@ -1141,10 +1391,10 @@ var BowenSerene;
                 'Place',
                 'Notes',
                 'IsActive',
-                'InsertDate',
                 'InsertUserId',
-                'UpdateDate',
-                'UpdateUserId'
+                'InsertDate',
+                'UpdateUserId',
+                'UpdateDate'
             ].forEach(function (x) { return Fields[x] = x; });
         })(SuppliersRow = Default.SuppliersRow || (Default.SuppliersRow = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
@@ -9250,6 +9500,100 @@ var BowenSerene;
             Serenity.Decorators.registerClass()
         ], ProductsGrid);
         Default.ProductsGrid = ProductsGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseOrderDialog = (function (_super) {
+            __extends(PurchaseOrderDialog, _super);
+            function PurchaseOrderDialog() {
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.form = new Default.PurchaseOrderForm(_this.idPrefix);
+                return _this;
+            }
+            PurchaseOrderDialog.prototype.getFormKey = function () { return Default.PurchaseOrderForm.formKey; };
+            PurchaseOrderDialog.prototype.getIdProperty = function () { return Default.PurchaseOrderRow.idProperty; };
+            PurchaseOrderDialog.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
+            PurchaseOrderDialog.prototype.getNameProperty = function () { return Default.PurchaseOrderRow.nameProperty; };
+            PurchaseOrderDialog.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
+            return PurchaseOrderDialog;
+        }(Serenity.EntityDialog));
+        PurchaseOrderDialog = __decorate([
+            Serenity.Decorators.registerClass(),
+            Serenity.Decorators.panel()
+        ], PurchaseOrderDialog);
+        Default.PurchaseOrderDialog = PurchaseOrderDialog;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseOrderGrid = (function (_super) {
+            __extends(PurchaseOrderGrid, _super);
+            function PurchaseOrderGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            PurchaseOrderGrid.prototype.getColumnsKey = function () { return 'Default.PurchaseOrder'; };
+            PurchaseOrderGrid.prototype.getDialogType = function () { return Default.PurchaseOrderDialog; };
+            PurchaseOrderGrid.prototype.getIdProperty = function () { return Default.PurchaseOrderRow.idProperty; };
+            PurchaseOrderGrid.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
+            PurchaseOrderGrid.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
+            return PurchaseOrderGrid;
+        }(Serenity.EntityGrid));
+        PurchaseOrderGrid = __decorate([
+            Serenity.Decorators.registerClass()
+        ], PurchaseOrderGrid);
+        Default.PurchaseOrderGrid = PurchaseOrderGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseOrderDetailDialog = (function (_super) {
+            __extends(PurchaseOrderDetailDialog, _super);
+            function PurchaseOrderDetailDialog() {
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.form = new Default.PurchaseOrderDetailForm(_this.idPrefix);
+                return _this;
+            }
+            PurchaseOrderDetailDialog.prototype.getFormKey = function () { return Default.PurchaseOrderDetailForm.formKey; };
+            PurchaseOrderDetailDialog.prototype.getIdProperty = function () { return Default.PurchaseOrderDetailRow.idProperty; };
+            PurchaseOrderDetailDialog.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderDetailRow.localTextPrefix; };
+            PurchaseOrderDetailDialog.prototype.getNameProperty = function () { return Default.PurchaseOrderDetailRow.nameProperty; };
+            PurchaseOrderDetailDialog.prototype.getService = function () { return Default.PurchaseOrderDetailService.baseUrl; };
+            return PurchaseOrderDetailDialog;
+        }(Serenity.EntityDialog));
+        PurchaseOrderDetailDialog = __decorate([
+            Serenity.Decorators.registerClass(),
+            Serenity.Decorators.responsive()
+        ], PurchaseOrderDetailDialog);
+        Default.PurchaseOrderDetailDialog = PurchaseOrderDetailDialog;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseOrderDetailGrid = (function (_super) {
+            __extends(PurchaseOrderDetailGrid, _super);
+            function PurchaseOrderDetailGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            PurchaseOrderDetailGrid.prototype.getColumnsKey = function () { return 'Default.PurchaseOrderDetail'; };
+            PurchaseOrderDetailGrid.prototype.getDialogType = function () { return Default.PurchaseOrderDetailDialog; };
+            PurchaseOrderDetailGrid.prototype.getIdProperty = function () { return Default.PurchaseOrderDetailRow.idProperty; };
+            PurchaseOrderDetailGrid.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderDetailRow.localTextPrefix; };
+            PurchaseOrderDetailGrid.prototype.getService = function () { return Default.PurchaseOrderDetailService.baseUrl; };
+            return PurchaseOrderDetailGrid;
+        }(Serenity.EntityGrid));
+        PurchaseOrderDetailGrid = __decorate([
+            Serenity.Decorators.registerClass()
+        ], PurchaseOrderDetailGrid);
+        Default.PurchaseOrderDetailGrid = PurchaseOrderDetailGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
