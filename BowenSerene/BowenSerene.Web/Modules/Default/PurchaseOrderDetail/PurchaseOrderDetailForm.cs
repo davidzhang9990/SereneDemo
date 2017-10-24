@@ -32,18 +32,7 @@ namespace BowenSerene.Default.Forms
         public Decimal AutoSize { get; set; }
         public Decimal AutoWeight { get; set; }
         public Decimal AutoVolume { get; set; }
-        public Int32 IsStock { get; set; }
-        public DateTime StockDate { get; set; }
-        public Int32 IsAssign { get; set; }
-        public DateTime AssignDate { get; set; }
-        public Int32 IsAssignOrder { get; set; }
-        public DateTime AssignOrderDate { get; set; }
         public Int32 IsFinishType { get; set; }
         public String Notes { get; set; }
-        public Int32 SortCode { get; set; }
-        public DateTime InsertDate { get; set; }
-        public Int32 InsertUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public Int32 UpdateUserId { get; set; }
     }
 }

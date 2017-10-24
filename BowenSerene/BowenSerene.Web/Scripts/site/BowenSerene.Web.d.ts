@@ -988,6 +988,8 @@ declare namespace BowenSerene.Default {
         const isActiveProperty = "IsActive";
         const nameProperty = "Number";
         const localTextPrefix = "Default.Products";
+        const lookupKey = "Default.Products";
+        function getLookup(): Q.Lookup<ProductsRow>;
         namespace Fields {
             const ProductId: string;
             const Number: string;
@@ -1032,7 +1034,7 @@ declare namespace BowenSerene.Default {
         ParentId: Serenity.StringEditor;
         Container: Serenity.StringEditor;
         BlockNumber: Serenity.StringEditor;
-        ProductId: Serenity.StringEditor;
+        ProductId: Serenity.LookupEditor;
         Quantity: Serenity.IntegerEditor;
         Length: Serenity.IntegerEditor;
         Width: Serenity.IntegerEditor;
@@ -1048,19 +1050,8 @@ declare namespace BowenSerene.Default {
         AutoSize: Serenity.DecimalEditor;
         AutoWeight: Serenity.DecimalEditor;
         AutoVolume: Serenity.DecimalEditor;
-        IsStock: Serenity.IntegerEditor;
-        StockDate: Serenity.DateEditor;
-        IsAssign: Serenity.IntegerEditor;
-        AssignDate: Serenity.DateEditor;
-        IsAssignOrder: Serenity.IntegerEditor;
-        AssignOrderDate: Serenity.DateEditor;
         IsFinishType: Serenity.IntegerEditor;
         Notes: Serenity.StringEditor;
-        SortCode: Serenity.IntegerEditor;
-        InsertDate: Serenity.DateEditor;
-        InsertUserId: Serenity.IntegerEditor;
-        UpdateDate: Serenity.DateEditor;
-        UpdateUserId: Serenity.IntegerEditor;
     }
 }
 declare namespace BowenSerene.Default {
@@ -1094,43 +1085,10 @@ declare namespace BowenSerene.Default {
         IsFinishType?: number;
         Notes?: string;
         SortCode?: number;
-        InsertDate?: string;
         InsertUserId?: number;
-        UpdateDate?: string;
+        InsertDate?: string;
         UpdateUserId?: number;
-        ParentNumber?: string;
-        ParentType?: number;
-        ParentShareType?: number;
-        ParentPurchaseDate?: string;
-        ParentSupplierId?: string;
-        ParentLetterNumber?: string;
-        ParentAgentNumber?: string;
-        ParentPayWay?: number;
-        ParentBehalf?: string;
-        ParentBillLadingNumber?: string;
-        ParentBillLadingDate?: string;
-        ParentArrivalDate?: string;
-        ParentCompanyShip?: string;
-        ParentPortDepart?: string;
-        ParentPortDest?: string;
-        ParentPriceTerms?: string;
-        ParentAttachment?: string;
-        ParentNotes?: string;
-        ParentStatus?: number;
-        ParentInsertDate?: string;
-        ParentInsertUserId?: number;
-        ParentUpdateDate?: string;
-        ParentUpdateUserId?: number;
-        ProductNumber?: string;
-        ProductName?: string;
-        ProductDensity?: number;
-        ProductPlace?: string;
-        ProductAttach?: string;
-        ProductIsActive?: number;
-        ProductInsertDate?: string;
-        ProductInsertUserId?: number;
-        ProductUpdateDate?: string;
-        ProductUpdateUserId?: number;
+        UpdateDate?: string;
     }
     namespace PurchaseOrderDetailRow {
         const idProperty = "PurchaseOrderDetailId";
@@ -1166,43 +1124,10 @@ declare namespace BowenSerene.Default {
             const IsFinishType: string;
             const Notes: string;
             const SortCode: string;
-            const InsertDate: string;
             const InsertUserId: string;
-            const UpdateDate: string;
+            const InsertDate: string;
             const UpdateUserId: string;
-            const ParentNumber: string;
-            const ParentType: string;
-            const ParentShareType: string;
-            const ParentPurchaseDate: string;
-            const ParentSupplierId: string;
-            const ParentLetterNumber: string;
-            const ParentAgentNumber: string;
-            const ParentPayWay: string;
-            const ParentBehalf: string;
-            const ParentBillLadingNumber: string;
-            const ParentBillLadingDate: string;
-            const ParentArrivalDate: string;
-            const ParentCompanyShip: string;
-            const ParentPortDepart: string;
-            const ParentPortDest: string;
-            const ParentPriceTerms: string;
-            const ParentAttachment: string;
-            const ParentNotes: string;
-            const ParentStatus: string;
-            const ParentInsertDate: string;
-            const ParentInsertUserId: string;
-            const ParentUpdateDate: string;
-            const ParentUpdateUserId: string;
-            const ProductNumber: string;
-            const ProductName: string;
-            const ProductDensity: string;
-            const ProductPlace: string;
-            const ProductAttach: string;
-            const ProductIsActive: string;
-            const ProductInsertDate: string;
-            const ProductInsertUserId: string;
-            const ProductUpdateDate: string;
-            const ProductUpdateUserId: string;
+            const UpdateDate: string;
         }
     }
 }
@@ -1235,6 +1160,7 @@ declare namespace BowenSerene.Default {
         SupplierId: Serenity.LookupEditor;
         PayWay: Serenity.EnumEditor;
         Notes: Serenity.TextAreaEditor;
+        OrderDetailList: PurchaseOrderDetailEditor;
         LetterNumber: Serenity.StringEditor;
         AgentNumber: Serenity.StringEditor;
         Behalf: Serenity.StringEditor;
@@ -5003,23 +4929,22 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
-    class PurchaseOrderDetailDialog extends Serenity.EntityDialog<PurchaseOrderDetailRow, any> {
+    class PurchaseOrderDetailEditDialog extends Common.GridEditorDialog<PurchaseOrderDetailRow> {
         protected getFormKey(): string;
-        protected getIdProperty(): string;
-        protected getLocalTextPrefix(): string;
         protected getNameProperty(): string;
-        protected getService(): string;
+        protected getLocalTextPrefix(): string;
         protected form: PurchaseOrderDetailForm;
+        constructor();
     }
 }
 declare namespace BowenSerene.Default {
-    class PurchaseOrderDetailGrid extends Serenity.EntityGrid<PurchaseOrderDetailRow, any> {
+    class PurchaseOrderDetailEditor extends Common.GridEditorBase<PurchaseOrderDetailRow> {
+        protected validateEntity(row: PurchaseOrderDetailRow, id: number): boolean;
         protected getColumnsKey(): string;
-        protected getDialogType(): typeof PurchaseOrderDetailDialog;
-        protected getIdProperty(): string;
+        protected getDialogType(): typeof PurchaseOrderDetailEditDialog;
         protected getLocalTextPrefix(): string;
-        protected getService(): string;
         constructor(container: JQuery);
+        protected getAddButtonCaption(): string;
     }
 }
 declare namespace BowenSerene.Default {

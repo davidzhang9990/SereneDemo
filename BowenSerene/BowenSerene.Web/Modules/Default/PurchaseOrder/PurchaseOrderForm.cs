@@ -26,6 +26,10 @@ namespace BowenSerene.Default.Forms
         public Int16 PayWay { get; set; }
         [TextAreaEditor(Rows = 3)]
         public String Notes { get; set; }
+        [Tab("采购信息")]
+        [Category("明细")]
+        [PurchaseOrderDetailEditor]
+        public List<Entities.PurchaseOrderDetailRow> OrderDetailList { get; set; }
         [Tab("运货信息")]
         [Category("船运")]
         public String LetterNumber { get; set; }

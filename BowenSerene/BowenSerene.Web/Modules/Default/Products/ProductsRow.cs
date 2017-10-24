@@ -16,6 +16,7 @@ namespace BowenSerene.Default.Entities
     [DisplayName("品目列表"), InstanceName("品目"), TwoLevelCached]
     [ReadPermission("Administration:General")]
     [ModifyPermission("Administration:General")]
+    [LookupScript("Default.Products")]
     public sealed class ProductsRow : LoggingRow, IIdRow, INameRow, IIsActiveRow
     {
         [DisplayName("Product Id"), PrimaryKey, Insertable(false), Updatable(false)]

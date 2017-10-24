@@ -18,6 +18,11 @@
         export const isActiveProperty = 'IsActive';
         export const nameProperty = 'Number';
         export const localTextPrefix = 'Default.Products';
+        export const lookupKey = 'Default.Products';
+
+        export function getLookup(): Q.Lookup<ProductsRow> {
+            return Q.getLookup<ProductsRow>('Default.Products');
+        }
 
         export namespace Fields {
             export declare const ProductId: string;

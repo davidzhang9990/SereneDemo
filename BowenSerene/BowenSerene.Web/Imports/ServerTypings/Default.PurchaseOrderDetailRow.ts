@@ -29,43 +29,10 @@
         IsFinishType?: number;
         Notes?: string;
         SortCode?: number;
-        InsertDate?: string;
         InsertUserId?: number;
-        UpdateDate?: string;
+        InsertDate?: string;
         UpdateUserId?: number;
-        ParentNumber?: string;
-        ParentType?: number;
-        ParentShareType?: number;
-        ParentPurchaseDate?: string;
-        ParentSupplierId?: string;
-        ParentLetterNumber?: string;
-        ParentAgentNumber?: string;
-        ParentPayWay?: number;
-        ParentBehalf?: string;
-        ParentBillLadingNumber?: string;
-        ParentBillLadingDate?: string;
-        ParentArrivalDate?: string;
-        ParentCompanyShip?: string;
-        ParentPortDepart?: string;
-        ParentPortDest?: string;
-        ParentPriceTerms?: string;
-        ParentAttachment?: string;
-        ParentNotes?: string;
-        ParentStatus?: number;
-        ParentInsertDate?: string;
-        ParentInsertUserId?: number;
-        ParentUpdateDate?: string;
-        ParentUpdateUserId?: number;
-        ProductNumber?: string;
-        ProductName?: string;
-        ProductDensity?: number;
-        ProductPlace?: string;
-        ProductAttach?: string;
-        ProductIsActive?: number;
-        ProductInsertDate?: string;
-        ProductInsertUserId?: number;
-        ProductUpdateDate?: string;
-        ProductUpdateUserId?: number;
+        UpdateDate?: string;
     }
 
     export namespace PurchaseOrderDetailRow {
@@ -103,43 +70,10 @@
             export declare const IsFinishType: string;
             export declare const Notes: string;
             export declare const SortCode: string;
-            export declare const InsertDate: string;
             export declare const InsertUserId: string;
-            export declare const UpdateDate: string;
+            export declare const InsertDate: string;
             export declare const UpdateUserId: string;
-            export declare const ParentNumber: string;
-            export declare const ParentType: string;
-            export declare const ParentShareType: string;
-            export declare const ParentPurchaseDate: string;
-            export declare const ParentSupplierId: string;
-            export declare const ParentLetterNumber: string;
-            export declare const ParentAgentNumber: string;
-            export declare const ParentPayWay: string;
-            export declare const ParentBehalf: string;
-            export declare const ParentBillLadingNumber: string;
-            export declare const ParentBillLadingDate: string;
-            export declare const ParentArrivalDate: string;
-            export declare const ParentCompanyShip: string;
-            export declare const ParentPortDepart: string;
-            export declare const ParentPortDest: string;
-            export declare const ParentPriceTerms: string;
-            export declare const ParentAttachment: string;
-            export declare const ParentNotes: string;
-            export declare const ParentStatus: string;
-            export declare const ParentInsertDate: string;
-            export declare const ParentInsertUserId: string;
-            export declare const ParentUpdateDate: string;
-            export declare const ParentUpdateUserId: string;
-            export declare const ProductNumber: string;
-            export declare const ProductName: string;
-            export declare const ProductDensity: string;
-            export declare const ProductPlace: string;
-            export declare const ProductAttach: string;
-            export declare const ProductIsActive: string;
-            export declare const ProductInsertDate: string;
-            export declare const ProductInsertUserId: string;
-            export declare const ProductUpdateDate: string;
-            export declare const ProductUpdateUserId: string;
+            export declare const UpdateDate: string;
         }
 
         [
@@ -172,43 +106,10 @@
             'IsFinishType', 
             'Notes', 
             'SortCode', 
-            'InsertDate', 
             'InsertUserId', 
-            'UpdateDate', 
+            'InsertDate', 
             'UpdateUserId', 
-            'ParentNumber', 
-            'ParentType', 
-            'ParentShareType', 
-            'ParentPurchaseDate', 
-            'ParentSupplierId', 
-            'ParentLetterNumber', 
-            'ParentAgentNumber', 
-            'ParentPayWay', 
-            'ParentBehalf', 
-            'ParentBillLadingNumber', 
-            'ParentBillLadingDate', 
-            'ParentArrivalDate', 
-            'ParentCompanyShip', 
-            'ParentPortDepart', 
-            'ParentPortDest', 
-            'ParentPriceTerms', 
-            'ParentAttachment', 
-            'ParentNotes', 
-            'ParentStatus', 
-            'ParentInsertDate', 
-            'ParentInsertUserId', 
-            'ParentUpdateDate', 
-            'ParentUpdateUserId', 
-            'ProductNumber', 
-            'ProductName', 
-            'ProductDensity', 
-            'ProductPlace', 
-            'ProductAttach', 
-            'ProductIsActive', 
-            'ProductInsertDate', 
-            'ProductInsertUserId', 
-            'ProductUpdateDate', 
-            'ProductUpdateUserId'
+            'UpdateDate'
         ].forEach(x => (<any>Fields)[x] = x);
     }
 }

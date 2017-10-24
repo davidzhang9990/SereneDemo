@@ -319,11 +319,6 @@ namespace MVC
                 public const string PurchaseOrderIndex = "~/Modules/Default/PurchaseOrder/PurchaseOrderIndex.cshtml";
             }
 
-            public static class PurchaseOrderDetail
-            {
-                public const string PurchaseOrderDetailIndex = "~/Modules/Default/PurchaseOrderDetail/PurchaseOrderDetailIndex.cshtml";
-            }
-
             public static class Suppliers
             {
                 public const string SuppliersIndex = "~/Modules/Default/Suppliers/SuppliersIndex.cshtml";

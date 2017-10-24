@@ -1048,6 +1048,11 @@ var BowenSerene;
             ProductsRow.isActiveProperty = 'IsActive';
             ProductsRow.nameProperty = 'Number';
             ProductsRow.localTextPrefix = 'Default.Products';
+            ProductsRow.lookupKey = 'Default.Products';
+            function getLookup() {
+                return Q.getLookup('Default.Products');
+            }
+            ProductsRow.getLookup = getLookup;
             var Fields;
             (function (Fields) {
             })(Fields = ProductsRow.Fields || (ProductsRow.Fields = {}));
@@ -1105,7 +1110,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         PurchaseOrderDetailForm.formKey = 'Default.PurchaseOrderDetail';
         Default.PurchaseOrderDetailForm = PurchaseOrderDetailForm;
-        [['ParentId', function () { return Serenity.StringEditor; }], ['Container', function () { return Serenity.StringEditor; }], ['BlockNumber', function () { return Serenity.StringEditor; }], ['ProductId', function () { return Serenity.StringEditor; }], ['Quantity', function () { return Serenity.IntegerEditor; }], ['Length', function () { return Serenity.IntegerEditor; }], ['Width', function () { return Serenity.IntegerEditor; }], ['Height', function () { return Serenity.IntegerEditor; }], ['Thick', function () { return Serenity.DecimalEditor; }], ['Size', function () { return Serenity.DecimalEditor; }], ['Weight', function () { return Serenity.DecimalEditor; }], ['Volume', function () { return Serenity.DecimalEditor; }], ['AutoQuantity', function () { return Serenity.IntegerEditor; }], ['AutoLength', function () { return Serenity.IntegerEditor; }], ['AutoWidth', function () { return Serenity.IntegerEditor; }], ['AutoHeight', function () { return Serenity.IntegerEditor; }], ['AutoSize', function () { return Serenity.DecimalEditor; }], ['AutoWeight', function () { return Serenity.DecimalEditor; }], ['AutoVolume', function () { return Serenity.DecimalEditor; }], ['IsStock', function () { return Serenity.IntegerEditor; }], ['StockDate', function () { return Serenity.DateEditor; }], ['IsAssign', function () { return Serenity.IntegerEditor; }], ['AssignDate', function () { return Serenity.DateEditor; }], ['IsAssignOrder', function () { return Serenity.IntegerEditor; }], ['AssignOrderDate', function () { return Serenity.DateEditor; }], ['IsFinishType', function () { return Serenity.IntegerEditor; }], ['Notes', function () { return Serenity.StringEditor; }], ['SortCode', function () { return Serenity.IntegerEditor; }], ['InsertDate', function () { return Serenity.DateEditor; }], ['InsertUserId', function () { return Serenity.IntegerEditor; }], ['UpdateDate', function () { return Serenity.DateEditor; }], ['UpdateUserId', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderDetailForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['ParentId', function () { return Serenity.StringEditor; }], ['Container', function () { return Serenity.StringEditor; }], ['BlockNumber', function () { return Serenity.StringEditor; }], ['ProductId', function () { return Serenity.LookupEditor; }], ['Quantity', function () { return Serenity.IntegerEditor; }], ['Length', function () { return Serenity.IntegerEditor; }], ['Width', function () { return Serenity.IntegerEditor; }], ['Height', function () { return Serenity.IntegerEditor; }], ['Thick', function () { return Serenity.DecimalEditor; }], ['Size', function () { return Serenity.DecimalEditor; }], ['Weight', function () { return Serenity.DecimalEditor; }], ['Volume', function () { return Serenity.DecimalEditor; }], ['AutoQuantity', function () { return Serenity.IntegerEditor; }], ['AutoLength', function () { return Serenity.IntegerEditor; }], ['AutoWidth', function () { return Serenity.IntegerEditor; }], ['AutoHeight', function () { return Serenity.IntegerEditor; }], ['AutoSize', function () { return Serenity.DecimalEditor; }], ['AutoWeight', function () { return Serenity.DecimalEditor; }], ['AutoVolume', function () { return Serenity.DecimalEditor; }], ['IsFinishType', function () { return Serenity.IntegerEditor; }], ['Notes', function () { return Serenity.StringEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderDetailForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -1150,43 +1155,10 @@ var BowenSerene;
                 'IsFinishType',
                 'Notes',
                 'SortCode',
-                'InsertDate',
                 'InsertUserId',
-                'UpdateDate',
+                'InsertDate',
                 'UpdateUserId',
-                'ParentNumber',
-                'ParentType',
-                'ParentShareType',
-                'ParentPurchaseDate',
-                'ParentSupplierId',
-                'ParentLetterNumber',
-                'ParentAgentNumber',
-                'ParentPayWay',
-                'ParentBehalf',
-                'ParentBillLadingNumber',
-                'ParentBillLadingDate',
-                'ParentArrivalDate',
-                'ParentCompanyShip',
-                'ParentPortDepart',
-                'ParentPortDest',
-                'ParentPriceTerms',
-                'ParentAttachment',
-                'ParentNotes',
-                'ParentStatus',
-                'ParentInsertDate',
-                'ParentInsertUserId',
-                'ParentUpdateDate',
-                'ParentUpdateUserId',
-                'ProductNumber',
-                'ProductName',
-                'ProductDensity',
-                'ProductPlace',
-                'ProductAttach',
-                'ProductIsActive',
-                'ProductInsertDate',
-                'ProductInsertUserId',
-                'ProductUpdateDate',
-                'ProductUpdateUserId'
+                'UpdateDate'
             ].forEach(function (x) { return Fields[x] = x; });
         })(PurchaseOrderDetailRow = Default.PurchaseOrderDetailRow || (Default.PurchaseOrderDetailRow = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
@@ -1229,7 +1201,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         PurchaseOrderForm.formKey = 'Default.PurchaseOrder';
         Default.PurchaseOrderForm = PurchaseOrderForm;
-        [['Number', function () { return Serenity.StringEditor; }], ['Type', function () { return Serenity.EnumEditor; }], ['ShareType', function () { return Serenity.EnumEditor; }], ['PurchaseDate', function () { return Serenity.DateEditor; }], ['SupplierId', function () { return Serenity.LookupEditor; }], ['PayWay', function () { return Serenity.EnumEditor; }], ['Notes', function () { return Serenity.TextAreaEditor; }], ['LetterNumber', function () { return Serenity.StringEditor; }], ['AgentNumber', function () { return Serenity.StringEditor; }], ['Behalf', function () { return Serenity.StringEditor; }], ['BillLadingNumber', function () { return Serenity.StringEditor; }], ['BillLadingDate', function () { return Serenity.DateEditor; }], ['ArrivalDate', function () { return Serenity.DateEditor; }], ['CompanyShip', function () { return Serenity.StringEditor; }], ['PortDepart', function () { return Serenity.StringEditor; }], ['PortDest', function () { return Serenity.StringEditor; }], ['PriceTerms', function () { return Serenity.StringEditor; }], ['Attachment', function () { return Serenity.MultipleImageUploadEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['Number', function () { return Serenity.StringEditor; }], ['Type', function () { return Serenity.EnumEditor; }], ['ShareType', function () { return Serenity.EnumEditor; }], ['PurchaseDate', function () { return Serenity.DateEditor; }], ['SupplierId', function () { return Serenity.LookupEditor; }], ['PayWay', function () { return Serenity.EnumEditor; }], ['Notes', function () { return Serenity.TextAreaEditor; }], ['OrderDetailList', function () { return Default.PurchaseOrderDetailEditor; }], ['LetterNumber', function () { return Serenity.StringEditor; }], ['AgentNumber', function () { return Serenity.StringEditor; }], ['Behalf', function () { return Serenity.StringEditor; }], ['BillLadingNumber', function () { return Serenity.StringEditor; }], ['BillLadingDate', function () { return Serenity.DateEditor; }], ['ArrivalDate', function () { return Serenity.DateEditor; }], ['CompanyShip', function () { return Serenity.StringEditor; }], ['PortDepart', function () { return Serenity.StringEditor; }], ['PortDest', function () { return Serenity.StringEditor; }], ['PriceTerms', function () { return Serenity.StringEditor; }], ['Attachment', function () { return Serenity.MultipleImageUploadEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -9560,51 +9532,63 @@ var BowenSerene;
         Default.PurchaseOrderGrid = PurchaseOrderGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
+/// <reference path="../../Common/Helpers/GridEditorDialog.ts" />
 var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
-        var PurchaseOrderDetailDialog = (function (_super) {
-            __extends(PurchaseOrderDetailDialog, _super);
-            function PurchaseOrderDetailDialog() {
-                var _this = _super !== null && _super.apply(this, arguments) || this;
+        var PurchaseOrderDetailEditDialog = (function (_super) {
+            __extends(PurchaseOrderDetailEditDialog, _super);
+            function PurchaseOrderDetailEditDialog() {
+                var _this = _super.call(this) || this;
                 _this.form = new Default.PurchaseOrderDetailForm(_this.idPrefix);
                 return _this;
             }
-            PurchaseOrderDetailDialog.prototype.getFormKey = function () { return Default.PurchaseOrderDetailForm.formKey; };
-            PurchaseOrderDetailDialog.prototype.getIdProperty = function () { return Default.PurchaseOrderDetailRow.idProperty; };
-            PurchaseOrderDetailDialog.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderDetailRow.localTextPrefix; };
-            PurchaseOrderDetailDialog.prototype.getNameProperty = function () { return Default.PurchaseOrderDetailRow.nameProperty; };
-            PurchaseOrderDetailDialog.prototype.getService = function () { return Default.PurchaseOrderDetailService.baseUrl; };
-            return PurchaseOrderDetailDialog;
-        }(Serenity.EntityDialog));
-        PurchaseOrderDetailDialog = __decorate([
-            Serenity.Decorators.registerClass(),
-            Serenity.Decorators.responsive()
-        ], PurchaseOrderDetailDialog);
-        Default.PurchaseOrderDetailDialog = PurchaseOrderDetailDialog;
+            PurchaseOrderDetailEditDialog.prototype.getFormKey = function () { return Default.PurchaseOrderDetailForm.formKey; };
+            PurchaseOrderDetailEditDialog.prototype.getNameProperty = function () { return Default.PurchaseOrderDetailRow.nameProperty; };
+            PurchaseOrderDetailEditDialog.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderDetailRow.localTextPrefix; };
+            return PurchaseOrderDetailEditDialog;
+        }(BowenSerene.Common.GridEditorDialog));
+        PurchaseOrderDetailEditDialog = __decorate([
+            Serenity.Decorators.registerClass()
+        ], PurchaseOrderDetailEditDialog);
+        Default.PurchaseOrderDetailEditDialog = PurchaseOrderDetailEditDialog;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
+/// <reference path="../../Common/Helpers/GridEditorBase.ts" />
 var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
-        var PurchaseOrderDetailGrid = (function (_super) {
-            __extends(PurchaseOrderDetailGrid, _super);
-            function PurchaseOrderDetailGrid(container) {
+        var PurchaseOrderDetailEditor = (function (_super) {
+            __extends(PurchaseOrderDetailEditor, _super);
+            function PurchaseOrderDetailEditor(container) {
                 return _super.call(this, container) || this;
             }
-            PurchaseOrderDetailGrid.prototype.getColumnsKey = function () { return 'Default.PurchaseOrderDetail'; };
-            PurchaseOrderDetailGrid.prototype.getDialogType = function () { return Default.PurchaseOrderDetailDialog; };
-            PurchaseOrderDetailGrid.prototype.getIdProperty = function () { return Default.PurchaseOrderDetailRow.idProperty; };
-            PurchaseOrderDetailGrid.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderDetailRow.localTextPrefix; };
-            PurchaseOrderDetailGrid.prototype.getService = function () { return Default.PurchaseOrderDetailService.baseUrl; };
-            return PurchaseOrderDetailGrid;
-        }(Serenity.EntityGrid));
-        PurchaseOrderDetailGrid = __decorate([
-            Serenity.Decorators.registerClass()
-        ], PurchaseOrderDetailGrid);
-        Default.PurchaseOrderDetailGrid = PurchaseOrderDetailGrid;
+            PurchaseOrderDetailEditor.prototype.validateEntity = function (row, id) {
+                if (!_super.prototype.validateEntity.call(this, row, id))
+                    return false;
+                //row.PersonFullname = PersonRow.getLookup().itemById[row.PersonId].Fullname;
+                return true;
+            };
+            PurchaseOrderDetailEditor.prototype.getColumnsKey = function () {
+                return "Default.PurchaseOrderDetail";
+            };
+            PurchaseOrderDetailEditor.prototype.getDialogType = function () {
+                return Default.PurchaseOrderDetailEditDialog;
+            };
+            PurchaseOrderDetailEditor.prototype.getLocalTextPrefix = function () {
+                return Default.PurchaseOrderDetailRow.localTextPrefix;
+            };
+            PurchaseOrderDetailEditor.prototype.getAddButtonCaption = function () {
+                return "Add";
+            };
+            return PurchaseOrderDetailEditor;
+        }(BowenSerene.Common.GridEditorBase));
+        PurchaseOrderDetailEditor = __decorate([
+            Serenity.Decorators.registerEditor()
+        ], PurchaseOrderDetailEditor);
+        Default.PurchaseOrderDetailEditor = PurchaseOrderDetailEditor;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
