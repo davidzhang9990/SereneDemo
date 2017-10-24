@@ -512,6 +512,7 @@
     <Content Include="Content\serenity\serenity.css" />
     <Content Include="Content\simple-line-icons.css" />
     <Content Include="Content\site\images\accordion-arrows.png" />
+    <Content Include="Modules\Default\PurchaseOrder\Default.PurchaseOrderDialog.Template.html" />
     <Content Include="Scripts\SlickGrid\Plugins\slick.autocolumnsize.js" />
     <Content Include="wkhtmltopdf-license.txt" />
     <EmbeddedResource Include="Migrations\NorthwindDB\NorthwindDBScript_Sqlite.sql" />

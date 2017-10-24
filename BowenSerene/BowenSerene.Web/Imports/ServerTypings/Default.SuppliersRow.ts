@@ -17,7 +17,7 @@
     export namespace SuppliersRow {
         export const idProperty = 'SupplierId';
         export const isActiveProperty = 'IsActive';
-        export const nameProperty = 'Number';
+        export const nameProperty = 'Name';
         export const localTextPrefix = 'Default.Suppliers';
         export const lookupKey = 'Default.Suppliers';
 

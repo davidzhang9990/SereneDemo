@@ -1229,7 +1229,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         PurchaseOrderForm.formKey = 'Default.PurchaseOrder';
         Default.PurchaseOrderForm = PurchaseOrderForm;
-        [['Number', function () { return Serenity.StringEditor; }], ['Type', function () { return Serenity.EnumEditor; }], ['ShareType', function () { return Serenity.EnumEditor; }], ['PurchaseDate', function () { return Serenity.DateEditor; }], ['SupplierId', function () { return Serenity.LookupEditor; }], ['PayWay', function () { return Serenity.EnumEditor; }], ['Notes', function () { return Serenity.TextAreaEditor; }], ['LetterNumber', function () { return Serenity.StringEditor; }], ['AgentNumber', function () { return Serenity.StringEditor; }], ['Behalf', function () { return Serenity.StringEditor; }], ['BillLadingNumber', function () { return Serenity.StringEditor; }], ['BillLadingDate', function () { return Serenity.DateEditor; }], ['ArrivalDate', function () { return Serenity.DateEditor; }], ['CompanyShip', function () { return Serenity.StringEditor; }], ['PortDepart', function () { return Serenity.StringEditor; }], ['PortDest', function () { return Serenity.StringEditor; }], ['PriceTerms', function () { return Serenity.StringEditor; }], ['Attachment', function () { return Serenity.StringEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['Number', function () { return Serenity.StringEditor; }], ['Type', function () { return Serenity.EnumEditor; }], ['ShareType', function () { return Serenity.EnumEditor; }], ['PurchaseDate', function () { return Serenity.DateEditor; }], ['SupplierId', function () { return Serenity.LookupEditor; }], ['PayWay', function () { return Serenity.EnumEditor; }], ['Notes', function () { return Serenity.TextAreaEditor; }], ['LetterNumber', function () { return Serenity.StringEditor; }], ['AgentNumber', function () { return Serenity.StringEditor; }], ['Behalf', function () { return Serenity.StringEditor; }], ['BillLadingNumber', function () { return Serenity.StringEditor; }], ['BillLadingDate', function () { return Serenity.DateEditor; }], ['ArrivalDate', function () { return Serenity.DateEditor; }], ['CompanyShip', function () { return Serenity.StringEditor; }], ['PortDepart', function () { return Serenity.StringEditor; }], ['PortDest', function () { return Serenity.StringEditor; }], ['PriceTerms', function () { return Serenity.StringEditor; }], ['Attachment', function () { return Serenity.MultipleImageUploadEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -1372,7 +1372,7 @@ var BowenSerene;
         (function (SuppliersRow) {
             SuppliersRow.idProperty = 'SupplierId';
             SuppliersRow.isActiveProperty = 'IsActive';
-            SuppliersRow.nameProperty = 'Number';
+            SuppliersRow.nameProperty = 'Name';
             SuppliersRow.localTextPrefix = 'Default.Suppliers';
             SuppliersRow.lookupKey = 'Default.Suppliers';
             function getLookup() {
@@ -9509,8 +9509,19 @@ var BowenSerene;
         var PurchaseOrderDialog = (function (_super) {
             __extends(PurchaseOrderDialog, _super);
             function PurchaseOrderDialog() {
-                var _this = _super !== null && _super.apply(this, arguments) || this;
+                var _this = _super.call(this) || this;
                 _this.form = new Default.PurchaseOrderForm(_this.idPrefix);
+                _this.form.Type.changeSelect2(function (e) {
+                    var orderType = _this.form.Type.value;
+                    _this.byId('ShareType').closest('.field').hide();
+                    if (Q.isEmptyOrNull(orderType)) {
+                        _this.form.ShareType.clearItems();
+                        return;
+                    }
+                    if (orderType === Default.PurchaseType.Stone.toString()) {
+                        _this.byId('ShareType').closest('.field').show();
+                    }
+                });
                 return _this;
             }
             PurchaseOrderDialog.prototype.getFormKey = function () { return Default.PurchaseOrderForm.formKey; };

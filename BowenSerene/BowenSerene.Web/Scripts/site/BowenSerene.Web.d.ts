@@ -1245,7 +1245,7 @@ declare namespace BowenSerene.Default {
         PortDepart: Serenity.StringEditor;
         PortDest: Serenity.StringEditor;
         PriceTerms: Serenity.StringEditor;
-        Attachment: Serenity.StringEditor;
+        Attachment: Serenity.MultipleImageUploadEditor;
     }
 }
 declare namespace BowenSerene.Default {
@@ -1386,7 +1386,7 @@ declare namespace BowenSerene.Default {
     namespace SuppliersRow {
         const idProperty = "SupplierId";
         const isActiveProperty = "IsActive";
-        const nameProperty = "Number";
+        const nameProperty = "Name";
         const localTextPrefix = "Default.Suppliers";
         const lookupKey = "Default.Suppliers";
         function getLookup(): Q.Lookup<SuppliersRow>;
@@ -4989,6 +4989,7 @@ declare namespace BowenSerene.Default {
         protected getNameProperty(): string;
         protected getService(): string;
         protected form: PurchaseOrderForm;
+        constructor();
     }
 }
 declare namespace BowenSerene.Default {

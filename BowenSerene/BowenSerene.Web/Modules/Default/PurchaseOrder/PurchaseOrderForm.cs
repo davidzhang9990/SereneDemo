@@ -1,4 +1,5 @@
 ﻿
+using MVC;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 
 namespace BowenSerene.Default.Forms
@@ -16,14 +17,14 @@ namespace BowenSerene.Default.Forms
     public class PurchaseOrderForm
     {
         [Tab("基本信息")]
-        [Category("aaa")]
+        [Category("采购信息")]
         public String Number { get; set; }
         public Int16 Type { get; set; }
         public Int16 ShareType { get; set; }
         public DateTime PurchaseDate { get; set; }
         public Guid SupplierId { get; set; }
         public Int16 PayWay { get; set; }
-        [TextAreaEditor(Rows = 8)]
+        [TextAreaEditor(Rows = 3)]
         public String Notes { get; set; }
         [Tab("运货信息")]
         [Category("船运")]
@@ -37,8 +38,9 @@ namespace BowenSerene.Default.Forms
         public String PortDepart { get; set; }
         public String PortDest { get; set; }
         public String PriceTerms { get; set; }
-       
-        [Tab("附件")]
+
+        [Tab("运货信息")]
+        [Category("附件")]
         public String Attachment { get; set; }
 
     }

@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using BowenSerene.Administration.Entities;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 
@@ -53,12 +54,26 @@ namespace BowenSerene.Default.Entities
             set { Fields.PurchaseDate[this] = value; }
         }
 
-        [DisplayName("供应商"), NotNull, ForeignKey("[dbo].[Suppliers]", "SupplierId"), LeftJoin("jSupplier"), TextualField("SupplierName"), Updatable(false)]
+        [DisplayName("供应商"), NotNull, ForeignKey(typeof(SuppliersRow), "SupplierId"), LeftJoin("jSupplier")]
         [LookupEditor(typeof(SuppliersRow), InplaceAdd = true)]
         public Guid? SupplierId
         {
             get { return Fields.SupplierId[this]; }
             set { Fields.SupplierId[this] = value; }
+        }
+
+        [Origin("jSupplier"), DisplayName("供应商名称"), QuickSearch]
+        public String SupplierName
+        {
+            get { return Fields.SupplierName[this]; }
+            set { Fields.SupplierName[this] = value; }
+        }
+
+        [DisplayName("Supplier Suffix"), Expression("jSupplier.[Suffix]")]
+        public String SupplierSuffix
+        {
+            get { return Fields.SupplierSuffix[this]; }
+            set { Fields.SupplierSuffix[this] = value; }
         }
 
         [DisplayName("信用证号"), Size(100)]
@@ -157,19 +172,6 @@ namespace BowenSerene.Default.Entities
         {
             get { return Fields.Status[this]; }
             set { Fields.Status[this] = value; }
-        }
-
-        [DisplayName("供应商名称"), Expression("jSupplier.[Name]")]
-        public String SupplierName
-        {
-            get { return Fields.SupplierName[this]; }
-            set { Fields.SupplierName[this] = value; }
-        }
-        [DisplayName("Supplier Suffix"), Expression("jSupplier.[Suffix]")]
-        public String SupplierSuffix
-        {
-            get { return Fields.SupplierSuffix[this]; }
-            set { Fields.SupplierSuffix[this] = value; }
         }
 
         IIdField IIdRow.IdField
