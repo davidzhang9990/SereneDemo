@@ -9,7 +9,7 @@ namespace BowenSerene.Migrations.DefaultDB
         public override void Up()
         {
             Create.Table("Products")
-                .WithColumn("ProductId").AsGuid().PrimaryKey().WithDefaultValue(Guid.NewGuid()).NotNullable()
+                .WithColumn("ProductId").AsGuid().PrimaryKey().NotNullable()
                 .WithColumn("Number").AsString(100).NotNullable()
                 .WithColumn("Name").AsString(100).NotNullable()
                 .WithColumn("Density").AsDecimal().NotNullable()
@@ -23,7 +23,7 @@ namespace BowenSerene.Migrations.DefaultDB
 
 
             Create.Table("Suppliers")
-                .WithColumn("SupplierId").AsGuid().PrimaryKey().WithDefaultValue(Guid.NewGuid()).NotNullable()
+                .WithColumn("SupplierId").AsGuid().PrimaryKey().NotNullable()
                 .WithColumn("Number").AsString(100).NotNullable()
                 .WithColumn("Name").AsString(100).NotNullable()
                  .WithColumn("Country").AsString(100).NotNullable()

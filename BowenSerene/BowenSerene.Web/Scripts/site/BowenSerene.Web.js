@@ -1026,6 +1026,158 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
+        var ProductsForm = (function (_super) {
+            __extends(ProductsForm, _super);
+            function ProductsForm() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            return ProductsForm;
+        }(Serenity.PrefixedContext));
+        ProductsForm.formKey = 'Default.Products';
+        Default.ProductsForm = ProductsForm;
+        [['Number', function () { return Serenity.StringEditor; }], ['Name', function () { return Serenity.StringEditor; }], ['Density', function () { return Serenity.DecimalEditor; }], ['Place', function () { return Serenity.StringEditor; }], ['IsActive', function () { return Serenity.EnumEditor; }], ['Attach', function () { return Serenity.MultipleImageUploadEditor; }]].forEach(function (x) { return Object.defineProperty(ProductsForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var ProductsRow;
+        (function (ProductsRow) {
+            ProductsRow.idProperty = 'ProductId';
+            ProductsRow.isActiveProperty = 'IsActive';
+            ProductsRow.nameProperty = 'Number';
+            ProductsRow.localTextPrefix = 'Default.Products';
+            var Fields;
+            (function (Fields) {
+            })(Fields = ProductsRow.Fields || (ProductsRow.Fields = {}));
+            [
+                'ProductId',
+                'Number',
+                'Name',
+                'Density',
+                'Place',
+                'Attach',
+                'IsActive',
+                'InsertUserId',
+                'InsertDate',
+                'UpdateUserId',
+                'UpdateDate'
+            ].forEach(function (x) { return Fields[x] = x; });
+        })(ProductsRow = Default.ProductsRow || (Default.ProductsRow = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var ProductsService;
+        (function (ProductsService) {
+            ProductsService.baseUrl = 'Default/Products';
+            var Methods;
+            (function (Methods) {
+            })(Methods = ProductsService.Methods || (ProductsService.Methods = {}));
+            [
+                'Create',
+                'Update',
+                'Delete',
+                'Retrieve',
+                'List'
+            ].forEach(function (x) {
+                ProductsService[x] = function (r, s, o) {
+                    return Q.serviceRequest(ProductsService.baseUrl + '/' + x, r, s, o);
+                };
+                Methods[x] = ProductsService.baseUrl + '/' + x;
+            });
+        })(ProductsService = Default.ProductsService || (Default.ProductsService = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var RowActive;
+        (function (RowActive) {
+            RowActive[RowActive["Locked"] = 0] = "Locked";
+            RowActive[RowActive["Active"] = 1] = "Active";
+        })(RowActive = Default.RowActive || (Default.RowActive = {}));
+        Serenity.Decorators.registerEnum(RowActive, 'Default.RowActive');
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var SuppliersForm = (function (_super) {
+            __extends(SuppliersForm, _super);
+            function SuppliersForm() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            return SuppliersForm;
+        }(Serenity.PrefixedContext));
+        SuppliersForm.formKey = 'Default.Suppliers';
+        Default.SuppliersForm = SuppliersForm;
+        [['Number', function () { return Serenity.StringEditor; }], ['Name', function () { return Serenity.StringEditor; }], ['Country', function () { return Serenity.StringEditor; }], ['Suffix', function () { return Serenity.StringEditor; }], ['Place', function () { return Serenity.StringEditor; }], ['Notes', function () { return Serenity.StringEditor; }], ['IsActive', function () { return Serenity.IntegerEditor; }], ['InsertDate', function () { return Serenity.DateEditor; }], ['InsertUserId', function () { return Serenity.IntegerEditor; }], ['UpdateDate', function () { return Serenity.DateEditor; }], ['UpdateUserId', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(SuppliersForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var SuppliersRow;
+        (function (SuppliersRow) {
+            SuppliersRow.idProperty = 'SupplierId';
+            SuppliersRow.nameProperty = 'Number';
+            SuppliersRow.localTextPrefix = 'Default.Suppliers';
+            var Fields;
+            (function (Fields) {
+            })(Fields = SuppliersRow.Fields || (SuppliersRow.Fields = {}));
+            [
+                'SupplierId',
+                'Number',
+                'Name',
+                'Country',
+                'Suffix',
+                'Place',
+                'Notes',
+                'IsActive',
+                'InsertDate',
+                'InsertUserId',
+                'UpdateDate',
+                'UpdateUserId'
+            ].forEach(function (x) { return Fields[x] = x; });
+        })(SuppliersRow = Default.SuppliersRow || (Default.SuppliersRow = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var SuppliersService;
+        (function (SuppliersService) {
+            SuppliersService.baseUrl = 'Default/Suppliers';
+            var Methods;
+            (function (Methods) {
+            })(Methods = SuppliersService.Methods || (SuppliersService.Methods = {}));
+            [
+                'Create',
+                'Update',
+                'Delete',
+                'Retrieve',
+                'List'
+            ].forEach(function (x) {
+                SuppliersService[x] = function (r, s, o) {
+                    return Q.serviceRequest(SuppliersService.baseUrl + '/' + x, r, s, o);
+                };
+                Methods[x] = SuppliersService.baseUrl + '/' + x;
+            });
+        })(SuppliersService = Default.SuppliersService || (Default.SuppliersService = {}));
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
         var TenantsForm = (function (_super) {
             __extends(TenantsForm, _super);
             function TenantsForm() {
@@ -9051,6 +9203,100 @@ var BowenSerene;
             Serenity.Decorators.registerClass()
         ], PersonMovieGrid);
         Default.PersonMovieGrid = PersonMovieGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var ProductsDialog = (function (_super) {
+            __extends(ProductsDialog, _super);
+            function ProductsDialog() {
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.form = new Default.ProductsForm(_this.idPrefix);
+                return _this;
+            }
+            ProductsDialog.prototype.getFormKey = function () { return Default.ProductsForm.formKey; };
+            ProductsDialog.prototype.getIdProperty = function () { return Default.ProductsRow.idProperty; };
+            ProductsDialog.prototype.getLocalTextPrefix = function () { return Default.ProductsRow.localTextPrefix; };
+            ProductsDialog.prototype.getNameProperty = function () { return Default.ProductsRow.nameProperty; };
+            ProductsDialog.prototype.getService = function () { return Default.ProductsService.baseUrl; };
+            return ProductsDialog;
+        }(Serenity.EntityDialog));
+        ProductsDialog = __decorate([
+            Serenity.Decorators.registerClass(),
+            Serenity.Decorators.responsive()
+        ], ProductsDialog);
+        Default.ProductsDialog = ProductsDialog;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var ProductsGrid = (function (_super) {
+            __extends(ProductsGrid, _super);
+            function ProductsGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            ProductsGrid.prototype.getColumnsKey = function () { return 'Default.Products'; };
+            ProductsGrid.prototype.getDialogType = function () { return Default.ProductsDialog; };
+            ProductsGrid.prototype.getIdProperty = function () { return Default.ProductsRow.idProperty; };
+            ProductsGrid.prototype.getLocalTextPrefix = function () { return Default.ProductsRow.localTextPrefix; };
+            ProductsGrid.prototype.getService = function () { return Default.ProductsService.baseUrl; };
+            return ProductsGrid;
+        }(Serenity.EntityGrid));
+        ProductsGrid = __decorate([
+            Serenity.Decorators.registerClass()
+        ], ProductsGrid);
+        Default.ProductsGrid = ProductsGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var SuppliersDialog = (function (_super) {
+            __extends(SuppliersDialog, _super);
+            function SuppliersDialog() {
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.form = new Default.SuppliersForm(_this.idPrefix);
+                return _this;
+            }
+            SuppliersDialog.prototype.getFormKey = function () { return Default.SuppliersForm.formKey; };
+            SuppliersDialog.prototype.getIdProperty = function () { return Default.SuppliersRow.idProperty; };
+            SuppliersDialog.prototype.getLocalTextPrefix = function () { return Default.SuppliersRow.localTextPrefix; };
+            SuppliersDialog.prototype.getNameProperty = function () { return Default.SuppliersRow.nameProperty; };
+            SuppliersDialog.prototype.getService = function () { return Default.SuppliersService.baseUrl; };
+            return SuppliersDialog;
+        }(Serenity.EntityDialog));
+        SuppliersDialog = __decorate([
+            Serenity.Decorators.registerClass(),
+            Serenity.Decorators.responsive()
+        ], SuppliersDialog);
+        Default.SuppliersDialog = SuppliersDialog;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var SuppliersGrid = (function (_super) {
+            __extends(SuppliersGrid, _super);
+            function SuppliersGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            SuppliersGrid.prototype.getColumnsKey = function () { return 'Default.Suppliers'; };
+            SuppliersGrid.prototype.getDialogType = function () { return Default.SuppliersDialog; };
+            SuppliersGrid.prototype.getIdProperty = function () { return Default.SuppliersRow.idProperty; };
+            SuppliersGrid.prototype.getLocalTextPrefix = function () { return Default.SuppliersRow.localTextPrefix; };
+            SuppliersGrid.prototype.getService = function () { return Default.SuppliersService.baseUrl; };
+            return SuppliersGrid;
+        }(Serenity.EntityGrid));
+        SuppliersGrid = __decorate([
+            Serenity.Decorators.registerClass()
+        ], SuppliersGrid);
+        Default.SuppliersGrid = SuppliersGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;

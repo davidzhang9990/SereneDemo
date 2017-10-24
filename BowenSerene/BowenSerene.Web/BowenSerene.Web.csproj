@@ -1165,6 +1165,15 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PersonMovieColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductsColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.RowActive.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.SuppliersColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.TenantsColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -2038,6 +2047,30 @@
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Scripts\typings\SlickGrid\slick.autocolumnsize.d.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductsRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductsService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\Products\ProductsIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\Products\ProductsDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\Products\ProductsGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductsForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.SuppliersRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.SuppliersService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\Suppliers\SuppliersIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\Suppliers\SuppliersDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\Suppliers\SuppliersGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.SuppliersForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -2069,6 +2102,7 @@
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_191600_GenreTable.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_184800_MovieKind.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_130000_Movie.cs" />
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171024_101100_ProductAndSupplier.cs" />
     <Compile Include="Migrations\NorthwindDB\NorthwindDB_20171022_195900_MultiTenant.cs" />
     <Compile Include="Modules\Administration\AdministrationNavigation.cs" />
     <Compile Include="Modules\Administration\Language\LanguageLookup.cs" />
@@ -2122,6 +2156,7 @@
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesListRequest.cs" />
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesEndpoint.cs" />
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesRepository.cs" />
+    <Compile Include="Modules\Common\RowActive.cs" />
     <Compile Include="Modules\Texts.cs" />
     <Compile Include="Modules\Default\Movie\MovieKind.cs" />
     <Compile Include="Modules\Default\Person\Gender.cs" />
@@ -2483,6 +2518,18 @@
     <Compile Include="Modules\Default\Tenants\TenantsPage.cs" />
     <Compile Include="Modules\Default\Tenants\TenantsColumns.cs" />
     <Compile Include="Modules\Default\Tenants\TenantsForm.cs" />
+    <Compile Include="Modules\Default\Products\ProductsRow.cs" />
+    <Compile Include="Modules\Default\Products\ProductsRepository.cs" />
+    <Compile Include="Modules\Default\Products\ProductsEndpoint.cs" />
+    <Compile Include="Modules\Default\Products\ProductsPage.cs" />
+    <Compile Include="Modules\Default\Products\ProductsColumns.cs" />
+    <Compile Include="Modules\Default\Products\ProductsForm.cs" />
+    <Compile Include="Modules\Default\Suppliers\SuppliersRow.cs" />
+    <Compile Include="Modules\Default\Suppliers\SuppliersRepository.cs" />
+    <Compile Include="Modules\Default\Suppliers\SuppliersEndpoint.cs" />
+    <Compile Include="Modules\Default\Suppliers\SuppliersPage.cs" />
+    <Compile Include="Modules\Default\Suppliers\SuppliersColumns.cs" />
+    <Compile Include="Modules\Default\Suppliers\SuppliersForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

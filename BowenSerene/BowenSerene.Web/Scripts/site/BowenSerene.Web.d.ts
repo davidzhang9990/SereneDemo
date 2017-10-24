@@ -957,6 +957,150 @@ declare namespace BowenSerene.Default {
 declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
+    class ProductsForm extends Serenity.PrefixedContext {
+        static formKey: string;
+    }
+    interface ProductsForm {
+        Number: Serenity.StringEditor;
+        Name: Serenity.StringEditor;
+        Density: Serenity.DecimalEditor;
+        Place: Serenity.StringEditor;
+        IsActive: Serenity.EnumEditor;
+        Attach: Serenity.MultipleImageUploadEditor;
+    }
+}
+declare namespace BowenSerene.Default {
+    interface ProductsRow {
+        ProductId?: string;
+        Number?: string;
+        Name?: string;
+        Density?: number;
+        Place?: string;
+        Attach?: string;
+        IsActive?: RowActive;
+        InsertUserId?: number;
+        InsertDate?: string;
+        UpdateUserId?: number;
+        UpdateDate?: string;
+    }
+    namespace ProductsRow {
+        const idProperty = "ProductId";
+        const isActiveProperty = "IsActive";
+        const nameProperty = "Number";
+        const localTextPrefix = "Default.Products";
+        namespace Fields {
+            const ProductId: string;
+            const Number: string;
+            const Name: string;
+            const Density: string;
+            const Place: string;
+            const Attach: string;
+            const IsActive: string;
+            const InsertUserId: string;
+            const InsertDate: string;
+            const UpdateUserId: string;
+            const UpdateDate: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    namespace ProductsService {
+        const baseUrl = "Default/Products";
+        function Create(request: Serenity.SaveRequest<ProductsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Update(request: Serenity.SaveRequest<ProductsRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<ProductsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<ProductsRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        namespace Methods {
+            const Create: string;
+            const Update: string;
+            const Delete: string;
+            const Retrieve: string;
+            const List: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    enum RowActive {
+        Locked = 0,
+        Active = 1,
+    }
+}
+declare namespace BowenSerene.Default {
+}
+declare namespace BowenSerene.Default {
+    class SuppliersForm extends Serenity.PrefixedContext {
+        static formKey: string;
+    }
+    interface SuppliersForm {
+        Number: Serenity.StringEditor;
+        Name: Serenity.StringEditor;
+        Country: Serenity.StringEditor;
+        Suffix: Serenity.StringEditor;
+        Place: Serenity.StringEditor;
+        Notes: Serenity.StringEditor;
+        IsActive: Serenity.IntegerEditor;
+        InsertDate: Serenity.DateEditor;
+        InsertUserId: Serenity.IntegerEditor;
+        UpdateDate: Serenity.DateEditor;
+        UpdateUserId: Serenity.IntegerEditor;
+    }
+}
+declare namespace BowenSerene.Default {
+    interface SuppliersRow {
+        SupplierId?: string;
+        Number?: string;
+        Name?: string;
+        Country?: string;
+        Suffix?: string;
+        Place?: string;
+        Notes?: string;
+        IsActive?: number;
+        InsertDate?: string;
+        InsertUserId?: number;
+        UpdateDate?: string;
+        UpdateUserId?: number;
+    }
+    namespace SuppliersRow {
+        const idProperty = "SupplierId";
+        const nameProperty = "Number";
+        const localTextPrefix = "Default.Suppliers";
+        namespace Fields {
+            const SupplierId: string;
+            const Number: string;
+            const Name: string;
+            const Country: string;
+            const Suffix: string;
+            const Place: string;
+            const Notes: string;
+            const IsActive: string;
+            const InsertDate: string;
+            const InsertUserId: string;
+            const UpdateDate: string;
+            const UpdateUserId: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+    namespace SuppliersService {
+        const baseUrl = "Default/Suppliers";
+        function Create(request: Serenity.SaveRequest<SuppliersRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Update(request: Serenity.SaveRequest<SuppliersRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<SuppliersRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<SuppliersRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        namespace Methods {
+            const Create: string;
+            const Update: string;
+            const Delete: string;
+            const Retrieve: string;
+            const List: string;
+        }
+    }
+}
+declare namespace BowenSerene.Default {
+}
+declare namespace BowenSerene.Default {
     class TenantsForm extends Serenity.PrefixedContext {
         static formKey: string;
     }
@@ -4490,6 +4634,46 @@ declare namespace BowenSerene.Default {
         protected getGridCanLoad(): boolean;
         private _personID;
         personID: number;
+    }
+}
+declare namespace BowenSerene.Default {
+    class ProductsDialog extends Serenity.EntityDialog<ProductsRow, any> {
+        protected getFormKey(): string;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getNameProperty(): string;
+        protected getService(): string;
+        protected form: ProductsForm;
+    }
+}
+declare namespace BowenSerene.Default {
+    class ProductsGrid extends Serenity.EntityGrid<ProductsRow, any> {
+        protected getColumnsKey(): string;
+        protected getDialogType(): typeof ProductsDialog;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getService(): string;
+        constructor(container: JQuery);
+    }
+}
+declare namespace BowenSerene.Default {
+    class SuppliersDialog extends Serenity.EntityDialog<SuppliersRow, any> {
+        protected getFormKey(): string;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getNameProperty(): string;
+        protected getService(): string;
+        protected form: SuppliersForm;
+    }
+}
+declare namespace BowenSerene.Default {
+    class SuppliersGrid extends Serenity.EntityGrid<SuppliersRow, any> {
+        protected getColumnsKey(): string;
+        protected getDialogType(): typeof SuppliersDialog;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getService(): string;
+        constructor(container: JQuery);
     }
 }
 declare namespace BowenSerene.Default {
