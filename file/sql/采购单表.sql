@@ -13,19 +13,10 @@ CREATE TABLE [dbo].[PurchaseOrder](
 	[Status] [int] default 0  NULL,
 	[IsPay] [int] default 0  NULL,
 	[DeleteMark] [int] default 0  NULL,
-	[BuyUserId] [varchar](50) NULL,
+	[BuyUserId]  [int] default 0  NULL,
 	[PurchaseDate] [datetime] NULL,
 	[SupplierId] [varchar](50) NULL,
-	[SupplierNumber] [varchar](50) NULL,
 	[LetterNumber] [varchar](50) NULL,
-	[EstimateTotal] decimal(20,2) NULL,
-	[ReckonTotal] decimal(20,2) NULL,
-	[TotalSize] decimal(20,3) NULL,
-	[TotalWeight] decimal(20,2) NULL,
-	[TotalVolume] decimal(20,2) NULL,
-	[TotalContainer] int NULL,
-	[TotalBuyCount] int NULL,
-	[TotalPieceCount] int NULL,
 	[Notes] [varchar](1000) NULL,
 	[AgentNumber] [varchar](1000) NULL,
 	[PayWay] [int] default 0  NULL,
@@ -40,7 +31,6 @@ CREATE TABLE [dbo].[PurchaseOrder](
 	[PortDepart] [varchar](50) NULL,
 	[PortDest] [varchar](50) NULL,
 	[PriceTerms] [int] default 0  NULL,
-	[OrganizeId] [varchar](50) NULL,
 	[InsertUserId] [int] default 0  NULL,
 	[InsertDate] [datetime] NULL,
 	[UpdateUserId] [int] default 0  NULL,
@@ -78,16 +68,7 @@ exec sp_addextendedproperty N'MS_Description', N'支付状态（0：未支付 1：支付中 2
 exec sp_addextendedproperty N'MS_Description', N'采购日期', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'PurchaseDate'
 exec sp_addextendedproperty N'MS_Description', N'采购员', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'BuyUserId'
 exec sp_addextendedproperty N'MS_Description', N'供货商主键', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'SupplierId'
-exec sp_addextendedproperty N'MS_Description', N'供货商编号', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'SupplierNumber'
 exec sp_addextendedproperty N'MS_Description', N'信用证号', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'LetterNumber'
-exec sp_addextendedproperty N'MS_Description', N'预估金额', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'EstimateTotal'
-exec sp_addextendedproperty N'MS_Description', N'结算金额', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'ReckonTotal'
-exec sp_addextendedproperty N'MS_Description', N'总面积', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'TotalSize'
-exec sp_addextendedproperty N'MS_Description', N'总重量', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'TotalWeight'
-exec sp_addextendedproperty N'MS_Description', N'总体积', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'TotalVolume'
-exec sp_addextendedproperty N'MS_Description', N'总货柜数', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'TotalContainer'
-exec sp_addextendedproperty N'MS_Description', N'总荒料数', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'TotalBuyCount'
-exec sp_addextendedproperty N'MS_Description', N'总片数', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'TotalPieceCount'
 exec sp_addextendedproperty N'MS_Description', N'备注', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'Notes'
 exec sp_addextendedproperty N'MS_Description', N'进口代理', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'AgentNumber'
 exec sp_addextendedproperty N'MS_Description', N'付款方式', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'PayWay'
@@ -102,7 +83,6 @@ exec sp_addextendedproperty N'MS_Description', N'船公司', N'user', N'dbo', N'tab
 exec sp_addextendedproperty N'MS_Description', N'启运港', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'PortDepart'
 exec sp_addextendedproperty N'MS_Description', N'目的港', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'PortDest'
 exec sp_addextendedproperty N'MS_Description', N'价格条款', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'PriceTerms'
-exec sp_addextendedproperty N'MS_Description', N'所属公司', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'OrganizeId'
 exec sp_addextendedproperty N'MS_Description', N'删除标识', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'DeleteMark'
 
 exec sp_addextendedproperty N'MS_Description', N'创建人', N'user', N'dbo', N'table', N'PurchaseOrder', N'column', N'InsertUserId'
