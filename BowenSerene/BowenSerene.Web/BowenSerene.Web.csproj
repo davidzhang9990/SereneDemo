@@ -2102,6 +2102,7 @@
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_191600_GenreTable.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_184800_MovieKind.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171021_130000_Movie.cs" />
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171024_123200_PurchaseOrder.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171024_101100_ProductAndSupplier.cs" />
     <Compile Include="Migrations\NorthwindDB\NorthwindDB_20171022_195900_MultiTenant.cs" />
     <Compile Include="Modules\Administration\AdministrationNavigation.cs" />
