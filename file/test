@@ -69,3 +69,7 @@ xxxForm.cs 属性前 加
 [Tab("General")]
 [Category("Order")]
 等属性
+
+#上传图片属性
+#单个图片	ImageUploadEditor(FilenameFormat = "Movie/PrimaryImage/~")
+#多个图片 	MultipleImageUploadEditor(FilenameFormat = "Movie/GalleryImages/~")
