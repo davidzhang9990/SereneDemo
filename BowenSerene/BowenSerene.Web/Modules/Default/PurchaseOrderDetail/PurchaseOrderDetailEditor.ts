@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../Common/Helpers/GridEditorBase.ts" />
 
 namespace BowenSerene.Default {
+    import ToolButton = Serenity.ToolButton;
 
     @Serenity.Decorators.registerEditor()
     export class PurchaseOrderDetailEditor extends Common.GridEditorBase<PurchaseOrderDetailRow>{
@@ -27,8 +28,23 @@ namespace BowenSerene.Default {
             super(container);
         }
 
-        protected getAddButtonCaption() {
-            return "Add";
+        protected getButtons() {
+            return [{
+                title: this.getAddButtonCaption(),
+                cssClass: 'add-button',
+                onClick: () => {
+                    var row = this.getNewEntity();
+                    (row as any)[this.getIdProperty()] = this.getNextId();
+                    var items = this.view.getItems().slice();
+                    items.push(row);
+                    //            else {
+                    //                var index = Q.indexOf(items, x => this.id(x) === id);
+                    //                items[index] = Q.deepClone({} as TEntity, items[index], row);
+                    //            }
+
+                    this.setEntities(items);
+                }
+            }];
         }
     }
 }
