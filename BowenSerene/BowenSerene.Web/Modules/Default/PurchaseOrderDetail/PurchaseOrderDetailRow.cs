@@ -102,7 +102,7 @@ namespace BowenSerene.Default.Entities
             set { Fields.Weight[this] = value; }
         }
 
-        [DisplayName("体积"), Size(19), Scale(5)]
+        [DisplayName("体积"), Size(19), Scale(5), Expression("(t0.[Length] * t0.[Width] *t0.[Height])")]
         public Decimal? Volume
         {
             get { return Fields.Volume[this]; }

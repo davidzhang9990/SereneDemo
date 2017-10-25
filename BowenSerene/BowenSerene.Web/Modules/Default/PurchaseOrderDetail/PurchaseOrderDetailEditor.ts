@@ -26,7 +26,9 @@ namespace BowenSerene.Default {
 
         constructor(container: JQuery) {
             super(container);
-            //this.orderType = parent.frames[0].form.Type;
+
+           
+                //Northwind.ProductRow.Fields.CategoryID;
             //  parent.frames[0].form.Type;
 
             this.slickContainer.on('change', '.edit:input', (e) => this.inputsChange(e));
@@ -161,7 +163,9 @@ namespace BowenSerene.Default {
         private addRow() {
             var row = this.getNewEntity();
             row.PurchaseOrderDetailId = this.getNextId();
-            Q.log(this.view.getItems());
+
+            var tt = Default.PurchaseOrderRow.Fields.Type;
+            Q.log(tt);
             (row as any)[this.getIdProperty()] = this.getNextId();
             var newRow = Q.deepClone({} as PurchaseOrderDetailRow, { Length: 0, Width: 0, Height: this.orderType, Weight: 0.00, Volume: 0.00, Container: '', BlockNumber: parent.name }, row);
             var items = this.view.getItems().slice();

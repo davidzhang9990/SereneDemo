@@ -18,6 +18,7 @@ namespace BowenSerene.Default {
             this.form.Type.changeSelect2(e => {
                 var orderType = this.form.Type.value;
                 this.byId('ShareType').closest('.field').hide();
+                
                 if (Q.isEmptyOrNull(orderType)) {
                     this.form.ShareType.clearItems();
                     return;
