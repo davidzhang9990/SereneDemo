@@ -8247,3 +8247,84 @@ section.content > .s-DataGrid {
 .inline-action.add-child-unit {
   background-image: url(../serenity/images/node-insert-next.png);
 }
+.s-Default-MovieDialog > .size {
+  width: 650px;
+}
+.s-Default-MovieDialog .caption {
+  width: 150px;
+}
+.s-Default-GenreDialog > .size {
+  width: 650px;
+}
+.s-Default-GenreDialog .caption {
+  width: 150px;
+}
+.s-Default-PersonDialog > .size {
+  width: 700px;
+  height: 600px;
+}
+.s-Default-PersonDialog .caption {
+  width: 150px;
+}
+.s-Default-PersonDialog .s-PersonMovieGrid > .grid-container {
+  height: 500px;
+}
+.s-Default-MovieCastDialog > .size {
+  width: 650px;
+}
+.s-Default-MovieCastDialog .caption {
+  width: 150px;
+}
+.s-Default-MovieCastEditDialog > .size {
+  width: 450px;
+}
+.s-Default-MovieCastEditDialog .caption {
+  width: 120px;
+}
+.s-Default-MovieCastEditDialog .s-PropertyGrid .categories {
+  height: 120px;
+}
+.s-Default-TenantsDialog > .size {
+  width: 650px;
+}
+.s-Default-TenantsDialog .caption {
+  width: 150px;
+}
+.s-Default-ProductsDialog > .size {
+  width: 650px;
+}
+.s-Default-ProductsDialog .caption {
+  width: 150px;
+}
+.s-Default-SuppliersDialog > .size {
+  width: 650px;
+}
+.s-Default-SuppliersDialog .caption {
+  width: 150px;
+}
+.s-Default-PurchaseOrderDialog > .size {
+  width: 650px;
+}
+.s-Default-PurchaseOrderDialog .caption {
+  width: 150px;
+}
+@media (min-width: 768px) {
+  .s-Default-PurchaseOrderDialog .field.PurchaseDate,
+  .s-Default-PurchaseOrderDialog .field.SupplierId,
+  .s-Default-PurchaseOrderDialog .field.Number,
+  .s-Default-PurchaseOrderDialog .field.Type,
+  .s-Default-PurchaseOrderDialog .field.ShareType,
+  .s-Default-PurchaseOrderDialog .field.PayWay {
+    flex: auto;
+    min-width: 50%;
+  }
+  .s-Default-PurchaseOrderDialog .grid-container {
+    height: 500px;
+  }
+}
+.s-Default-PurchaseOrderDetailDialog > .size {
+  width: 650px;
+}
+.s-Default-PurchaseOrderDetailDialog .caption {
+  width: 150px;
+}

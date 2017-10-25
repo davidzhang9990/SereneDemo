@@ -45,7 +45,7 @@ namespace BowenSerene.Default.Entities
             set { Fields.BlockNumber[this] = value; }
         }
 
-        [DisplayName("品目"), NotNull, ForeignKey("[dbo].[Products]", "ProductId"), LeftJoin("jProduct"), TextualField("ProductNumber")]
+        [DisplayName("品目"), NotNull, ForeignKey("[dbo].[Products]", "ProductId"), LeftJoin("jProduct"), LookupInclude]
         [LookupEditor(typeof(ProductsRow), InplaceAdd = true)]
         public Guid? ProductId
         {

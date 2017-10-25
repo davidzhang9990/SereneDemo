@@ -13,7 +13,7 @@ namespace BowenSerene.Default.Columns
     [BasedOnRow(typeof(Entities.PurchaseOrderDetailRow))]
     public class PurchaseOrderDetailColumns
     {
-        public String ProductNumber { get; set; }
+        public Guid? ProductId { get; set; }
         public String Container { get; set; }
         public String BlockNumber { get; set; }
         public Int32 Length { get; set; }

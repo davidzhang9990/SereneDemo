@@ -19,9 +19,9 @@ namespace BowenSerene.Default.Forms
         [Tab("基本信息")]
         [Category("采购信息")]
         public String Number { get; set; }
+        public DateTime PurchaseDate { get; set; }
         public Int16 Type { get; set; }
         public Int16 ShareType { get; set; }
-        public DateTime PurchaseDate { get; set; }
         public Guid SupplierId { get; set; }
         public Int16 PayWay { get; set; }
         [TextAreaEditor(Rows = 3)]
