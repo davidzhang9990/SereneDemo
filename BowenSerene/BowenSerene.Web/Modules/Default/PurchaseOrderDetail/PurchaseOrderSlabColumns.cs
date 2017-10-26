@@ -28,7 +28,7 @@ namespace BowenSerene.Default.Columns
         [Width(80)]
         public Decimal Thick { get; set; }
         [Width(80)]
-        public Int32 IsFinishType { get; set; }
+        public Guid? IsFinishType { get; set; }
         [Width(80)]
         public Decimal Size { get; set; }
         [Width(60)]

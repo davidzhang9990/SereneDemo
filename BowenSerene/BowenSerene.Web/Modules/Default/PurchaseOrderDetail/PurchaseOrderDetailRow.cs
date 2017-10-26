@@ -221,11 +221,12 @@ namespace BowenSerene.Default.Entities
             set { Fields.AssignOrderDate[this] = value; }
         }
 
-        [DisplayName("完成面")]
-        public Int32? IsFinishType
+        [DisplayName("完成面"), NotNull, ForeignKey("[dbo].[ProductFinishType]", "FinishTypeId"), LeftJoin("jFinishType"), LookupInclude]
+        [LookupEditor(typeof(ProductFinishTypeRow), InplaceAdd = true)]
+        public Guid? IsFinishType
         {
-            get { return Fields.IsFinishType[this]; }
-            set { Fields.IsFinishType[this] = value; }
+            get { return Fields.ProductId[this]; }
+            set { Fields.ProductId[this] = value; }
         }
 
         [DisplayName("备注"), Size(1000)]

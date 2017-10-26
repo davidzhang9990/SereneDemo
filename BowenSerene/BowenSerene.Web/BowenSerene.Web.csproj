@@ -1166,6 +1166,9 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PersonMovieColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductFinishTypeColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductsColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -2118,6 +2121,18 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailForm.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductFinishTypeRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductFinishTypeService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\ProductFinishType\ProductFinishTypeIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\ProductFinishType\ProductFinishTypeDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\ProductFinishType\ProductFinishTypeGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductFinishTypeForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -2150,6 +2165,7 @@
     <Compile Include="Imports\ClientTypes\Default.PurchaseOrderStoneEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171026_165400_PurchaseOrderDetail_Type.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171026_145800_ProductFinishType.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171026_092100_PurchaseOrderDetail_TypeAndMine.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171023_085300_UserRoleUpdateDate.cs" />
@@ -2603,6 +2619,12 @@
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailEndpoint.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailColumns.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailForm.cs" />
+    <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypeRow.cs" />
+    <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypeRepository.cs" />
+    <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypeEndpoint.cs" />
+    <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypePage.cs" />
+    <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypeColumns.cs" />
+    <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypeForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

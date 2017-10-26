@@ -146,19 +146,23 @@ namespace BowenSerene.Default {
             Q.first(columns, x => x.field === 'Mine').format = str;
             Q.first(columns, x => x.field === 'Grade').format = str;
             Q.first(columns, x => x.field === 'Notes').format = str;
-
-            // this.form.UserId.getGridField().toggle(false);
+            Q.first(columns, x => x.field === 'Size').format = str;
 
             var product = Q.first(columns, x => x.field === fld.ProductId);
             product.referencedFields = [fld.ProductId];
             product.format = ctx => this.selectFormatter(ctx, fld.ProductId, ProductsRow.getLookup());
+
+            var finishType = Q.first(columns, x => x.field === fld.IsFinishType);
+            finishType.referencedFields = [fld.IsFinishType];
+            finishType.format = ctx => this.selectFormatter(ctx, fld.IsFinishType, ProductFinishTypeRow.getLookup());
 
             Q.first(columns, x => x.field === 'Size')
                 .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
 
             Q.first(columns, x => x.field === fld.Length).format = num;
             Q.first(columns, x => x.field === fld.Width).format = num;
-          
+            Q.first(columns, x => x.field === fld.Thick).format = num;
+
             return columns;
         }
         //添加行
@@ -166,7 +170,7 @@ namespace BowenSerene.Default {
             var row = this.getNewEntity();
             row.PurchaseOrderDetailId = this.getNextId();
             (row as any)[this.getIdProperty()] = this.getNextId();
-            var newRow = Q.deepClone({} as PurchaseOrderDetailRow, { Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Container: this.orderType, BlockNumber: this.supplierId }, row);
+            var newRow = Q.deepClone({} as PurchaseOrderDetailRow, { Length: 0, Width: 0, Thick: 0, Size: 0.00, Container: '', BlockNumber: '' }, row);
             // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
             var items = this.view.getItems().slice();
             items.push(newRow);
@@ -216,7 +220,7 @@ namespace BowenSerene.Default {
                 oldText = effective as string;
 
             var value;
-            if (field === 'UnitPrice') {
+            if (field === 'Thick') {
                 value = Q.parseDecimal(text);
                 if (value == null || isNaN(value)) {
                     Q.notifyError(Q.text('Validation.Decimal'), '', null);
