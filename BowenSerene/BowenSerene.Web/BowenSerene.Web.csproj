@@ -1169,6 +1169,9 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductFinishTypeColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductListRequest.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductsColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -2232,6 +2235,7 @@
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesEndpoint.cs" />
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesRepository.cs" />
     <Compile Include="Modules\Common\RowActive.cs" />
+    <Compile Include="Modules\Default\Products\ProductListRequest.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderSlabColumns.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderStoneColumns.cs" />
     <Compile Include="Modules\Default\PurchaseOrder\PurchaseEnum.cs" />

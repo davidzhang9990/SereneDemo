@@ -31,7 +31,6 @@ namespace BowenSerene.Default {
 
         //        protected afterLoadEntity() {
         //            super.afterLoadEntity();
-        //            //Q.log("testss" + this.orderType);
         //        }
 
         protected createSlickGrid() {
@@ -107,6 +106,14 @@ namespace BowenSerene.Default {
                 klass += ' dirty';
             }
 
+            Q.log("place--" + this.supplierId);
+
+            Default.ProductsService.ListProductsBySupplier({
+                SupplierId: this.supplierId
+            }, response => {
+                Q.log(response.Entities);
+            });
+
             var value = this.getEffectiveValue(item, idField);
             var markup = "<select class='" + klass +
                 "' data-field='" + idField +
@@ -176,7 +183,6 @@ namespace BowenSerene.Default {
             var items = this.view.getItems().slice();
             items.push(newRow);
             this.setEntities(items);
-            Q.log(items);
         }
 
         protected onClick(e: JQueryEventObject, row: number, cell: number) {

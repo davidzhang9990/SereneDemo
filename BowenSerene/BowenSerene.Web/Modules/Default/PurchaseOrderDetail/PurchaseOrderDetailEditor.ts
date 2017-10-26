@@ -26,21 +26,14 @@ namespace BowenSerene.Default {
 
         constructor(container: JQuery) {
             super(container);
-
-            Q.log("detailEditor-constructor:" + this.orderType);
-            //Northwind.ProductRow.Fields.CategoryID;
-            //  parent.frames[0].form.Type;
-
             this.slickContainer.on('change', '.edit:input', (e) => this.inputsChange(e));
         }
 
         //        protected afterLoadEntity() {
         //            super.afterLoadEntity();
-        //            //Q.log("testss" + this.orderType);
         //        }
 
         protected createSlickGrid() {
-            Q.log("createTable" + this.orderType);
             var grid = super.createSlickGrid();
             // need to register this plugin for grouping or you'll have errors
             grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
@@ -198,7 +191,6 @@ namespace BowenSerene.Default {
             var items = this.view.getItems().slice();
             items.push(newRow);
             this.setEntities(items);
-            Q.log(items);
         }
 
         protected onClick(e: JQueryEventObject, row: number, cell: number) {

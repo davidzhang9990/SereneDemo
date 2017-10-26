@@ -31,7 +31,6 @@ namespace BowenSerene.Default {
 
         //        protected afterLoadEntity() {
         //            super.afterLoadEntity();
-        //            //Q.log("testss" + this.orderType);
         //        }
 
         protected createSlickGrid() {
@@ -175,7 +174,6 @@ namespace BowenSerene.Default {
             var items = this.view.getItems().slice();
             items.push(newRow);
             this.setEntities(items);
-            Q.log(items);
         }
 
         protected onClick(e: JQueryEventObject, row: number, cell: number) {

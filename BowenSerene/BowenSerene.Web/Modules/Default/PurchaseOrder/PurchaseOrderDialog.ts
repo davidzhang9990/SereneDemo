@@ -19,9 +19,19 @@ namespace BowenSerene.Default {
             //供应商改变事件
             this.form.SupplierId.changeSelect2(e => {
                 var supplierId = Q.toId(this.form.SupplierId.value);
-                if (supplierId != null) {
-                    this.form.OrderStoneList.supplierId = this.form.SupplierId.value;
+
+                if (Q.isEmptyOrNull(supplierId)) {
+                    return;
                 }
+
+                this.form.OrderStoneList.supplierId = supplierId;
+                //var place = Q.first(Default.SuppliersRow.getLookup().items, x => x.SupplierId == supplierId).Place;
+
+//                Default.SuppliersService.Retrieve({
+//                    EntityId: supplierId
+//                }, response => {
+//                    this.form.OrderStoneList.supplierId = response.Entity.Place;
+//                });
             });
         }
 
@@ -43,7 +53,6 @@ namespace BowenSerene.Default {
                 this.byId('ShareType').closest('.field').hide();
                // this.byId('OrderStoneList').closest('.field').show();
                 this.form.OrderStoneList.getGridField().toggle(false);
-                Q.log("新建板材采购单");
             }
             //            Serenity.TabsExtensions.setDisabled(this.tabs, 'Customer',
             //                !this.getCustomerID());

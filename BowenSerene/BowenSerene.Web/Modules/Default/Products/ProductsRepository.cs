@@ -1,4 +1,8 @@
 ﻿
+using System.Linq;
+using BowenSerene.Default.Entities;
+using BowenSerene.Northwind.Entities;
+
 namespace BowenSerene.Default.Repositories
 {
     using Serenity;
@@ -35,6 +39,33 @@ namespace BowenSerene.Default.Repositories
         public ListResponse<MyRow> List(IDbConnection connection, ListRequest request)
         {
             return new MyListHandler().Process(connection, request);
+        }
+
+        public ListResponse<string> ListProductsBySupplier(IDbConnection connection, ProductListRequest request)
+        {
+            Check.NotNull(request, "request");
+            Check.NotNull(request.SupplierId, "supplierId");
+
+            var pro = MyRow.Fields.As("pro");
+            var sup = SuppliersRow.Fields.As("sup");
+
+            var query = new SqlQuery()
+                .From(pro)
+                .Select(pro.Name)
+                .Distinct(true)
+                .OrderBy(pro.Name);
+
+            query.Where(pro.Place.In(
+                query.SubQuery()
+                    .From(sup)
+                    .Select(sup.Place)
+                    .Where(sup.SupplierId == request.SupplierId)
+            ));
+
+            return new ListResponse<string>
+            {
+                Entities = connection.Query<string>(query).ToList()
+            };
         }
 
         private class MySaveHandler : SaveRequestHandler<MyRow>
