@@ -11,23 +11,42 @@ namespace BowenSerene.Default {
         protected getService() { return PurchaseOrderService.baseUrl; }
 
         protected form = new PurchaseOrderForm(this.idPrefix);
+        private supplierId: string;
+        public type: string;
 
         constructor() {
             super();
-
-            this.form.Type.changeSelect2(e => {
-                var orderType = this.form.Type.value;
-                this.byId('ShareType').closest('.field').hide();
-                
-                if (Q.isEmptyOrNull(orderType)) {
-                    this.form.ShareType.clearItems();
-                    return;
-                }
-                if (orderType === Default.PurchaseType.Stone.toString()) {
-                    this.byId('ShareType').closest('.field').show();
+            //供应商改变事件
+            this.form.SupplierId.changeSelect2(e => {
+                var supplierId = Q.toId(this.form.SupplierId.value);
+                if (supplierId != null) {
+                    this.form.OrderStoneList.supplierId = this.form.SupplierId.value;
                 }
             });
         }
 
+        //#david 加载实体完成事件
+        loadEntity(entity: Northwind.OrderRow) {
+            super.loadEntity(entity);
+            var orderType = this.form.Type.value;
+            if (Q.isEmptyOrNull(orderType)) {
+                this.form.Type.value = Default.PurchaseType.Stone.toString();
+            }
+            //设置明细窗体的 type
+            //this.form.OrderStoneList.orderType = this.form.Type.value;
+            //荒料 Q.isEmptyOrNull(orderType)
+            if (this.form.Type.value === Default.PurchaseType.Stone.toString()) {
+                this.byId('ShareType').closest('.field').show();
+                //this.byId('OrderSlabList').closest('.field').show();
+                this.form.OrderSlabList.getGridField().toggle(false);
+            } else {
+                this.byId('ShareType').closest('.field').hide();
+               // this.byId('OrderStoneList').closest('.field').show();
+                this.form.OrderStoneList.getGridField().toggle(false);
+                Q.log("新建板材采购单");
+            }
+            //            Serenity.TabsExtensions.setDisabled(this.tabs, 'Customer',
+            //                !this.getCustomerID());
+        }
     }
 }

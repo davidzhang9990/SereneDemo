@@ -101,9 +101,17 @@
     }
 
     @media (min-width: 768px) {
-        .field.PurchaseDate, .field.SupplierId ,.field.Number, .field.Type, .field.ShareType ,.field.PayWay{
+        .field.PurchaseDate, .field.SupplierId, .field.Number, .field.Type, .field.ShareType, .field.PayWay {
             flex: auto;
             min-width: 50%;
+        }
+
+        .field.OrderStoneList > .caption {
+            display: none;
+        }
+
+        .field.OrderSlabList > .caption {
+            display: none;
         }
 
         .grid-container {

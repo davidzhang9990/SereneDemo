@@ -8318,6 +8318,12 @@ section.content > .s-DataGrid {
     flex: auto;
     min-width: 50%;
   }
+  .s-Default-PurchaseOrderDialog .field.OrderStoneList > .caption {
+    display: none;
+  }
+  .s-Default-PurchaseOrderDialog .field.OrderSlabList > .caption {
+    display: none;
+  }
   .s-Default-PurchaseOrderDialog .grid-container {
     height: 500px;
   }

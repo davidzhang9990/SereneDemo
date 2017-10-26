@@ -14,7 +14,7 @@ namespace BowenSerene.Default.Entities
     using System.IO;
 
     [ConnectionKey("Default"), TableName("[dbo].[PurchaseOrder]")]
-    [DisplayName("Purchase Order"), InstanceName("Purchase Order"), TwoLevelCached]
+    [DisplayName("Purchase Order"), InstanceName("订单"), TwoLevelCached]
     [ReadPermission("Administration:General")]
     [ModifyPermission("Administration:General")]
     public sealed class PurchaseOrderRow : LoggingRow, IIdRow, INameRow

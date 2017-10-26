@@ -53,6 +53,27 @@ namespace BowenSerene.Default.Entities
             set { Fields.ProductId[this] = value; }
         }
 
+        [DisplayName("类别"), Size(50)]
+        public String Category
+        {
+            get { return Fields.BlockNumber[this]; }
+            set { Fields.BlockNumber[this] = value; }
+        }
+
+        [DisplayName("矿口"), Size(50)]
+        public String Mine
+        {
+            get { return Fields.BlockNumber[this]; }
+            set { Fields.BlockNumber[this] = value; }
+        }
+
+        [DisplayName("等级"), Size(50)]
+        public String Grade
+        {
+            get { return Fields.BlockNumber[this]; }
+            set { Fields.BlockNumber[this] = value; }
+        }
+
         [DisplayName("数量")]
         public Int32? Quantity
         {
@@ -245,6 +266,9 @@ namespace BowenSerene.Default.Entities
             public StringField Container;
             public StringField BlockNumber;
             public GuidField ProductId;
+            public StringField Category;
+            public StringField Mine;
+            public StringField Grade;
             public Int32Field Quantity;
             public Int32Field Length;
             public Int32Field Width;

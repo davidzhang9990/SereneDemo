@@ -1061,6 +1061,9 @@ declare namespace BowenSerene.Default {
         Container?: string;
         BlockNumber?: string;
         ProductId?: string;
+        Category?: string;
+        Mine?: string;
+        Grade?: string;
         Quantity?: number;
         Length?: number;
         Width?: number;
@@ -1100,6 +1103,9 @@ declare namespace BowenSerene.Default {
             const Container: string;
             const BlockNumber: string;
             const ProductId: string;
+            const Category: string;
+            const Mine: string;
+            const Grade: string;
             const Quantity: string;
             const Length: string;
             const Width: string;
@@ -1160,7 +1166,8 @@ declare namespace BowenSerene.Default {
         SupplierId: Serenity.LookupEditor;
         PayWay: Serenity.EnumEditor;
         Notes: Serenity.TextAreaEditor;
-        OrderDetailList: PurchaseOrderDetailEditor;
+        OrderStoneList: PurchaseOrderStoneEditor;
+        OrderSlabList: PurchaseOrderSlabEditor;
         LetterNumber: Serenity.StringEditor;
         AgentNumber: Serenity.StringEditor;
         Behalf: Serenity.StringEditor;
@@ -1253,6 +1260,10 @@ declare namespace BowenSerene.Default {
             const List: string;
         }
     }
+}
+declare namespace BowenSerene.Default {
+}
+declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
     enum PurchasePayWay {
@@ -4915,7 +4926,10 @@ declare namespace BowenSerene.Default {
         protected getNameProperty(): string;
         protected getService(): string;
         protected form: PurchaseOrderForm;
+        private supplierId;
+        type: string;
         constructor();
+        loadEntity(entity: Northwind.OrderRow): void;
     }
 }
 declare namespace BowenSerene.Default {
@@ -4926,15 +4940,8 @@ declare namespace BowenSerene.Default {
         protected getLocalTextPrefix(): string;
         protected getService(): string;
         constructor(container: JQuery);
-    }
-}
-declare namespace BowenSerene.Default {
-    class PurchaseOrderDetailEditDialog extends Common.GridEditorDialog<PurchaseOrderDetailRow> {
-        protected getFormKey(): string;
-        protected getNameProperty(): string;
-        protected getLocalTextPrefix(): string;
-        protected form: PurchaseOrderDetailForm;
-        constructor();
+        private openOrderDialog(orderType);
+        protected getButtons(): Serenity.ToolButton[];
     }
 }
 declare namespace BowenSerene.Default {
@@ -4942,11 +4949,74 @@ declare namespace BowenSerene.Default {
         protected validateEntity(row: PurchaseOrderDetailRow, id: number): boolean;
         protected getColumnsKey(): string;
         protected getLocalTextPrefix(): string;
-        private orderType;
+        orderType: string;
+        supplierId: string;
         private pendingChanges;
         constructor(container: JQuery);
         protected createSlickGrid(): Slick.Grid;
-        protected usePager(): boolean;
+        protected onViewProcessData(response: any): Serenity.ListResponse<PurchaseOrderDetailRow>;
+        private numericInputFormatter(ctx);
+        private stringInputFormatter(ctx);
+        /**
+        * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
+        */
+        private selectFormatter(ctx, idField, lookup);
+        protected setcustomColumns(): Slick.Column[];
+        protected getColumns(): Slick.Column[];
+        private addRow();
+        protected onClick(e: JQueryEventObject, row: number, cell: number): void;
+        private inputsChange(e);
+        private setSaveButtonState();
+        protected getSlickOptions(): Slick.GridOptions;
+        private getEffectiveValue(item, field);
+        protected getButtons(): {
+            title: string;
+            cssClass: string;
+            onClick: () => void;
+        }[];
+    }
+}
+declare namespace BowenSerene.Default {
+    class PurchaseOrderSlabEditor extends Common.GridEditorBase<PurchaseOrderDetailRow> {
+        protected validateEntity(row: PurchaseOrderDetailRow, id: number): boolean;
+        protected getColumnsKey(): string;
+        protected getLocalTextPrefix(): string;
+        orderType: string;
+        supplierId: string;
+        private pendingChanges;
+        constructor(container: JQuery);
+        protected createSlickGrid(): Slick.Grid;
+        protected onViewProcessData(response: any): Serenity.ListResponse<PurchaseOrderDetailRow>;
+        private numericInputFormatter(ctx);
+        private stringInputFormatter(ctx);
+        /**
+        * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
+        */
+        private selectFormatter(ctx, idField, lookup);
+        protected getColumns(): Slick.Column[];
+        private addRow();
+        protected onClick(e: JQueryEventObject, row: number, cell: number): void;
+        private inputsChange(e);
+        private setSaveButtonState();
+        protected getSlickOptions(): Slick.GridOptions;
+        private getEffectiveValue(item, field);
+        protected getButtons(): {
+            title: string;
+            cssClass: string;
+            onClick: () => void;
+        }[];
+    }
+}
+declare namespace BowenSerene.Default {
+    class PurchaseOrderStoneEditor extends Common.GridEditorBase<PurchaseOrderDetailRow> {
+        protected validateEntity(row: PurchaseOrderDetailRow, id: number): boolean;
+        protected getColumnsKey(): string;
+        protected getLocalTextPrefix(): string;
+        orderType: string;
+        supplierId: string;
+        private pendingChanges;
+        constructor(container: JQuery);
+        protected createSlickGrid(): Slick.Grid;
         protected onViewProcessData(response: any): Serenity.ListResponse<PurchaseOrderDetailRow>;
         private numericInputFormatter(ctx);
         private stringInputFormatter(ctx);

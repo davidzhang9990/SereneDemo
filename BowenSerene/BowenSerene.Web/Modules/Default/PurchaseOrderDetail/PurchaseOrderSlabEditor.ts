@@ -3,7 +3,7 @@
 namespace BowenSerene.Default {
 
     @Serenity.Decorators.registerEditor()
-    export class PurchaseOrderDetailEditor extends Common.GridEditorBase<PurchaseOrderDetailRow>{
+    export class PurchaseOrderSlabEditor extends Common.GridEditorBase<PurchaseOrderDetailRow>{
 
         protected validateEntity(row: PurchaseOrderDetailRow, id: number) {
             if (!super.validateEntity(row, id))
@@ -13,7 +13,7 @@ namespace BowenSerene.Default {
             return true;
         }
         protected getColumnsKey() {
-            return "Default.PurchaseOrderDetail";
+            return "Default.PurchaseOrderSlab";
         }
 
         protected getLocalTextPrefix() {
@@ -26,11 +26,6 @@ namespace BowenSerene.Default {
 
         constructor(container: JQuery) {
             super(container);
-
-            Q.log("detailEditor-constructor:" + this.orderType);
-            //Northwind.ProductRow.Fields.CategoryID;
-            //  parent.frames[0].form.Type;
-
             this.slickContainer.on('change', '.edit:input', (e) => this.inputsChange(e));
         }
 
@@ -40,15 +35,13 @@ namespace BowenSerene.Default {
         //        }
 
         protected createSlickGrid() {
-            Q.log("createTable" + this.orderType);
             var grid = super.createSlickGrid();
             // need to register this plugin for grouping or you'll have errors
             grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
 
             this.view.setSummaryOptions({
                 aggregators: [
-                    new Slick.Aggregators.Sum('Weight'),
-                    new Slick.Aggregators.Sum('Volume')
+                    new Slick.Aggregators.Sum('Size')
                 ]
             });
 
@@ -128,16 +121,6 @@ namespace BowenSerene.Default {
             return markup + "</select>";
         }
 
-        //设置自定义字段
-        protected setcustomColumns() {
-            var columns = super.getColumns();
-            if (this.orderType === Default.PurchaseType.Stone.toString()) {
-                columns.splice(10, 3);
-            } else {
-                columns.splice(7, 3);
-            }
-            return columns;
-        }
         //格式化列
         protected getColumns() {
             var columns = super.getColumns();
@@ -170,22 +153,12 @@ namespace BowenSerene.Default {
             product.referencedFields = [fld.ProductId];
             product.format = ctx => this.selectFormatter(ctx, fld.ProductId, ProductsRow.getLookup());
 
-            Q.first(columns, x => x.field === 'Weight')
-                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
-
-            Q.first(columns, x => x.field === 'Volume')
+            Q.first(columns, x => x.field === 'Size')
                 .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
 
             Q.first(columns, x => x.field === fld.Length).format = num;
             Q.first(columns, x => x.field === fld.Width).format = num;
-            Q.first(columns, x => x.field === fld.Height).format = num;
-            Q.first(columns, x => x.field === fld.Weight).format = num;
-
-            if (this.orderType === Default.PurchaseType.Stone.toString()) {
-                columns.splice(10, 3);
-            } else {
-                columns.splice(7, 3);
-            }
+          
             return columns;
         }
         //添加行

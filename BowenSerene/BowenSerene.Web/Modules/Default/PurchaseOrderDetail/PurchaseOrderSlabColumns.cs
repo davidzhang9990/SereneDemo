@@ -9,9 +9,9 @@ namespace BowenSerene.Default.Columns
     using System.Collections.Generic;
     using System.IO;
 
-    [ColumnsScript("Default.PurchaseOrderDetail")]
+    [ColumnsScript("Default.PurchaseOrderSlab")]
     [BasedOnRow(typeof(Entities.PurchaseOrderDetailRow))]
-    public class PurchaseOrderDetailColumns
+    public class PurchaseOrderSlabColumns
     {
         [Width(100)]
         public Guid? ProductId { get; set; }
@@ -26,12 +26,8 @@ namespace BowenSerene.Default.Columns
         [Width(80)]
         public Int32 Width { get; set; }
         [Width(80)]
-        public Int32 Height { get; set; }
-        [Width(80)]
-        public Decimal Weight { get; set; }
-        [Width(80)]
-        public Decimal Volume { get; set; }
         public Decimal Thick { get; set; }
+        [Width(80)]
         public Int32 IsFinishType { get; set; }
         [Width(80)]
         public Decimal Size { get; set; }
