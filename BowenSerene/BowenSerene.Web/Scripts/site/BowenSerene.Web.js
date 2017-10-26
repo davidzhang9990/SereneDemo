@@ -10333,6 +10333,12 @@ var BowenSerene;
                 }, function (response) {
                     Q.log(response.Entities);
                 });
+                //            Default.ProductsService.List({
+                //                ContainsText: "沙特",
+                //                ContainsField: "CompanyName"
+                //            }, response => {
+                //                Q.log(response.Entities);
+                //            });
                 var value = this.getEffectiveValue(item, idField);
                 var markup = "<select class='" + klass +
                     "' data-field='" + idField +

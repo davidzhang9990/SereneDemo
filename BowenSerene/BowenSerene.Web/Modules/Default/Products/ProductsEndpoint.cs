@@ -42,5 +42,11 @@ namespace BowenSerene.Default.Endpoints
         {
             return new MyRepository().List(connection, request);
         }
+
+        [HttpPost]
+        public ListResponse<string> ListProductsBySupplier(IDbConnection connection, ProductListRequest request)
+        {
+            return new MyRepository().ListProductsBySupplier(connection, request);
+        }
     }
 }

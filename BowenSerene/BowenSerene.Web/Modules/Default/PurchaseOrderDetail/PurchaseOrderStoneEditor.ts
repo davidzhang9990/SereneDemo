@@ -108,11 +108,18 @@ namespace BowenSerene.Default {
 
             Q.log("place--" + this.supplierId);
 
-            Default.ProductsService.ListProductsBySupplier({
-                SupplierId: this.supplierId
-            }, response => {
-                Q.log(response.Entities);
-            });
+                        Default.ProductsService.ListProductsBySupplier({
+                            SupplierId: this.supplierId
+                        }, response => {
+                            Q.log(response.Entities);
+                        });
+
+//            Default.ProductsService.List({
+//                ContainsText: "沙特",
+//                ContainsField: "CompanyName"
+//            }, response => {
+//                Q.log(response.Entities);
+//            });
 
             var value = this.getEffectiveValue(item, idField);
             var markup = "<select class='" + klass +

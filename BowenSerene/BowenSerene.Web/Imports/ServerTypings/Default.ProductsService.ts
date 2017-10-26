@@ -23,7 +23,7 @@
             'Update', 
             'Delete', 
             'Retrieve', 
-            'List',
+            'List', 
             'ListProductsBySupplier'
         ].forEach(x => {
             (<any>ProductsService)[x] = function (r, s, o) {
