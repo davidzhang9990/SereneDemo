@@ -1448,6 +1448,7 @@
     <TypeScriptCompile Include="Modules\Common\Navigation\ThemeSelection.ts" />
     <TypeScriptCompile Include="Modules\Common\Navigation\SidebarSearch.ts" />
     <TypeScriptCompile Include="Modules\Common\Navigation\LanguageSelection.ts" />
+    <TypeScriptCompile Include="Modules\Common\Common.ts" />
     <TypeScriptCompile Include="Modules\Common\Reporting\ReportPage.ts" />
     <TypeScriptCompile Include="Modules\Common\Reporting\ReportDialog.ts" />
     <TypeScriptCompile Include="Modules\Common\ScriptInitialization.ts" />
@@ -1458,7 +1459,6 @@
     <TypeScriptCompile Include="Modules\Default\Person\PersonMovieGrid.ts" />
     <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderSlabEditor.ts" />
     <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderStoneEditor.ts" />
-    <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailEditor.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ChangePassword\ChangePasswordPanel.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ForgotPassword\ForgotPasswordPanel.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ResetPassword\ResetPasswordPanel.ts" />
@@ -2621,8 +2621,6 @@
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailRow.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailRepository.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailEndpoint.cs" />
-    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailColumns.cs" />
-    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailForm.cs" />
     <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypeRow.cs" />
     <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypeRepository.cs" />
     <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypeEndpoint.cs" />

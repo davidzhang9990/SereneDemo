@@ -1,4 +1,6 @@
 ﻿
+using System.Web.UI.WebControls;
+
 namespace BowenSerene.Default.Columns
 {
     using Serenity;
@@ -13,6 +15,7 @@ namespace BowenSerene.Default.Columns
     [BasedOnRow(typeof(Entities.PurchaseOrderDetailRow))]
     public class PurchaseOrderStoneColumns
     {
+        public Guid? PurchaseOrderDetailId { get; set; }
         [Width(100)]
         public Guid? ProductId { get; set; }
         [Width(80)]

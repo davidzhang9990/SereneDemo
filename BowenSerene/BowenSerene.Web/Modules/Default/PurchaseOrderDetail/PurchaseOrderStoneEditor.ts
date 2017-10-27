@@ -21,6 +21,7 @@ namespace BowenSerene.Default {
         }
         public orderType: string;
         public supplierId: string;
+        public customProductList: ProductsRow[];
 
         private pendingChanges: Q.Dictionary<any> = {};
 
@@ -105,22 +106,6 @@ namespace BowenSerene.Default {
             if (pending && pending[idField] !== undefined) {
                 klass += ' dirty';
             }
-
-            Q.log("place--" + this.supplierId);
-
-                        Default.ProductsService.ListProductsBySupplier({
-                            SupplierId: this.supplierId
-                        }, response => {
-                            Q.log(response.Entities);
-                        });
-
-//            Default.ProductsService.List({
-//                ContainsText: "沙特",
-//                ContainsField: "CompanyName"
-//            }, response => {
-//                Q.log(response.Entities);
-//            });
-
             var value = this.getEffectiveValue(item, idField);
             var markup = "<select class='" + klass +
                 "' data-field='" + idField +
@@ -132,6 +117,33 @@ namespace BowenSerene.Default {
                     markup += " selected";
                 }
                 markup += ">" + Q.htmlEncode(c[lookup.textField]) + "</option>";
+            }
+            return markup + "</select>";
+        }
+
+        /**
+       * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
+       */
+        private selectCustomFormatter(ctx: Slick.FormatterContext, idField: string) {
+
+            var klass = 'edit';
+            var item = ctx.item as PurchaseOrderDetailRow;
+            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+
+            if (pending && pending[idField] !== undefined) {
+                klass += ' dirty';
+            }
+
+            var value = this.getEffectiveValue(item, idField);
+            var markup = "<select class='" + klass +
+                "' data-field='" + idField +
+                "' style='width: 100%; max-width: 100%'>";
+            for (var c of this.customProductList) {
+                markup += "<option value='" + c.ProductId + "'";
+                if (c.ProductId == value) {
+                    markup += " selected";
+                }
+                markup += ">" + Q.htmlEncode(c.Name) + "</option>";
             }
             return markup + "</select>";
         }
@@ -166,7 +178,7 @@ namespace BowenSerene.Default {
 
             var product = Q.first(columns, x => x.field === fld.ProductId);
             product.referencedFields = [fld.ProductId];
-            product.format = ctx => this.selectFormatter(ctx, fld.ProductId, ProductsRow.getLookup());
+            product.format = ctx => this.selectCustomFormatter(ctx, fld.ProductId);
 
             Q.first(columns, x => x.field === 'Weight')
                 .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
@@ -183,13 +195,20 @@ namespace BowenSerene.Default {
         //添加行
         private addRow() {
             var row = this.getNewEntity();
-            row.PurchaseOrderDetailId = this.getNextId();
             (row as any)[this.getIdProperty()] = this.getNextId();
-            var newRow = Q.deepClone({} as PurchaseOrderDetailRow, { Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Container: this.orderType, BlockNumber: this.supplierId }, row);
+            var newRow = Q.deepClone({} as PurchaseOrderDetailRow, { PurchaseOrderDetailId: Guid.newGuid(), Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Container: '', BlockNumber: '' }, row);
             // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
             var items = this.view.getItems().slice();
             items.push(newRow);
             this.setEntities(items);
+            Q.log("items:" + items);
+        }
+
+        public clearView() {
+            var items = this.view.getItems().slice();
+            for (var c of items) {
+                this.view.deleteItem(c.__id);
+            }
         }
 
         protected onClick(e: JQueryEventObject, row: number, cell: number) {
@@ -234,7 +253,7 @@ namespace BowenSerene.Default {
                 oldText = effective as string;
 
             var value;
-            if (field === 'UnitPrice') {
+            if (field === 'Weight') {
                 value = Q.parseDecimal(text);
                 if (value == null || isNaN(value)) {
                     Q.notifyError(Q.text('Validation.Decimal'), '', null);
@@ -288,7 +307,6 @@ namespace BowenSerene.Default {
             if (pending && pending[field] !== undefined) {
                 return pending[field];
             }
-
             return item[field];
         }
 

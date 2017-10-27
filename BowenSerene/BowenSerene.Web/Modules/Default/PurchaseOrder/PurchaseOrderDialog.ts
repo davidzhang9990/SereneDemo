@@ -18,13 +18,7 @@ namespace BowenSerene.Default {
             super();
             //供应商改变事件
             this.form.SupplierId.changeSelect2(e => {
-                var supplierId = Q.toId(this.form.SupplierId.value);
-
-                if (Q.isEmptyOrNull(supplierId)) {
-                    return;
-                }
-
-                this.form.OrderStoneList.supplierId = supplierId;
+                this.setProducts();
                 //var place = Q.first(Default.SuppliersRow.getLookup().items, x => x.SupplierId == supplierId).Place;
 
 //                Default.SuppliersService.Retrieve({
@@ -35,12 +29,31 @@ namespace BowenSerene.Default {
             });
         }
 
+        private setProducts() {
+            var supplierId = Q.toId(this.form.SupplierId.value);
+            this.form.OrderStoneList.customProductList = [];
+            if (Q.isEmptyOrNull(supplierId)) {
+                return;
+            }
+            Default.ProductsService.ListProductsBySupplier({
+                SupplierId: supplierId
+            }, response => {
+                this.form.OrderStoneList.customProductList = response.Entities;
+                this.form.OrderStoneList.clearView();
+            });
+        }
+
         //#david 加载实体完成事件
         loadEntity(entity: Northwind.OrderRow) {
             super.loadEntity(entity);
             var orderType = this.form.Type.value;
             if (Q.isEmptyOrNull(orderType)) {
                 this.form.Type.value = Default.PurchaseType.Stone.toString();
+            }
+
+            var supplierId = Q.toId(this.form.SupplierId.value);
+            if (!Q.isEmptyOrNull(supplierId)) {
+                this.setProducts();
             }
             //设置明细窗体的 type
             //this.form.OrderStoneList.orderType = this.form.Type.value;

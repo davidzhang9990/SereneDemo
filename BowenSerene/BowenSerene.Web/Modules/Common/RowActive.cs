@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace BowenSerene.Default
 {
     using Serenity.ComponentModel;

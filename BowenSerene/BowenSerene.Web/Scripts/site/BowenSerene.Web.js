@@ -1298,6 +1298,8 @@ var BowenSerene;
                 'ShareType',
                 'PurchaseDate',
                 'SupplierId',
+                'OrderStoneList',
+                'OrderSlabList',
                 'LetterNumber',
                 'AgentNumber',
                 'PayWay',
@@ -8389,6 +8391,27 @@ var BowenSerene;
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
 (function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var Guid = (function () {
+            function Guid() {
+            }
+            Guid.newGuid = function () {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            };
+            return Guid;
+        }());
+        Guid = __decorate([
+            Serenity.Decorators.registerClass()
+        ], Guid);
+        Default.Guid = Guid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
     var BasicProgressDialog = (function (_super) {
         __extends(BasicProgressDialog, _super);
         function BasicProgressDialog() {
@@ -9607,11 +9630,7 @@ var BowenSerene;
                 _this.form = new Default.PurchaseOrderForm(_this.idPrefix);
                 //供应商改变事件
                 _this.form.SupplierId.changeSelect2(function (e) {
-                    var supplierId = Q.toId(_this.form.SupplierId.value);
-                    if (Q.isEmptyOrNull(supplierId)) {
-                        return;
-                    }
-                    _this.form.OrderStoneList.supplierId = supplierId;
+                    _this.setProducts();
                     //var place = Q.first(Default.SuppliersRow.getLookup().items, x => x.SupplierId == supplierId).Place;
                     //                Default.SuppliersService.Retrieve({
                     //                    EntityId: supplierId
@@ -9626,12 +9645,30 @@ var BowenSerene;
             PurchaseOrderDialog.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
             PurchaseOrderDialog.prototype.getNameProperty = function () { return Default.PurchaseOrderRow.nameProperty; };
             PurchaseOrderDialog.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
+            PurchaseOrderDialog.prototype.setProducts = function () {
+                var _this = this;
+                var supplierId = Q.toId(this.form.SupplierId.value);
+                this.form.OrderStoneList.customProductList = [];
+                if (Q.isEmptyOrNull(supplierId)) {
+                    return;
+                }
+                Default.ProductsService.ListProductsBySupplier({
+                    SupplierId: supplierId
+                }, function (response) {
+                    _this.form.OrderStoneList.customProductList = response.Entities;
+                    _this.form.OrderStoneList.clearView();
+                });
+            };
             //#david 加载实体完成事件
             PurchaseOrderDialog.prototype.loadEntity = function (entity) {
                 _super.prototype.loadEntity.call(this, entity);
                 var orderType = this.form.Type.value;
                 if (Q.isEmptyOrNull(orderType)) {
                     this.form.Type.value = Default.PurchaseType.Stone.toString();
+                }
+                var supplierId = Q.toId(this.form.SupplierId.value);
+                if (!Q.isEmptyOrNull(supplierId)) {
+                    this.setProducts();
                 }
                 //设置明细窗体的 type
                 //this.form.OrderStoneList.orderType = this.form.Type.value;
@@ -9716,275 +9753,6 @@ var BowenSerene;
             Serenity.Decorators.registerClass()
         ], PurchaseOrderGrid);
         Default.PurchaseOrderGrid = PurchaseOrderGrid;
-    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
-})(BowenSerene || (BowenSerene = {}));
-/// <reference path="../../Common/Helpers/GridEditorBase.ts" />
-var BowenSerene;
-(function (BowenSerene) {
-    var Default;
-    (function (Default) {
-        var PurchaseOrderDetailEditor = (function (_super) {
-            __extends(PurchaseOrderDetailEditor, _super);
-            function PurchaseOrderDetailEditor(container) {
-                var _this = _super.call(this, container) || this;
-                _this.pendingChanges = {};
-                _this.slickContainer.on('change', '.edit:input', function (e) { return _this.inputsChange(e); });
-                return _this;
-            }
-            PurchaseOrderDetailEditor.prototype.validateEntity = function (row, id) {
-                if (!_super.prototype.validateEntity.call(this, row, id))
-                    return false;
-                row.Size = 2.11;
-                //row.PersonFullname = PersonRow.getLookup().itemById[row.PersonId].Fullname;
-                return true;
-            };
-            PurchaseOrderDetailEditor.prototype.getColumnsKey = function () {
-                return "Default.PurchaseOrderDetail";
-            };
-            PurchaseOrderDetailEditor.prototype.getLocalTextPrefix = function () {
-                return Default.PurchaseOrderDetailRow.localTextPrefix;
-            };
-            //        protected afterLoadEntity() {
-            //            super.afterLoadEntity();
-            //        }
-            PurchaseOrderDetailEditor.prototype.createSlickGrid = function () {
-                var grid = _super.prototype.createSlickGrid.call(this);
-                // need to register this plugin for grouping or you'll have errors
-                grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
-                this.view.setSummaryOptions({
-                    aggregators: [
-                        new Slick.Aggregators.Sum('Weight'),
-                        new Slick.Aggregators.Sum('Volume')
-                    ]
-                });
-                return grid;
-            };
-            //        protected usePager() {
-            //            return false;
-            //        }
-            PurchaseOrderDetailEditor.prototype.onViewProcessData = function (response) {
-                this.pendingChanges = {};
-                this.setSaveButtonState();
-                return _super.prototype.onViewProcessData.call(this, response);
-            };
-            //数字输入框
-            PurchaseOrderDetailEditor.prototype.numericInputFormatter = function (ctx) {
-                var klass = 'edit numeric';
-                var item = ctx.item;
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
-                if (pending && pending[ctx.column.field] !== undefined) {
-                    klass += ' dirty';
-                }
-                var value = this.getEffectiveValue(item, ctx.column.field);
-                return "<input type='text' class='" + klass +
-                    "' data-field='" + ctx.column.field +
-                    "' value='" + Q.formatNumber(value, '0.##') + "'/>";
-            };
-            //文本输入 框
-            PurchaseOrderDetailEditor.prototype.stringInputFormatter = function (ctx) {
-                var klass = 'edit string';
-                var item = ctx.item;
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
-                var column = ctx.column;
-                if (pending && pending[column.field] !== undefined) {
-                    klass += ' dirty';
-                }
-                var value = this.getEffectiveValue(item, column.field);
-                return "<input type='text' class='" + klass +
-                    "' data-field='" + column.field +
-                    "' value='" + Q.htmlEncode(value) +
-                    "' maxlength='" + column.sourceItem.maxLength + "'/>";
-            };
-            /**
-            * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
-            */
-            PurchaseOrderDetailEditor.prototype.selectFormatter = function (ctx, idField, lookup) {
-                var fld = Default.PurchaseOrderDetailRow.Fields;
-                var klass = 'edit';
-                var item = ctx.item;
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
-                var column = ctx.column;
-                if (pending && pending[idField] !== undefined) {
-                    klass += ' dirty';
-                }
-                var value = this.getEffectiveValue(item, idField);
-                var markup = "<select class='" + klass +
-                    "' data-field='" + idField +
-                    "' style='width: 100%; max-width: 100%'>";
-                for (var _i = 0, _a = lookup.items; _i < _a.length; _i++) {
-                    var c = _a[_i];
-                    var id = c[lookup.idField];
-                    markup += "<option value='" + id + "'";
-                    if (id == value) {
-                        markup += " selected";
-                    }
-                    markup += ">" + Q.htmlEncode(c[lookup.textField]) + "</option>";
-                }
-                return markup + "</select>";
-            };
-            //设置自定义字段
-            PurchaseOrderDetailEditor.prototype.setcustomColumns = function () {
-                var columns = _super.prototype.getColumns.call(this);
-                if (this.orderType === Default.PurchaseType.Stone.toString()) {
-                    columns.splice(10, 3);
-                }
-                else {
-                    columns.splice(7, 3);
-                }
-                return columns;
-            };
-            //格式化列
-            PurchaseOrderDetailEditor.prototype.getColumns = function () {
-                var _this = this;
-                var columns = _super.prototype.getColumns.call(this);
-                var num = function (ctx) { return _this.numericInputFormatter(ctx); };
-                var str = function (ctx) { return _this.stringInputFormatter(ctx); };
-                var fld = Default.PurchaseOrderDetailRow.Fields;
-                //增加删除按钮
-                columns.unshift({
-                    field: 'Delete Row',
-                    name: '',
-                    format: function (ctx) { return '<a class="inline-action delete-row" title="delete">' +
-                        '<i class="fa fa-trash-o text-red"></i></a>'; },
-                    width: 24,
-                    minWidth: 24,
-                    maxWidth: 24
-                });
-                Q.first(columns, function (x) { return x.field === 'Container'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'BlockNumber'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Category'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Mine'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Grade'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Notes'; }).format = str;
-                // this.form.UserId.getGridField().toggle(false);
-                var product = Q.first(columns, function (x) { return x.field === fld.ProductId; });
-                product.referencedFields = [fld.ProductId];
-                product.format = function (ctx) { return _this.selectFormatter(ctx, fld.ProductId, Default.ProductsRow.getLookup()); };
-                Q.first(columns, function (x) { return x.field === 'Weight'; })
-                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
-                Q.first(columns, function (x) { return x.field === 'Volume'; })
-                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
-                Q.first(columns, function (x) { return x.field === fld.Length; }).format = num;
-                Q.first(columns, function (x) { return x.field === fld.Width; }).format = num;
-                Q.first(columns, function (x) { return x.field === fld.Height; }).format = num;
-                Q.first(columns, function (x) { return x.field === fld.Weight; }).format = num;
-                if (this.orderType === Default.PurchaseType.Stone.toString()) {
-                    columns.splice(10, 3);
-                }
-                else {
-                    columns.splice(7, 3);
-                }
-                return columns;
-            };
-            //添加行
-            PurchaseOrderDetailEditor.prototype.addRow = function () {
-                var row = this.getNewEntity();
-                row.PurchaseOrderDetailId = this.getNextId();
-                row[this.getIdProperty()] = this.getNextId();
-                var newRow = Q.deepClone({}, { Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Container: this.orderType, BlockNumber: this.supplierId }, row);
-                // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
-                var items = this.view.getItems().slice();
-                items.push(newRow);
-                this.setEntities(items);
-            };
-            PurchaseOrderDetailEditor.prototype.onClick = function (e, row, cell) {
-                var _this = this;
-                _super.prototype.onClick.call(this, e, row, cell);
-                if (e.isDefaultPrevented())
-                    return;
-                var item = this.itemAt(row);
-                var target = $(e.target);
-                // if user clicks "i" element, e.g. icon
-                if (target.parent().hasClass('inline-action'))
-                    target = target.parent();
-                if (target.hasClass('inline-action')) {
-                    e.preventDefault();
-                    if (target.hasClass('delete-row')) {
-                        Q.confirm('Delete record?', function () {
-                            _this.view.deleteItem(item.__id);
-                            return true;
-                        });
-                    }
-                }
-            };
-            //文本框改变事件
-            PurchaseOrderDetailEditor.prototype.inputsChange = function (e) {
-                var cell = this.slickGrid.getCellFromEvent(e);
-                var item = this.itemAt(cell.row);
-                var input = $(e.target);
-                var field = input.data('field');
-                var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
-                var effective = this.getEffectiveValue(item, field);
-                var oldText;
-                if (input.hasClass("numeric"))
-                    oldText = Q.formatNumber(effective, '0.##');
-                else
-                    oldText = effective;
-                var value;
-                if (field === 'UnitPrice') {
-                    value = Q.parseDecimal(text);
-                    if (value == null || isNaN(value)) {
-                        Q.notifyError(Q.text('Validation.Decimal'), '', null);
-                        input.val(oldText);
-                        input.focus();
-                        return;
-                    }
-                }
-                else if (input.hasClass("numeric")) {
-                    var i = Q.parseInteger(text);
-                    if (isNaN(i) || i > 32767 || i < 0) {
-                        Q.notifyError(Q.text('Validation.Integer'), '', null);
-                        input.val(oldText);
-                        input.focus();
-                        return;
-                    }
-                    value = i;
-                }
-                else
-                    value = text;
-                if (!pending) {
-                    this.pendingChanges[item.PurchaseOrderDetailId] = pending = {};
-                }
-                pending[field] = value;
-                item[field] = value;
-                this.view.refresh();
-                if (input.hasClass("numeric"))
-                    value = Q.formatNumber(value, '0.##');
-                input.val(value).addClass('dirty');
-                this.setSaveButtonState();
-            };
-            PurchaseOrderDetailEditor.prototype.setSaveButtonState = function () {
-                this.toolbar.findButton('apply-changes-button').toggleClass('disabled', Object.keys(this.pendingChanges).length === 0);
-            };
-            PurchaseOrderDetailEditor.prototype.getSlickOptions = function () {
-                var opt = _super.prototype.getSlickOptions.call(this);
-                opt.showFooterRow = true;
-                return opt;
-            };
-            PurchaseOrderDetailEditor.prototype.getEffectiveValue = function (item, field) {
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
-                if (pending && pending[field] !== undefined) {
-                    return pending[field];
-                }
-                return item[field];
-            };
-            PurchaseOrderDetailEditor.prototype.getButtons = function () {
-                var _this = this;
-                return [{
-                        title: '新增',
-                        cssClass: 'add-button',
-                        onClick: function () {
-                            _this.addRow();
-                        }
-                    }];
-            };
-            return PurchaseOrderDetailEditor;
-        }(BowenSerene.Common.GridEditorBase));
-        PurchaseOrderDetailEditor = __decorate([
-            Serenity.Decorators.registerEditor()
-        ], PurchaseOrderDetailEditor);
-        Default.PurchaseOrderDetailEditor = PurchaseOrderDetailEditor;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 /// <reference path="../../Common/Helpers/GridEditorBase.ts" />
@@ -10327,18 +10095,6 @@ var BowenSerene;
                 if (pending && pending[idField] !== undefined) {
                     klass += ' dirty';
                 }
-                Q.log("place--" + this.supplierId);
-                Default.ProductsService.ListProductsBySupplier({
-                    SupplierId: this.supplierId
-                }, function (response) {
-                    Q.log(response.Entities);
-                });
-                //            Default.ProductsService.List({
-                //                ContainsText: "沙特",
-                //                ContainsField: "CompanyName"
-                //            }, response => {
-                //                Q.log(response.Entities);
-                //            });
                 var value = this.getEffectiveValue(item, idField);
                 var markup = "<select class='" + klass +
                     "' data-field='" + idField +
@@ -10351,6 +10107,30 @@ var BowenSerene;
                         markup += " selected";
                     }
                     markup += ">" + Q.htmlEncode(c[lookup.textField]) + "</option>";
+                }
+                return markup + "</select>";
+            };
+            /**
+           * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
+           */
+            PurchaseOrderStoneEditor.prototype.selectCustomFormatter = function (ctx, idField) {
+                var klass = 'edit';
+                var item = ctx.item;
+                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                if (pending && pending[idField] !== undefined) {
+                    klass += ' dirty';
+                }
+                var value = this.getEffectiveValue(item, idField);
+                var markup = "<select class='" + klass +
+                    "' data-field='" + idField +
+                    "' style='width: 100%; max-width: 100%'>";
+                for (var _i = 0, _a = this.customProductList; _i < _a.length; _i++) {
+                    var c = _a[_i];
+                    markup += "<option value='" + c.ProductId + "'";
+                    if (c.ProductId == value) {
+                        markup += " selected";
+                    }
+                    markup += ">" + Q.htmlEncode(c.Name) + "</option>";
                 }
                 return markup + "</select>";
             };
@@ -10380,7 +10160,7 @@ var BowenSerene;
                 // this.form.UserId.getGridField().toggle(false);
                 var product = Q.first(columns, function (x) { return x.field === fld.ProductId; });
                 product.referencedFields = [fld.ProductId];
-                product.format = function (ctx) { return _this.selectFormatter(ctx, fld.ProductId, Default.ProductsRow.getLookup()); };
+                product.format = function (ctx) { return _this.selectCustomFormatter(ctx, fld.ProductId); };
                 Q.first(columns, function (x) { return x.field === 'Weight'; })
                     .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
                 Q.first(columns, function (x) { return x.field === 'Volume'; })
@@ -10394,13 +10174,20 @@ var BowenSerene;
             //添加行
             PurchaseOrderStoneEditor.prototype.addRow = function () {
                 var row = this.getNewEntity();
-                row.PurchaseOrderDetailId = this.getNextId();
                 row[this.getIdProperty()] = this.getNextId();
-                var newRow = Q.deepClone({}, { Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Container: this.orderType, BlockNumber: this.supplierId }, row);
+                var newRow = Q.deepClone({}, { PurchaseOrderDetailId: Default.Guid.newGuid(), Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Container: '', BlockNumber: '' }, row);
                 // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
                 var items = this.view.getItems().slice();
                 items.push(newRow);
                 this.setEntities(items);
+                Q.log("items:" + items);
+            };
+            PurchaseOrderStoneEditor.prototype.clearView = function () {
+                var items = this.view.getItems().slice();
+                for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
+                    var c = items_1[_i];
+                    this.view.deleteItem(c.__id);
+                }
             };
             PurchaseOrderStoneEditor.prototype.onClick = function (e, row, cell) {
                 var _this = this;
@@ -10437,7 +10224,7 @@ var BowenSerene;
                 else
                     oldText = effective;
                 var value;
-                if (field === 'UnitPrice') {
+                if (field === 'Weight') {
                     value = Q.parseDecimal(text);
                     if (value == null || isNaN(value)) {
                         Q.notifyError(Q.text('Validation.Decimal'), '', null);

@@ -41,7 +41,7 @@ namespace BowenSerene.Default.Repositories
             return new MyListHandler().Process(connection, request);
         }
 
-        public ListResponse<string> ListProductsBySupplier(IDbConnection connection, ProductListRequest request)
+        public ListResponse<MyRow> ListProductsBySupplier(IDbConnection connection, ProductListRequest request)
         {
             Check.NotNull(request, "request");
             Check.NotNull(request.SupplierId, "supplierId");
@@ -51,6 +51,7 @@ namespace BowenSerene.Default.Repositories
 
             var query = new SqlQuery()
                 .From(pro)
+                .Select(pro.ProductId)
                 .Select(pro.Name)
                 .Distinct(true)
                 .OrderBy(pro.Name);
@@ -62,9 +63,9 @@ namespace BowenSerene.Default.Repositories
                     .Where(sup.SupplierId == request.SupplierId)
             ));
 
-            return new ListResponse<string>
+            return new ListResponse<MyRow>
             {
-                Entities = connection.Query<string>(query).ToList()
+                Entities = connection.Query<MyRow>(query).ToList()
             };
         }
 
