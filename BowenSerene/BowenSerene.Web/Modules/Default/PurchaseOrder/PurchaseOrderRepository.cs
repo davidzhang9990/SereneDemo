@@ -39,6 +39,11 @@ namespace BowenSerene.Default.Repositories
 
         private class MySaveHandler : SaveRequestHandler<MyRow>
         {
+            protected override void BeforeSave()
+            {
+                base.BeforeSave();
+                Console.Write(Row);
+            }
             protected override void SetInternalFields()
             {
                 base.SetInternalFields();

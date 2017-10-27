@@ -1178,9 +1178,6 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailColumns.ts">
-      <DependentUpon>ServerTypings.tt</DependentUpon>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderSlabColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -2121,9 +2118,6 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailService.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailForm.ts">
-      <DependentUpon>ServerTypings.tt</DependentUpon>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductFinishTypeRow.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -2157,9 +2151,6 @@
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
     <Compile Include="Imports\ClientTypes\Default.MovieCastEditorAttribute.cs">
-      <DependentUpon>ClientTypes.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Imports\ClientTypes\Default.PurchaseOrderDetailEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
     <Compile Include="Imports\ClientTypes\Default.PurchaseOrderSlabEditorAttribute.cs">
