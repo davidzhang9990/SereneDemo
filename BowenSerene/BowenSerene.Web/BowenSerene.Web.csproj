@@ -2159,6 +2159,9 @@
     <Compile Include="Imports\ClientTypes\Default.PurchaseOrderStoneEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171028_095500_PurchaseOrderDetail_TypeAndMine.cs" />
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171028_091900_PurchaseOrderDetailNum.cs" />
+    <Compile Include="Migrations\DefaultDB\DefaultDB_20171027_222900_PurchaseOrderDetailID.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171026_165400_PurchaseOrderDetail_Type.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171026_145800_ProductFinishType.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171026_092100_PurchaseOrderDetail_TypeAndMine.cs" />
@@ -2226,10 +2229,12 @@
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesEndpoint.cs" />
     <Compile Include="Modules\BasicSamples\Grids\StoredProcedureGrid\CustomerGrossSalesRepository.cs" />
     <Compile Include="Modules\Common\RowActive.cs" />
+    <Compile Include="Modules\Default\Products\ProductsLookup.cs" />
     <Compile Include="Modules\Default\Products\ProductListRequest.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderSlabColumns.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderStoneColumns.cs" />
     <Compile Include="Modules\Default\PurchaseOrder\PurchaseEnum.cs" />
+    <Compile Include="Modules\Default\Suppliers\SuppliersLookup.cs" />
     <Compile Include="Modules\Texts.cs" />
     <Compile Include="Modules\Default\Movie\MovieKind.cs" />
     <Compile Include="Modules\Default\Person\Gender.cs" />

@@ -15,7 +15,6 @@ namespace BowenSerene.Default.Columns
     [BasedOnRow(typeof(Entities.PurchaseOrderDetailRow))]
     public class PurchaseOrderStoneColumns
     {
-        public Guid? PurchaseOrderDetailId { get; set; }
         [Width(100)]
         public Guid? ProductId { get; set; }
         [Width(80)]
@@ -30,6 +29,8 @@ namespace BowenSerene.Default.Columns
         public Int32 Width { get; set; }
         [Width(80)]
         public Int32 Height { get; set; }
+        [Width(80)]
+        public Decimal Thick { get; set; }
         [Width(80)]
         public Decimal Weight { get; set; }
         [Width(80)]

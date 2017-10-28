@@ -42,7 +42,28 @@ namespace BowenSerene.Default.Repositories
             protected override void BeforeSave()
             {
                 base.BeforeSave();
+
+                if (Row.OrderStoneList != null)
+                {
+                    foreach (var detail in Row.OrderStoneList)
+                    {
+                        detail.ParentId = this.Row.PurchaseOrderId.Value;
+                    }
+                }
                 Console.Write(Row);
+            }
+
+            protected override void AfterSave()
+            {
+                base.AfterSave();
+//                if (Row.OrderStoneList != null)
+//                {
+//                    var mc = Entities.PurchaseOrderDetailRow.Fields;
+//                    var oldList = IsCreate ? null : Connection.List<Entities.PurchaseOrderDetailRow>(mc.ParentId == this.Row.PurchaseOrderId.Value);
+//
+//                    new Common.DetailListSaveHandler<Entities.PurchaseOrderDetailRow>(oldList, Row.OrderStoneList,
+//                              x => x.ParentId = Row.PurchaseOrderId.Value).Process(this.UnitOfWork);
+//                }
             }
             protected override void SetInternalFields()
             {
@@ -56,7 +77,18 @@ namespace BowenSerene.Default.Repositories
             }
         }
         private class MyDeleteHandler : DeleteRequestHandler<MyRow> { }
-        private class MyRetrieveHandler : RetrieveRequestHandler<MyRow> { }
+
+        private class MyRetrieveHandler : RetrieveRequestHandler<MyRow>
+        {
+            protected override void OnReturn()
+            {
+                base.OnReturn();
+//                var mc = Entities.PurchaseOrderDetailRow.Fields;
+//                Row.OrderStoneList = Connection.List<Entities.PurchaseOrderDetailRow>(q => q
+//                    .SelectTableFields()
+//                    .Where(mc.ParentId == Row.PurchaseOrderId.Value));
+            }
+        }
         private class MyListHandler : ListRequestHandler<MyRow> { }
     }
 }

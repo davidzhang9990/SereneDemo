@@ -61,7 +61,7 @@ namespace BowenSerene.Default {
         private numericInputFormatter(ctx) {
             var klass = 'edit numeric';
             var item = ctx.item as PurchaseOrderDetailRow;
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+            var pending = this.pendingChanges[item.OrderDetailId];
 
             if (pending && pending[ctx.column.field] !== undefined) {
                 klass += ' dirty';
@@ -77,7 +77,7 @@ namespace BowenSerene.Default {
         private stringInputFormatter(ctx) {
             var klass = 'edit string';
             var item = ctx.item as PurchaseOrderDetailRow;
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+            var pending = this.pendingChanges[item.OrderDetailId];
             var column = ctx.column as Slick.Column;
 
             if (pending && pending[column.field] !== undefined) {
@@ -98,7 +98,7 @@ namespace BowenSerene.Default {
             var fld = PurchaseOrderDetailRow.Fields;
             var klass = 'edit';
             var item = ctx.item as PurchaseOrderDetailRow;
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+            var pending = this.pendingChanges[item.OrderDetailId];
             var column = ctx.column as Slick.Column;
 
             if (pending && pending[idField] !== undefined) {
@@ -167,7 +167,6 @@ namespace BowenSerene.Default {
         //添加行
         private addRow() {
             var row = this.getNewEntity();
-            row.PurchaseOrderDetailId = this.getNextId();
             (row as any)[this.getIdProperty()] = this.getNextId();
             var newRow = Q.deepClone({} as PurchaseOrderDetailRow, { Length: 0, Width: 0, Thick: 0, Size: 0.00, Container: '', BlockNumber: '' }, row);
             // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
@@ -208,7 +207,7 @@ namespace BowenSerene.Default {
             var input = $(e.target);
             var field = input.data('field');
             var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+            var pending = this.pendingChanges[item.OrderDetailId];
 
             var effective = this.getEffectiveValue(item, field);
             var oldText: string;
@@ -241,7 +240,7 @@ namespace BowenSerene.Default {
                 value = text;
 
             if (!pending) {
-                this.pendingChanges[item.PurchaseOrderDetailId] = pending = {};
+                this.pendingChanges[item.OrderDetailId] = pending = {};
             }
 
             pending[field] = value;
@@ -268,7 +267,7 @@ namespace BowenSerene.Default {
         }
 
         private getEffectiveValue(item, field): any {
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+            var pending = this.pendingChanges[item.OrderDetailId];
             if (pending && pending[field] !== undefined) {
                 return pending[field];
             }

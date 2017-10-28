@@ -1173,32 +1173,16 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
-        var PurchaseOrderDetailForm = (function (_super) {
-            __extends(PurchaseOrderDetailForm, _super);
-            function PurchaseOrderDetailForm() {
-                return _super !== null && _super.apply(this, arguments) || this;
-            }
-            return PurchaseOrderDetailForm;
-        }(Serenity.PrefixedContext));
-        PurchaseOrderDetailForm.formKey = 'Default.PurchaseOrderDetail';
-        Default.PurchaseOrderDetailForm = PurchaseOrderDetailForm;
-        [['ParentId', function () { return Serenity.StringEditor; }], ['Container', function () { return Serenity.StringEditor; }], ['BlockNumber', function () { return Serenity.StringEditor; }], ['ProductId', function () { return Serenity.LookupEditor; }], ['Quantity', function () { return Serenity.IntegerEditor; }], ['Length', function () { return Serenity.IntegerEditor; }], ['Width', function () { return Serenity.IntegerEditor; }], ['Height', function () { return Serenity.IntegerEditor; }], ['Thick', function () { return Serenity.DecimalEditor; }], ['Size', function () { return Serenity.DecimalEditor; }], ['Weight', function () { return Serenity.DecimalEditor; }], ['Volume', function () { return Serenity.DecimalEditor; }], ['AutoQuantity', function () { return Serenity.IntegerEditor; }], ['AutoLength', function () { return Serenity.IntegerEditor; }], ['AutoWidth', function () { return Serenity.IntegerEditor; }], ['AutoHeight', function () { return Serenity.IntegerEditor; }], ['AutoSize', function () { return Serenity.DecimalEditor; }], ['AutoWeight', function () { return Serenity.DecimalEditor; }], ['AutoVolume', function () { return Serenity.DecimalEditor; }], ['IsFinishType', function () { return Serenity.LookupEditor; }], ['Notes', function () { return Serenity.StringEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderDetailForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
-    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
-})(BowenSerene || (BowenSerene = {}));
-var BowenSerene;
-(function (BowenSerene) {
-    var Default;
-    (function (Default) {
         var PurchaseOrderDetailRow;
         (function (PurchaseOrderDetailRow) {
-            PurchaseOrderDetailRow.idProperty = 'PurchaseOrderDetailId';
+            PurchaseOrderDetailRow.idProperty = 'OrderDetailId';
             PurchaseOrderDetailRow.nameProperty = 'Container';
             PurchaseOrderDetailRow.localTextPrefix = 'Default.PurchaseOrderDetail';
             var Fields;
             (function (Fields) {
             })(Fields = PurchaseOrderDetailRow.Fields || (PurchaseOrderDetailRow.Fields = {}));
             [
-                'PurchaseOrderDetailId',
+                'OrderDetailId',
                 'ParentId',
                 'Container',
                 'BlockNumber',
@@ -9630,8 +9614,7 @@ var BowenSerene;
                 _this.form = new Default.PurchaseOrderForm(_this.idPrefix);
                 //供应商改变事件
                 _this.form.SupplierId.changeSelect2(function (e) {
-                    _this.setProducts();
-                    //var place = Q.first(Default.SuppliersRow.getLookup().items, x => x.SupplierId == supplierId).Place;
+                    _this.supplierChange();
                     //                Default.SuppliersService.Retrieve({
                     //                    EntityId: supplierId
                     //                }, response => {
@@ -9645,19 +9628,25 @@ var BowenSerene;
             PurchaseOrderDialog.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
             PurchaseOrderDialog.prototype.getNameProperty = function () { return Default.PurchaseOrderRow.nameProperty; };
             PurchaseOrderDialog.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
-            PurchaseOrderDialog.prototype.setProducts = function () {
-                var _this = this;
+            PurchaseOrderDialog.prototype.supplierChange = function () {
                 var supplierId = Q.toId(this.form.SupplierId.value);
-                this.form.OrderStoneList.customProductList = [];
-                if (Q.isEmptyOrNull(supplierId)) {
-                    return;
-                }
-                Default.ProductsService.ListProductsBySupplier({
-                    SupplierId: supplierId
-                }, function (response) {
-                    _this.form.OrderStoneList.customProductList = response.Entities;
-                    _this.form.OrderStoneList.clearView();
-                });
+                var place = Q.first(Default.SuppliersRow.getLookup().items, function (x) { return x.SupplierId == supplierId; }).Place;
+                this.form.OrderStoneList.place = place;
+            };
+            PurchaseOrderDialog.prototype.setProducts = function () {
+                var supplierId = Q.toId(this.form.SupplierId.value);
+                var place = Q.first(Default.SuppliersRow.getLookup().items, function (x) { return x.SupplierId == supplierId; }).Place;
+                this.form.OrderStoneList.place = place;
+                //            this.form.OrderStoneList.customProductList = [];
+                //            if (Q.isEmptyOrNull(supplierId)) {
+                //                return;
+                //            }
+                //            Default.ProductsService.ListProductsBySupplier({
+                //                SupplierId: supplierId
+                //            }, response => {
+                //                this.form.OrderStoneList.customProductList = response.Entities;
+                //                this.form.OrderStoneList.clearView();
+                //            });
             };
             //#david 加载实体完成事件
             PurchaseOrderDialog.prototype.loadEntity = function (entity) {
@@ -9668,7 +9657,7 @@ var BowenSerene;
                 }
                 var supplierId = Q.toId(this.form.SupplierId.value);
                 if (!Q.isEmptyOrNull(supplierId)) {
-                    this.setProducts();
+                    this.supplierChange();
                 }
                 //设置明细窗体的 type
                 //this.form.OrderStoneList.orderType = this.form.Type.value;
@@ -9807,7 +9796,7 @@ var BowenSerene;
             PurchaseOrderSlabEditor.prototype.numericInputFormatter = function (ctx) {
                 var klass = 'edit numeric';
                 var item = ctx.item;
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                var pending = this.pendingChanges[item.OrderDetailId];
                 if (pending && pending[ctx.column.field] !== undefined) {
                     klass += ' dirty';
                 }
@@ -9820,7 +9809,7 @@ var BowenSerene;
             PurchaseOrderSlabEditor.prototype.stringInputFormatter = function (ctx) {
                 var klass = 'edit string';
                 var item = ctx.item;
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                var pending = this.pendingChanges[item.OrderDetailId];
                 var column = ctx.column;
                 if (pending && pending[column.field] !== undefined) {
                     klass += ' dirty';
@@ -9838,7 +9827,7 @@ var BowenSerene;
                 var fld = Default.PurchaseOrderDetailRow.Fields;
                 var klass = 'edit';
                 var item = ctx.item;
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                var pending = this.pendingChanges[item.OrderDetailId];
                 var column = ctx.column;
                 if (pending && pending[idField] !== undefined) {
                     klass += ' dirty';
@@ -9898,7 +9887,6 @@ var BowenSerene;
             //添加行
             PurchaseOrderSlabEditor.prototype.addRow = function () {
                 var row = this.getNewEntity();
-                row.PurchaseOrderDetailId = this.getNextId();
                 row[this.getIdProperty()] = this.getNextId();
                 var newRow = Q.deepClone({}, { Length: 0, Width: 0, Thick: 0, Size: 0.00, Container: '', BlockNumber: '' }, row);
                 // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
@@ -9933,7 +9921,7 @@ var BowenSerene;
                 var input = $(e.target);
                 var field = input.data('field');
                 var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                var pending = this.pendingChanges[item.OrderDetailId];
                 var effective = this.getEffectiveValue(item, field);
                 var oldText;
                 if (input.hasClass("numeric"))
@@ -9963,7 +9951,7 @@ var BowenSerene;
                 else
                     value = text;
                 if (!pending) {
-                    this.pendingChanges[item.PurchaseOrderDetailId] = pending = {};
+                    this.pendingChanges[item.OrderDetailId] = pending = {};
                 }
                 pending[field] = value;
                 item[field] = value;
@@ -9982,7 +9970,7 @@ var BowenSerene;
                 return opt;
             };
             PurchaseOrderSlabEditor.prototype.getEffectiveValue = function (item, field) {
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                var pending = this.pendingChanges[item.OrderDetailId];
                 if (pending && pending[field] !== undefined) {
                     return pending[field];
                 }
@@ -10059,7 +10047,7 @@ var BowenSerene;
             PurchaseOrderStoneEditor.prototype.numericInputFormatter = function (ctx) {
                 var klass = 'edit numeric';
                 var item = ctx.item;
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                var pending = this.pendingChanges[item.OrderDetailId];
                 if (pending && pending[ctx.column.field] !== undefined) {
                     klass += ' dirty';
                 }
@@ -10072,7 +10060,7 @@ var BowenSerene;
             PurchaseOrderStoneEditor.prototype.stringInputFormatter = function (ctx) {
                 var klass = 'edit string';
                 var item = ctx.item;
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                var pending = this.pendingChanges[item.OrderDetailId];
                 var column = ctx.column;
                 if (pending && pending[column.field] !== undefined) {
                     klass += ' dirty';
@@ -10087,10 +10075,11 @@ var BowenSerene;
             * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
             */
             PurchaseOrderStoneEditor.prototype.selectFormatter = function (ctx, idField, lookup) {
+                var _this = this;
                 var fld = Default.PurchaseOrderDetailRow.Fields;
                 var klass = 'edit';
                 var item = ctx.item;
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                var pending = this.pendingChanges[item.OrderDetailId];
                 var column = ctx.column;
                 if (pending && pending[idField] !== undefined) {
                     klass += ' dirty';
@@ -10098,39 +10087,18 @@ var BowenSerene;
                 var value = this.getEffectiveValue(item, idField);
                 var markup = "<select class='" + klass +
                     "' data-field='" + idField +
-                    "' style='width: 100%; max-width: 100%'>";
-                for (var _i = 0, _a = lookup.items; _i < _a.length; _i++) {
-                    var c = _a[_i];
+                    "' style='width: 100%; max-width: 100%'>"
+                    + " <option value=''>請選擇</option>";
+                console.log(this.place);
+                var itemJson = lookup.items.filter(function (x) { return x.Place == _this.place; });
+                for (var _i = 0, itemJson_1 = itemJson; _i < itemJson_1.length; _i++) {
+                    var c = itemJson_1[_i];
                     var id = c[lookup.idField];
                     markup += "<option value='" + id + "'";
                     if (id == value) {
                         markup += " selected";
                     }
                     markup += ">" + Q.htmlEncode(c[lookup.textField]) + "</option>";
-                }
-                return markup + "</select>";
-            };
-            /**
-           * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
-           */
-            PurchaseOrderStoneEditor.prototype.selectCustomFormatter = function (ctx, idField) {
-                var klass = 'edit';
-                var item = ctx.item;
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
-                if (pending && pending[idField] !== undefined) {
-                    klass += ' dirty';
-                }
-                var value = this.getEffectiveValue(item, idField);
-                var markup = "<select class='" + klass +
-                    "' data-field='" + idField +
-                    "' style='width: 100%; max-width: 100%'>";
-                for (var _i = 0, _a = this.customProductList; _i < _a.length; _i++) {
-                    var c = _a[_i];
-                    markup += "<option value='" + c.ProductId + "'";
-                    if (c.ProductId == value) {
-                        markup += " selected";
-                    }
-                    markup += ">" + Q.htmlEncode(c.Name) + "</option>";
                 }
                 return markup + "</select>";
             };
@@ -10160,7 +10128,7 @@ var BowenSerene;
                 // this.form.UserId.getGridField().toggle(false);
                 var product = Q.first(columns, function (x) { return x.field === fld.ProductId; });
                 product.referencedFields = [fld.ProductId];
-                product.format = function (ctx) { return _this.selectCustomFormatter(ctx, fld.ProductId); };
+                product.format = function (ctx) { return _this.selectFormatter(ctx, fld.ProductId, Default.ProductsRow.getLookup()); };
                 Q.first(columns, function (x) { return x.field === 'Weight'; })
                     .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
                 Q.first(columns, function (x) { return x.field === 'Volume'; })
@@ -10175,7 +10143,7 @@ var BowenSerene;
             PurchaseOrderStoneEditor.prototype.addRow = function () {
                 var row = this.getNewEntity();
                 row[this.getIdProperty()] = this.getNextId();
-                var newRow = Q.deepClone({}, { PurchaseOrderDetailId: Default.Guid.newGuid(), Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Container: '', BlockNumber: '' }, row);
+                var newRow = Q.deepClone({}, { Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Thick: 1, Container: '', BlockNumber: '' }, row);
                 // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
                 var items = this.view.getItems().slice();
                 items.push(newRow);
@@ -10216,7 +10184,7 @@ var BowenSerene;
                 var input = $(e.target);
                 var field = input.data('field');
                 var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                var pending = this.pendingChanges[item.OrderDetailId];
                 var effective = this.getEffectiveValue(item, field);
                 var oldText;
                 if (input.hasClass("numeric"))
@@ -10246,7 +10214,7 @@ var BowenSerene;
                 else
                     value = text;
                 if (!pending) {
-                    this.pendingChanges[item.PurchaseOrderDetailId] = pending = {};
+                    this.pendingChanges[item.OrderDetailId] = pending = {};
                 }
                 pending[field] = value;
                 item[field] = value;
@@ -10265,7 +10233,7 @@ var BowenSerene;
                 return opt;
             };
             PurchaseOrderStoneEditor.prototype.getEffectiveValue = function (item, field) {
-                var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+                var pending = this.pendingChanges[item.OrderDetailId];
                 if (pending && pending[field] !== undefined) {
                     return pending[field];
                 }

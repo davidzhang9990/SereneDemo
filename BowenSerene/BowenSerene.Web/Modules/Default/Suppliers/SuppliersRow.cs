@@ -15,7 +15,7 @@ namespace BowenSerene.Default.Entities
     [DisplayName("供应商列表"), InstanceName("供应商"), TwoLevelCached]
     [ReadPermission("Administration:General")]
     [ModifyPermission("Administration:General")]
-    [LookupScript("Default.Suppliers")]
+    [LookupScript(typeof(SuppliersLookup))]
     public sealed class SuppliersRow : LoggingRow, IIdRow, INameRow, IIsActiveRow
     {
         [DisplayName("Supplier Id"), PrimaryKey]

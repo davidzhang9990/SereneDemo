@@ -1089,38 +1089,8 @@ declare namespace BowenSerene.Default {
 declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
-}
-declare namespace BowenSerene.Default {
-    class PurchaseOrderDetailForm extends Serenity.PrefixedContext {
-        static formKey: string;
-    }
-    interface PurchaseOrderDetailForm {
-        ParentId: Serenity.StringEditor;
-        Container: Serenity.StringEditor;
-        BlockNumber: Serenity.StringEditor;
-        ProductId: Serenity.LookupEditor;
-        Quantity: Serenity.IntegerEditor;
-        Length: Serenity.IntegerEditor;
-        Width: Serenity.IntegerEditor;
-        Height: Serenity.IntegerEditor;
-        Thick: Serenity.DecimalEditor;
-        Size: Serenity.DecimalEditor;
-        Weight: Serenity.DecimalEditor;
-        Volume: Serenity.DecimalEditor;
-        AutoQuantity: Serenity.IntegerEditor;
-        AutoLength: Serenity.IntegerEditor;
-        AutoWidth: Serenity.IntegerEditor;
-        AutoHeight: Serenity.IntegerEditor;
-        AutoSize: Serenity.DecimalEditor;
-        AutoWeight: Serenity.DecimalEditor;
-        AutoVolume: Serenity.DecimalEditor;
-        IsFinishType: Serenity.LookupEditor;
-        Notes: Serenity.StringEditor;
-    }
-}
-declare namespace BowenSerene.Default {
     interface PurchaseOrderDetailRow {
-        PurchaseOrderDetailId?: string;
+        OrderDetailId?: number;
         ParentId?: string;
         Container?: string;
         BlockNumber?: string;
@@ -1158,11 +1128,11 @@ declare namespace BowenSerene.Default {
         UpdateDate?: string;
     }
     namespace PurchaseOrderDetailRow {
-        const idProperty = "PurchaseOrderDetailId";
+        const idProperty = "OrderDetailId";
         const nameProperty = "Container";
         const localTextPrefix = "Default.PurchaseOrderDetail";
         namespace Fields {
-            const PurchaseOrderDetailId: string;
+            const OrderDetailId: string;
             const ParentId: string;
             const Container: string;
             const BlockNumber: string;
@@ -5022,6 +4992,7 @@ declare namespace BowenSerene.Default {
         private supplierId;
         type: string;
         constructor();
+        private supplierChange();
         private setProducts();
         loadEntity(entity: Northwind.OrderRow): void;
     }
@@ -5076,6 +5047,7 @@ declare namespace BowenSerene.Default {
         protected getLocalTextPrefix(): string;
         orderType: string;
         supplierId: string;
+        place: string;
         customProductList: ProductsRow[];
         private pendingChanges;
         constructor(container: JQuery);
@@ -5087,10 +5059,6 @@ declare namespace BowenSerene.Default {
         * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
         */
         private selectFormatter(ctx, idField, lookup);
-        /**
-       * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
-       */
-        private selectCustomFormatter(ctx, idField);
         protected getColumns(): Slick.Column[];
         private addRow();
         clearView(): void;

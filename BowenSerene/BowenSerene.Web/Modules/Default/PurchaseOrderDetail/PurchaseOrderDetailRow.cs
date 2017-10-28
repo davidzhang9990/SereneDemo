@@ -17,11 +17,11 @@ namespace BowenSerene.Default.Entities
     [ModifyPermission("Administration:General")]
     public sealed class PurchaseOrderDetailRow : LoggingRow, IIdRow, INameRow
     {
-        [DisplayName("明细Key"), PrimaryKey]
-        public Guid? PurchaseOrderDetailId
+        [DisplayName("明细Key"), Identity]
+        public Int32? OrderDetailId
         {
-            get { return Fields.PurchaseOrderDetailId[this]; }
-            set { Fields.PurchaseOrderDetailId[this] = value; }
+            get { return Fields.OrderDetailId[this]; }
+            set { Fields.OrderDetailId[this] = value; }
         }
 
         [DisplayName("主表Key"), NotNull, ForeignKey("[dbo].[PurchaseOrder]", "PurchaseOrderId"), LeftJoin("jParent"), TextualField("ParentNumber")]
@@ -245,7 +245,7 @@ namespace BowenSerene.Default.Entities
 
         IIdField IIdRow.IdField
         {
-            get { return Fields.PurchaseOrderDetailId; }
+            get { return Fields.OrderDetailId; }
         }
 
         StringField INameRow.NameField
@@ -262,7 +262,7 @@ namespace BowenSerene.Default.Entities
 
         public class RowFields : LoggingRowFields
         {
-            public GuidField PurchaseOrderDetailId;
+            public Int32Field OrderDetailId;
             public GuidField ParentId;
             public StringField Container;
             public StringField BlockNumber;

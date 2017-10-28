@@ -18,9 +18,7 @@ namespace BowenSerene.Default {
             super();
             //供应商改变事件
             this.form.SupplierId.changeSelect2(e => {
-                this.setProducts();
-                //var place = Q.first(Default.SuppliersRow.getLookup().items, x => x.SupplierId == supplierId).Place;
-
+                this.supplierChange();
 //                Default.SuppliersService.Retrieve({
 //                    EntityId: supplierId
 //                }, response => {
@@ -29,18 +27,25 @@ namespace BowenSerene.Default {
             });
         }
 
+        private supplierChange() {
+            var supplierId = Q.toId(this.form.SupplierId.value);
+            var place = Q.first(Default.SuppliersRow.getLookup().items, x => x.SupplierId == supplierId).Place;
+            this.form.OrderStoneList.place = place;
+        }
         private setProducts() {
             var supplierId = Q.toId(this.form.SupplierId.value);
-            this.form.OrderStoneList.customProductList = [];
-            if (Q.isEmptyOrNull(supplierId)) {
-                return;
-            }
-            Default.ProductsService.ListProductsBySupplier({
-                SupplierId: supplierId
-            }, response => {
-                this.form.OrderStoneList.customProductList = response.Entities;
-                this.form.OrderStoneList.clearView();
-            });
+            var place = Q.first(Default.SuppliersRow.getLookup().items, x => x.SupplierId == supplierId).Place;
+            this.form.OrderStoneList.place = place;
+//            this.form.OrderStoneList.customProductList = [];
+//            if (Q.isEmptyOrNull(supplierId)) {
+//                return;
+//            }
+//            Default.ProductsService.ListProductsBySupplier({
+//                SupplierId: supplierId
+//            }, response => {
+//                this.form.OrderStoneList.customProductList = response.Entities;
+//                this.form.OrderStoneList.clearView();
+//            });
         }
 
         //#david 加载实体完成事件
@@ -53,7 +58,7 @@ namespace BowenSerene.Default {
 
             var supplierId = Q.toId(this.form.SupplierId.value);
             if (!Q.isEmptyOrNull(supplierId)) {
-                this.setProducts();
+                this.supplierChange();
             }
             //设置明细窗体的 type
             //this.form.OrderStoneList.orderType = this.form.Type.value;

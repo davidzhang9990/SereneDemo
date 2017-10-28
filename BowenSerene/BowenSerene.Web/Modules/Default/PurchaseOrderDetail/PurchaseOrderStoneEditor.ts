@@ -21,6 +21,7 @@ namespace BowenSerene.Default {
         }
         public orderType: string;
         public supplierId: string;
+        public place: string;
         public customProductList: ProductsRow[];
 
         private pendingChanges: Q.Dictionary<any> = {};
@@ -63,7 +64,7 @@ namespace BowenSerene.Default {
         private numericInputFormatter(ctx) {
             var klass = 'edit numeric';
             var item = ctx.item as PurchaseOrderDetailRow;
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+            var pending = this.pendingChanges[item.OrderDetailId];
 
             if (pending && pending[ctx.column.field] !== undefined) {
                 klass += ' dirty';
@@ -79,7 +80,7 @@ namespace BowenSerene.Default {
         private stringInputFormatter(ctx) {
             var klass = 'edit string';
             var item = ctx.item as PurchaseOrderDetailRow;
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+            var pending = this.pendingChanges[item.OrderDetailId];
             var column = ctx.column as Slick.Column;
 
             if (pending && pending[column.field] !== undefined) {
@@ -100,7 +101,7 @@ namespace BowenSerene.Default {
             var fld = PurchaseOrderDetailRow.Fields;
             var klass = 'edit';
             var item = ctx.item as PurchaseOrderDetailRow;
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+            var pending = this.pendingChanges[item.OrderDetailId];
             var column = ctx.column as Slick.Column;
 
             if (pending && pending[idField] !== undefined) {
@@ -109,41 +110,18 @@ namespace BowenSerene.Default {
             var value = this.getEffectiveValue(item, idField);
             var markup = "<select class='" + klass +
                 "' data-field='" + idField +
-                "' style='width: 100%; max-width: 100%'>";
-            for (var c of lookup.items) {
+                "' style='width: 100%; max-width: 100%'>"
+                + " <option value=''>請選擇</option>";
+
+            console.log(this.place);
+            var itemJson = lookup.items.filter(x => x.Place == this.place);
+            for (var c of itemJson) {
                 let id = c[lookup.idField];
                 markup += "<option value='" + id + "'";
-                if (id == value) {
+                if (id == value) { //|| itemJson.length == 1
                     markup += " selected";
                 }
                 markup += ">" + Q.htmlEncode(c[lookup.textField]) + "</option>";
-            }
-            return markup + "</select>";
-        }
-
-        /**
-       * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
-       */
-        private selectCustomFormatter(ctx: Slick.FormatterContext, idField: string) {
-
-            var klass = 'edit';
-            var item = ctx.item as PurchaseOrderDetailRow;
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
-
-            if (pending && pending[idField] !== undefined) {
-                klass += ' dirty';
-            }
-
-            var value = this.getEffectiveValue(item, idField);
-            var markup = "<select class='" + klass +
-                "' data-field='" + idField +
-                "' style='width: 100%; max-width: 100%'>";
-            for (var c of this.customProductList) {
-                markup += "<option value='" + c.ProductId + "'";
-                if (c.ProductId == value) {
-                    markup += " selected";
-                }
-                markup += ">" + Q.htmlEncode(c.Name) + "</option>";
             }
             return markup + "</select>";
         }
@@ -178,7 +156,7 @@ namespace BowenSerene.Default {
 
             var product = Q.first(columns, x => x.field === fld.ProductId);
             product.referencedFields = [fld.ProductId];
-            product.format = ctx => this.selectCustomFormatter(ctx, fld.ProductId);
+            product.format = ctx => this.selectFormatter(ctx, fld.ProductId, ProductsRow.getLookup());
 
             Q.first(columns, x => x.field === 'Weight')
                 .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
@@ -196,7 +174,7 @@ namespace BowenSerene.Default {
         private addRow() {
             var row = this.getNewEntity();
             (row as any)[this.getIdProperty()] = this.getNextId();
-            var newRow = Q.deepClone({} as PurchaseOrderDetailRow, { PurchaseOrderDetailId: Guid.newGuid(), Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Container: '', BlockNumber: '' }, row);
+            var newRow = Q.deepClone({} as PurchaseOrderDetailRow, { Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Thick: 1, Container: '', BlockNumber: '' }, row);
             // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
             var items = this.view.getItems().slice();
             items.push(newRow);
@@ -243,7 +221,7 @@ namespace BowenSerene.Default {
             var input = $(e.target);
             var field = input.data('field');
             var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+            var pending = this.pendingChanges[item.OrderDetailId];
 
             var effective = this.getEffectiveValue(item, field);
             var oldText: string;
@@ -276,7 +254,7 @@ namespace BowenSerene.Default {
                 value = text;
 
             if (!pending) {
-                this.pendingChanges[item.PurchaseOrderDetailId] = pending = {};
+                this.pendingChanges[item.OrderDetailId] = pending = {};
             }
 
             pending[field] = value;
@@ -303,7 +281,7 @@ namespace BowenSerene.Default {
         }
 
         private getEffectiveValue(item, field): any {
-            var pending = this.pendingChanges[item.PurchaseOrderDetailId];
+            var pending = this.pendingChanges[item.OrderDetailId];
             if (pending && pending[field] !== undefined) {
                 return pending[field];
             }

@@ -1,6 +1,6 @@
 ﻿namespace BowenSerene.Default {
     export interface PurchaseOrderDetailRow {
-        PurchaseOrderDetailId?: string;
+        OrderDetailId?: number;
         ParentId?: string;
         Container?: string;
         BlockNumber?: string;
@@ -39,12 +39,12 @@
     }
 
     export namespace PurchaseOrderDetailRow {
-        export const idProperty = 'PurchaseOrderDetailId';
+        export const idProperty = 'OrderDetailId';
         export const nameProperty = 'Container';
         export const localTextPrefix = 'Default.PurchaseOrderDetail';
 
         export namespace Fields {
-            export declare const PurchaseOrderDetailId: string;
+            export declare const OrderDetailId: string;
             export declare const ParentId: string;
             export declare const Container: string;
             export declare const BlockNumber: string;
@@ -83,7 +83,7 @@
         }
 
         [
-            'PurchaseOrderDetailId', 
+            'OrderDetailId', 
             'ParentId', 
             'Container', 
             'BlockNumber', 
