@@ -4987,10 +4987,11 @@ declare namespace BowenSerene.Default {
         protected getLocalTextPrefix(): string;
         protected getNameProperty(): string;
         protected getService(): string;
-        protected form: PurchaseOrderForm;
+        protected form: any;
         private supplierId;
         type: string;
-        constructor(ordertype: string);
+        constructor();
+        getPrefix(): string;
         private supplierChange();
         private setProducts();
         loadEntity(entity: PurchaseOrderRow): void;

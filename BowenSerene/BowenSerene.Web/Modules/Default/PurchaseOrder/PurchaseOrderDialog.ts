@@ -10,18 +10,24 @@ namespace BowenSerene.Default {
         protected getNameProperty() { return PurchaseOrderRow.nameProperty; }
         protected getService() { return PurchaseOrderService.baseUrl; }
 
-        protected form = new PurchaseOrderForm(this.idPrefix);
+        protected form;
         private supplierId: string;
         public type: string;
 
-        constructor(ordertype: string) {
+        constructor() {
             super();
-            this.form.OrderDetailsList.orderType = ordertype;
-            Q.log("dialog Id：" + ordertype);
+           // this.form = form;
+            Q.log(this.idPrefix);
+            //this.form.OrderDetailsList.orderType = ordertype;
+            Q.log("dialog Id：" + this.type);
             //供应商改变事件
             this.form.SupplierId.changeSelect2(e => {
                 this.supplierChange();
             });
+        }
+
+        public getPrefix() {
+            return this.idPrefix;
         }
 
         private supplierChange() {

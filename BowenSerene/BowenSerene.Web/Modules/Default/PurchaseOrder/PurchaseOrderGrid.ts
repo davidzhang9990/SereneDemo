@@ -15,7 +15,11 @@ namespace BowenSerene.Default {
 
         //打开窗体
         private openOrderDialog(orderType: number) {
-            var dlg = new PurchaseOrderDialog(orderType.toString());
+            //var form = new PurchaseOrderForm(typeof (PurchaseOrderForm));
+            //form.OrderDetailsList.orderType = orderType.toString();
+            var dlg = new PurchaseOrderDialog();
+            dlg.getPrefix();
+            
             this.initDialog(dlg);
             dlg.loadEntityAndOpenDialog(<PurchaseOrderRow>{
                 Type: orderType

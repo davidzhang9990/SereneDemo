@@ -22,7 +22,7 @@ namespace BowenSerene.Default {
         public supplierId: string;
         public place: string;
         public customProductList: ProductsRow[];
-        public orderType:string;
+        public orderType: string;
 
         private pendingChanges: Q.Dictionary<any> = {};
 
@@ -38,7 +38,10 @@ namespace BowenSerene.Default {
         //        }
 
         protected createSlickGrid() {
-            Q.log("slick details Id：" + this.orderType);
+
+            var t = "11";
+
+            Q.log("slick details Id：" + t.indexOf("00"));
             var grid = super.createSlickGrid();
             // need to register this plugin for grouping or you'll have errors
             grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());

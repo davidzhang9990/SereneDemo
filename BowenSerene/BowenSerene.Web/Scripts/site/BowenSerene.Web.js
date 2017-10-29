@@ -9609,11 +9609,12 @@ var BowenSerene;
     (function (Default) {
         var PurchaseOrderDialog = (function (_super) {
             __extends(PurchaseOrderDialog, _super);
-            function PurchaseOrderDialog(ordertype) {
+            function PurchaseOrderDialog() {
                 var _this = _super.call(this) || this;
-                _this.form = new Default.PurchaseOrderForm(_this.idPrefix);
-                _this.form.OrderDetailsList.orderType = ordertype;
-                Q.log("dialog Id：" + ordertype);
+                // this.form = form;
+                Q.log(_this.idPrefix);
+                //this.form.OrderDetailsList.orderType = ordertype;
+                Q.log("dialog Id：" + _this.type);
                 //供应商改变事件
                 _this.form.SupplierId.changeSelect2(function (e) {
                     _this.supplierChange();
@@ -9625,6 +9626,9 @@ var BowenSerene;
             PurchaseOrderDialog.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
             PurchaseOrderDialog.prototype.getNameProperty = function () { return Default.PurchaseOrderRow.nameProperty; };
             PurchaseOrderDialog.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
+            PurchaseOrderDialog.prototype.getPrefix = function () {
+                return this.idPrefix;
+            };
             PurchaseOrderDialog.prototype.supplierChange = function () {
                 var supplierId = Q.toId(this.form.SupplierId.value);
                 var place = Q.first(Default.SuppliersRow.getLookup().items, function (x) { return x.SupplierId == supplierId; }).Place;
@@ -9698,7 +9702,10 @@ var BowenSerene;
             PurchaseOrderGrid.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
             //打开窗体
             PurchaseOrderGrid.prototype.openOrderDialog = function (orderType) {
-                var dlg = new Default.PurchaseOrderDialog(orderType.toString());
+                //var form = new PurchaseOrderForm(typeof (PurchaseOrderForm));
+                //form.OrderDetailsList.orderType = orderType.toString();
+                var dlg = new Default.PurchaseOrderDialog();
+                dlg.getPrefix();
                 this.initDialog(dlg);
                 dlg.loadEntityAndOpenDialog({
                     Type: orderType
@@ -9766,7 +9773,8 @@ var BowenSerene;
             //            super.afterLoadEntity();
             //        }
             PurchaseOrderDetailEditor.prototype.createSlickGrid = function () {
-                Q.log("slick details Id：" + this.orderType);
+                var t = "11";
+                Q.log("slick details Id：" + t.indexOf("00"));
                 var grid = _super.prototype.createSlickGrid.call(this);
                 // need to register this plugin for grouping or you'll have errors
                 grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
