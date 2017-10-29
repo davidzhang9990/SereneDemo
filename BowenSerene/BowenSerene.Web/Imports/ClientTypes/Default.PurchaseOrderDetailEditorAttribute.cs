@@ -7,11 +7,11 @@ using System.ComponentModel;
 
 namespace BowenSerene.Default
 {
-    public partial class PurchaseOrderStoneEditorAttribute : CustomEditorAttribute
+    public partial class PurchaseOrderDetailEditorAttribute : CustomEditorAttribute
     {
-        public const string Key = "BowenSerene.Default.PurchaseOrderStoneEditor";
+        public const string Key = "BowenSerene.Default.PurchaseOrderDetailEditor";
 
-        public PurchaseOrderStoneEditorAttribute()
+        public PurchaseOrderDetailEditorAttribute()
             : base(Key)
         {
         }

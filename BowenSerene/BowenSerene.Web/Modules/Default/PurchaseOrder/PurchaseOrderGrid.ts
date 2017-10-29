@@ -14,18 +14,9 @@ namespace BowenSerene.Default {
         }
 
         //打开窗体
-        private openOrderDialog(orderType:number) {
-            var dlg = new PurchaseOrderDialog();
+        private openOrderDialog(orderType: number) {
+            var dlg = new PurchaseOrderDialog(orderType.toString());
             this.initDialog(dlg);
-            // get a reference to product Chai
-            //                    var chai = Northwind.ProductRow.getLookup().items
-            //                        .filter(x => x.ProductName === 'Chai')[0];
-
-            // LoadEntityAndOpenDialog, loads an OrderRow 
-            // to dialog and opens it
-            //                    var lauraCallahanID = Northwind.EmployeeRow.getLookup().items
-            //                        .filter(x => x.FullName === 'Laura Callahan')[0].EmployeeID;
-
             dlg.loadEntityAndOpenDialog(<PurchaseOrderRow>{
                 Type: orderType
             });

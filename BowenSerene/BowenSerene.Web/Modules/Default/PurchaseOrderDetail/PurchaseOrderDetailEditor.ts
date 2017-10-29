@@ -3,7 +3,7 @@
 namespace BowenSerene.Default {
 
     @Serenity.Decorators.registerEditor()
-    export class PurchaseOrderStoneEditor extends Common.GridEditorBase<PurchaseOrderDetailRow>{
+    export class PurchaseOrderDetailEditor extends Common.GridEditorBase<PurchaseOrderDetailRow>{
 
         protected validateEntity(row: PurchaseOrderDetailRow, id: number) {
             if (!super.validateEntity(row, id))
@@ -13,21 +13,23 @@ namespace BowenSerene.Default {
             return true;
         }
         protected getColumnsKey() {
-            return "Default.PurchaseOrderStone";
+            return "Default.PurchaseOrderDetail";
         }
 
         protected getLocalTextPrefix() {
             return PurchaseOrderDetailRow.localTextPrefix;
         }
-        public orderType: string;
         public supplierId: string;
         public place: string;
         public customProductList: ProductsRow[];
+        public orderType:string;
 
         private pendingChanges: Q.Dictionary<any> = {};
 
         constructor(container: JQuery) {
+
             super(container);
+            Q.log("container details Id：" + this.orderType);
             this.slickContainer.on('change', '.edit:input', (e) => this.inputsChange(e));
         }
 
@@ -36,6 +38,7 @@ namespace BowenSerene.Default {
         //        }
 
         protected createSlickGrid() {
+            Q.log("slick details Id：" + this.orderType);
             var grid = super.createSlickGrid();
             // need to register this plugin for grouping or you'll have errors
             grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
@@ -111,9 +114,8 @@ namespace BowenSerene.Default {
             var markup = "<select class='" + klass +
                 "' data-field='" + idField +
                 "' style='width: 100%; max-width: 100%'>"
-                + " <option value=''>請選擇</option>";
+                + " <option value=''>请选择</option>";
 
-            console.log(this.place);
             var itemJson = lookup.items.filter(x => x.Place == this.place);
             for (var c of itemJson) {
                 let id = c[lookup.idField];
@@ -126,8 +128,15 @@ namespace BowenSerene.Default {
             return markup + "</select>";
         }
 
+        protected initEntityDialog(itemType: string, dialog: Serenity.Widget<any>) {
+            super.initEntityDialog(itemType, dialog);
+            Q.log("dialog details Id：" + this.orderType);
+            // passing category ID from grid editor to detail dialog
+            //            (dialog as FilteredLookupOrderDetailDialog).categoryID = this.categoryID;
+        }
         //格式化列
         protected getColumns() {
+            Q.log("column details Id：" + this.orderType);
             var columns = super.getColumns();
 
             var num = ctx => this.numericInputFormatter(ctx);
@@ -152,8 +161,6 @@ namespace BowenSerene.Default {
             Q.first(columns, x => x.field === 'Grade').format = str;
             Q.first(columns, x => x.field === 'Notes').format = str;
 
-            // this.form.UserId.getGridField().toggle(false);
-
             var product = Q.first(columns, x => x.field === fld.ProductId);
             product.referencedFields = [fld.ProductId];
             product.format = ctx => this.selectFormatter(ctx, fld.ProductId, ProductsRow.getLookup());
@@ -168,6 +175,13 @@ namespace BowenSerene.Default {
             Q.first(columns, x => x.field === fld.Width).format = num;
             Q.first(columns, x => x.field === fld.Height).format = num;
             Q.first(columns, x => x.field === fld.Weight).format = num;
+
+            //            if (orderType === PurchaseType.Stone.toString()) {
+            //                this.allColumns.splice(7, 3);
+            //            } else {
+            //                this.allColumns.splice(10, 3);
+            //            }
+
             return columns;
         }
         //添加行
@@ -179,7 +193,6 @@ namespace BowenSerene.Default {
             var items = this.view.getItems().slice();
             items.push(newRow);
             this.setEntities(items);
-            Q.log("items:" + items);
         }
 
         public clearView() {

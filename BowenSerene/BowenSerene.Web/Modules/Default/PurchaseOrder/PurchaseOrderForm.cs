@@ -29,10 +29,8 @@ namespace BowenSerene.Default.Forms
         public String Notes { get; set; }
         [Tab("采购信息")]
         [Category("采购明细")]
-        [PurchaseOrderStoneEditor]
-        public List<Entities.PurchaseOrderDetailRow> OrderStoneList { get; set; }
-        [PurchaseOrderSlabEditor]
-        public List<Entities.PurchaseOrderDetailRow> OrderSlabList { get; set; }
+        [PurchaseOrderDetailEditor]
+        public List<Entities.PurchaseOrderDetailRow> OrderDetailsList { get; set; }
         [Tab("运货信息")]
         [Category("船运")]
         public String LetterNumber { get; set; }

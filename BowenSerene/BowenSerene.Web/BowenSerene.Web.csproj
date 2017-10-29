@@ -1178,10 +1178,10 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderSlabColumns.ts">
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderStoneColumns.ts">
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderSlabColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchasePayWay.ts">
@@ -1455,7 +1455,7 @@
     <TypeScriptCompile Include="Modules\Default\Movie\GenreListFormatter.ts" />
     <TypeScriptCompile Include="Modules\Default\Person\PersonMovieGrid.ts" />
     <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderSlabEditor.ts" />
-    <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderStoneEditor.ts" />
+    <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailEditor.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ChangePassword\ChangePasswordPanel.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ForgotPassword\ForgotPasswordPanel.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ResetPassword\ResetPasswordPanel.ts" />
@@ -2153,10 +2153,10 @@
     <Compile Include="Imports\ClientTypes\Default.MovieCastEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
-    <Compile Include="Imports\ClientTypes\Default.PurchaseOrderSlabEditorAttribute.cs">
+    <Compile Include="Imports\ClientTypes\Default.PurchaseOrderDetailEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
-    <Compile Include="Imports\ClientTypes\Default.PurchaseOrderStoneEditorAttribute.cs">
+    <Compile Include="Imports\ClientTypes\Default.PurchaseOrderSlabEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171028_095500_PurchaseOrderDetail_TypeAndMine.cs" />
@@ -2232,7 +2232,7 @@
     <Compile Include="Modules\Default\Products\ProductsLookup.cs" />
     <Compile Include="Modules\Default\Products\ProductListRequest.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderSlabColumns.cs" />
-    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderStoneColumns.cs" />
+    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailColumns.cs" />
     <Compile Include="Modules\Default\PurchaseOrder\PurchaseEnum.cs" />
     <Compile Include="Modules\Default\Suppliers\SuppliersLookup.cs" />
     <Compile Include="Modules\Texts.cs" />
