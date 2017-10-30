@@ -1,17 +1,10 @@
-﻿/// <reference path="../../Common/Helpers/GridEditorBase.ts" />
+﻿/// <reference path="../../_Ext/Editors/GridEditorBase.ts" />
 
 namespace BowenSerene.Default {
 
     @Serenity.Decorators.registerEditor()
-    export class PurchaseOrderDetailEditor extends Common.GridEditorBase<PurchaseOrderDetailRow>{
+    export class PurchaseOrderDetailEditor extends _Ext.GridEditorBase<PurchaseOrderDetailRow>{
 
-        protected validateEntity(row: PurchaseOrderDetailRow, id: number) {
-            if (!super.validateEntity(row, id))
-                return false;
-            row.Size = 2.11;
-            //row.PersonFullname = PersonRow.getLookup().itemById[row.PersonId].Fullname;
-            return true;
-        }
         protected getColumnsKey() {
             return "Default.PurchaseOrderDetail";
         }
@@ -27,32 +20,23 @@ namespace BowenSerene.Default {
         private pendingChanges: Q.Dictionary<any> = {};
 
         constructor(container: JQuery) {
-
             super(container);
             Q.log("container details Id：" + this.orderType);
-            this.slickContainer.on('change', '.edit:input', (e) => this.inputsChange(e));
+             this.slickContainer.on('change', '.edit:input', (e) => this.inputsChange(e));
         }
-
-        //        protected afterLoadEntity() {
-        //            super.afterLoadEntity();
-        //        }
 
         protected createSlickGrid() {
 
-            var t = "11";
-
-            Q.log("slick details Id：" + t.indexOf("00"));
             var grid = super.createSlickGrid();
             // need to register this plugin for grouping or you'll have errors
             grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
-
             this.view.setSummaryOptions({
                 aggregators: [
                     new Slick.Aggregators.Sum('Weight'),
                     new Slick.Aggregators.Sum('Volume')
                 ]
             });
-
+           
             return grid;
         }
 
@@ -60,11 +44,11 @@ namespace BowenSerene.Default {
         //            return false;
         //        }
 
-        protected onViewProcessData(response) {
-            this.pendingChanges = {};
-            this.setSaveButtonState();
-            return super.onViewProcessData(response);
-        }
+//        protected onViewProcessData(response) {
+//            this.pendingChanges = {};
+//            this.setSaveButtonState();
+//            return this.onViewProcessData(response);
+//        }
 
         //数字输入框
         private numericInputFormatter(ctx) {
@@ -131,12 +115,6 @@ namespace BowenSerene.Default {
             return markup + "</select>";
         }
 
-        protected initEntityDialog(itemType: string, dialog: Serenity.Widget<any>) {
-            super.initEntityDialog(itemType, dialog);
-            Q.log("dialog details Id：" + this.orderType);
-            // passing category ID from grid editor to detail dialog
-            //            (dialog as FilteredLookupOrderDetailDialog).categoryID = this.categoryID;
-        }
         //格式化列
         protected getColumns() {
             Q.log("column details Id：" + this.orderType);
@@ -157,27 +135,30 @@ namespace BowenSerene.Default {
                 maxWidth: 24
             });
 
-            Q.first(columns, x => x.field === 'Container').format = str;
-            Q.first(columns, x => x.field === 'BlockNumber').format = str;
-            Q.first(columns, x => x.field === 'Category').format = str;
-            Q.first(columns, x => x.field === 'Mine').format = str;
-            Q.first(columns, x => x.field === 'Grade').format = str;
-            Q.first(columns, x => x.field === 'Notes').format = str;
-
-            var product = Q.first(columns, x => x.field === fld.ProductId);
-            product.referencedFields = [fld.ProductId];
-            product.format = ctx => this.selectFormatter(ctx, fld.ProductId, ProductsRow.getLookup());
-
-            Q.first(columns, x => x.field === 'Weight')
-                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
-
-            Q.first(columns, x => x.field === 'Volume')
-                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
-
-            Q.first(columns, x => x.field === fld.Length).format = num;
-            Q.first(columns, x => x.field === fld.Width).format = num;
-            Q.first(columns, x => x.field === fld.Height).format = num;
-            Q.first(columns, x => x.field === fld.Weight).format = num;
+            _Ext.q.formatInt("Container");
+            _Ext.q.formatInt("BlockNumber");
+         
+//            Q.first(columns, x => x.field === 'Container').format = str;
+//            Q.first(columns, x => x.field === 'BlockNumber').format = str;
+//            Q.first(columns, x => x.field === 'Category').format = str;
+//            Q.first(columns, x => x.field === 'Mine').format = str;
+//            Q.first(columns, x => x.field === 'Grade').format = str;
+//            Q.first(columns, x => x.field === 'Notes').format = str;
+//
+//            var product = Q.first(columns, x => x.field === fld.ProductId);
+//            product.referencedFields = [fld.ProductId];
+//            product.format = ctx => this.selectFormatter(ctx, fld.ProductId, ProductsRow.getLookup());
+//
+//            Q.first(columns, x => x.field === 'Weight')
+//                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
+//
+//            Q.first(columns, x => x.field === 'Volume')
+//                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
+//
+//            Q.first(columns, x => x.field === fld.Length).format = num;
+//            Q.first(columns, x => x.field === fld.Width).format = num;
+//            Q.first(columns, x => x.field === fld.Height).format = num;
+//            Q.first(columns, x => x.field === fld.Weight).format = num;
 
             //            if (orderType === PurchaseType.Stone.toString()) {
             //                this.allColumns.splice(7, 3);
@@ -189,46 +170,15 @@ namespace BowenSerene.Default {
         }
         //添加行
         private addRow() {
-            var row = this.getNewEntity();
-            (row as any)[this.getIdProperty()] = this.getNextId();
+            var row = super.getNewEntity();
+           // (row as any)[this.getIdProperty()] = super.getView().getNextId();
             var newRow = Q.deepClone({} as PurchaseOrderDetailRow, { Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Thick: 1, Container: '', BlockNumber: '' }, row);
             // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
-            var items = this.view.getItems().slice();
+            var items = super.getView().getItems().slice();
             items.push(newRow);
             this.setEntities(items);
         }
 
-        public clearView() {
-            var items = this.view.getItems().slice();
-            for (var c of items) {
-                this.view.deleteItem(c.__id);
-            }
-        }
-
-        protected onClick(e: JQueryEventObject, row: number, cell: number) {
-            super.onClick(e, row, cell);
-
-            if (e.isDefaultPrevented())
-                return;
-
-            var item = this.itemAt(row);
-            var target = $(e.target);
-
-            // if user clicks "i" element, e.g. icon
-            if (target.parent().hasClass('inline-action'))
-                target = target.parent();
-
-            if (target.hasClass('inline-action')) {
-                e.preventDefault();
-
-                if (target.hasClass('delete-row')) {
-                    Q.confirm('Delete record?', () => {
-                        this.view.deleteItem(item.__id);
-                        return true;
-                    });
-                }
-            }
-        }
 
         //文本框改变事件
         private inputsChange(e: JQueryEventObject) {
@@ -285,33 +235,33 @@ namespace BowenSerene.Default {
             this.setSaveButtonState();
         }
 
-        private setSaveButtonState() {
-            this.toolbar.findButton('apply-changes-button').toggleClass('disabled',
-                Object.keys(this.pendingChanges).length === 0);
-        }
+//        private setSaveButtonState() {
+//            this.toolbar.findButton('apply-changes-button').toggleClass('disabled',
+//                Object.keys(this.pendingChanges).length === 0);
+//        }
 
-        protected getSlickOptions() {
-            var opt = super.getSlickOptions();
-            opt.showFooterRow = true;
-            return opt;
-        }
+//        protected getSlickOptions() {
+//            var opt = super.getSlickOptions();
+//            opt.showFooterRow = true;
+//            return opt;
+//        }
+//
+//        private getEffectiveValue(item, field): any {
+//            var pending = this.pendingChanges[item.OrderDetailId];
+//            if (pending && pending[field] !== undefined) {
+//                return pending[field];
+//            }
+//            return item[field];
+//        }
 
-        private getEffectiveValue(item, field): any {
-            var pending = this.pendingChanges[item.OrderDetailId];
-            if (pending && pending[field] !== undefined) {
-                return pending[field];
-            }
-            return item[field];
-        }
-
-        protected getButtons() {
-            return [{
-                title: '新增',
-                cssClass: 'add-button',
-                onClick: () => {
-                    this.addRow();
-                }
-            }];
-        }
+//        protected getButtons() {
+//            return [{
+//                title: '新增',
+//                cssClass: 'add-button',
+//                onClick: () => {
+//                    this.addRow();
+//                }
+//            }];
+//        }
     }
 }

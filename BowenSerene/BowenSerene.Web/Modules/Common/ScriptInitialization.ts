@@ -2,6 +2,6 @@
 
 namespace BowenSerene.ScriptInitialization {
     Q.Config.responsiveDialogs = true;
-    Q.Config.rootNamespaces.push('BowenSerene');
+    Q.Config.rootNamespaces.push('_Ext');
     Serenity.EntityDialog.defaultLanguageList = LanguageList.getValue;
 }

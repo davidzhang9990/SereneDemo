@@ -2,25 +2,24 @@
 namespace BowenSerene.Default {
 
     @Serenity.Decorators.registerClass()
-    export class PurchaseOrderGrid extends Serenity.EntityGrid<PurchaseOrderRow, any> {
+    export class PurchaseOrderGrid extends _Ext.GridBase<PurchaseOrderRow, any> {
+
         protected getColumnsKey() { return 'Default.PurchaseOrder'; }
         protected getDialogType() { return PurchaseOrderDialog; }
         protected getIdProperty() { return PurchaseOrderRow.idProperty; }
         protected getLocalTextPrefix() { return PurchaseOrderRow.localTextPrefix; }
         protected getService() { return PurchaseOrderService.baseUrl; }
 
-        constructor(container: JQuery) {
-            super(container);
+        protected getSlickOptions() {
+            let opt = super.getSlickOptions();
+            opt.editable = true;
+            return opt;
         }
 
         //打开窗体
         private openOrderDialog(orderType: number) {
-            //var form = new PurchaseOrderForm(typeof (PurchaseOrderForm));
-            //form.OrderDetailsList.orderType = orderType.toString();
             var dlg = new PurchaseOrderDialog();
-            dlg.getPrefix();
-            
-            this.initDialog(dlg);
+            super.initDialog(dlg);
             dlg.loadEntityAndOpenDialog(<PurchaseOrderRow>{
                 Type: orderType
             });

@@ -9,6 +9,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var _Ext;
+(function (_Ext) {
+    var Months;
+    (function (Months) {
+        Months[Months["January"] = 0] = "January";
+        Months[Months["February"] = 1] = "February";
+        Months[Months["March"] = 2] = "March";
+        Months[Months["April"] = 3] = "April";
+        Months[Months["May"] = 4] = "May";
+        Months[Months["June"] = 5] = "June";
+        Months[Months["July"] = 6] = "July";
+        Months[Months["August"] = 7] = "August";
+        Months[Months["September"] = 8] = "September";
+        Months[Months["October"] = 9] = "October";
+        Months[Months["November"] = 10] = "November";
+        Months[Months["December"] = 11] = "December";
+    })(Months = _Ext.Months || (_Ext.Months = {}));
+    Serenity.Decorators.registerEnum(Months, 'Months');
+})(_Ext || (_Ext = {}));
+var _Ext;
+(function (_Ext) {
+    var TimeUoM;
+    (function (TimeUoM) {
+        TimeUoM[TimeUoM["Hour"] = 1] = "Hour";
+        TimeUoM[TimeUoM["Day"] = 2] = "Day";
+        TimeUoM[TimeUoM["Week"] = 3] = "Week";
+        TimeUoM[TimeUoM["Month"] = 4] = "Month";
+        TimeUoM[TimeUoM["CalenderMonth"] = 5] = "CalenderMonth";
+        TimeUoM[TimeUoM["Year"] = 6] = "Year";
+    })(TimeUoM = _Ext.TimeUoM || (_Ext.TimeUoM = {}));
+    Serenity.Decorators.registerEnum(TimeUoM, 'TimeUoM');
+})(_Ext || (_Ext = {}));
 var BowenSerene;
 (function (BowenSerene) {
     var Administration;
@@ -3582,6 +3614,1599 @@ var BowenSerene;
         })(ContactService = Organization.ContactService || (Organization.ContactService = {}));
     })(Organization = BowenSerene.Organization || (BowenSerene.Organization = {}));
 })(BowenSerene || (BowenSerene = {}));
+var isPageRefreshRequired;
+var _Ext;
+(function (_Ext) {
+    var q = (function () {
+        function q() {
+        }
+        //date time
+        q.nextTick = function (date) {
+            return new Date(date.getTime() + 1);
+        };
+        q.addMinutes = function (date, minutes) {
+            return new Date(date.getTime() + minutes * 60000);
+        };
+        q.getHours = function (fromDate, toDate) {
+            var hours = 0;
+            if (fromDate && toDate) {
+                var totalMiliSeconds = toDate.valueOf() - fromDate.valueOf();
+                hours = totalMiliSeconds / (1000 * 60 * 60);
+            }
+            return hours;
+        };
+        q.getDays = function (fromDate, toDate) {
+            var days = q.getHours(fromDate, toDate) / 24;
+            return Math.ceil(days);
+        };
+        q.getMonths = function (fromDate, toDate) {
+            var months = q.getDays(fromDate, toDate) / 30;
+            return Math.ceil(months);
+        };
+        q.getCalenderMonths = function (fromDate, toDate) {
+            var months;
+            months = (toDate.getFullYear() - fromDate.getFullYear()) * 12;
+            months -= fromDate.getMonth();
+            months += toDate.getMonth();
+            return months <= 0 ? 0 : months;
+        };
+        q.getCalenderMonthsCeil = function (fromDate, toDate) {
+            var months = q.getCalenderMonths(fromDate, toDate);
+            return months == 0 ? 1 : months;
+        };
+        q.addDays = function (date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        };
+        q.addMonths = function (date, months) {
+            var result = new Date(date);
+            result.setMonth(result.getMonth() + months);
+            return result;
+        };
+        q.getPeriods = function (fromDate, toDate, periodUnit) {
+            if (periodUnit == _Ext.TimeUoM.Day) {
+                var days = q.getDays(fromDate, toDate);
+                return days == 0 ? 1 : days;
+            }
+            else if (periodUnit == _Ext.TimeUoM.Month) {
+                var months = q.getMonths(fromDate, toDate);
+                return months == 0 ? 1 : months;
+            }
+            else if (periodUnit == _Ext.TimeUoM.CalenderMonth) {
+                var calenderMonths = q.getCalenderMonths(fromDate, toDate);
+                return calenderMonths + 1;
+            }
+        };
+        q.addPeriod = function (date, period, periodUnit) {
+            var result = new Date(date);
+            if (periodUnit == _Ext.TimeUoM.Day)
+                result.setDate(result.getDate() + period);
+            else if (periodUnit == _Ext.TimeUoM.Month)
+                result.setMonth(result.getMonth() + period);
+            else if (periodUnit == _Ext.TimeUoM.CalenderMonth) {
+                result.setDate(1);
+                result.setMonth(result.getMonth() + period);
+            }
+            return result;
+        };
+        q.formatISODate = function (date) {
+            if (date) {
+                var offset = date.getTimezoneOffset();
+                var result = new Date(date.getTime() - offset * 60 * 1000);
+                return result.toISOString();
+            }
+            else
+                return null;
+        };
+        //editor utils
+        q.bindDateTimeEditorChange = function (editor, handler) {
+            editor.change(handler);
+            editor.element.closest('.field').find('.time').change(handler);
+            editor.element.closest('.field').find('.inplace-now').click(handler);
+        };
+        q.initDetailEditor = function (dialog, editor, options) {
+            if (options === void 0) { options = {}; }
+            if (options.showCaption != true) {
+                editor.element.siblings('.caption').hide();
+            }
+            if (options.hideToolbar == true) {
+                editor.element.find('.grid-toolbar').hide();
+            }
+            editor.parentDialog = dialog;
+            setTimeout(function () {
+                if (options.isReadOnly == true) {
+                    editor.set_readOnly(options.isReadOnly);
+                }
+                var categoriesHeight = editor.element.closest('.categories').height();
+                if (options.height) {
+                    editor.element.find('.grid-container').height(options.height);
+                }
+                else {
+                    var editorHeight = (categoriesHeight - editor.element.position().top + 40);
+                    editor.element.find('.grid-container').height(editorHeight);
+                }
+                if (options.width) {
+                    editor.element.find('.grid-container').width(options.width);
+                }
+                else {
+                    editor.element.find('.grid-container').width('100%');
+                }
+                editor.slickGrid.resizeCanvas();
+            }, 200);
+        };
+        q.addNotificationIcon = function (editor, isSuccess) {
+            var isAddOnInitialized = editor.element.data('isAddOnInitialized');
+            if (isAddOnInitialized != true) {
+                editor.element.after('<span class="text text-danger" style="padding:3px"><i class="fa fa-times"></i></span>');
+                editor.element.data('isAddOnInitialized', true);
+            }
+            if (isSuccess == true) {
+                editor.element.switchClass('bg-danger', 'bg-success')
+                    .siblings('.text').switchClass('text-danger', 'text-success')
+                    .children().switchClass('fa-times', 'fa-check');
+            }
+            else {
+                editor.element.switchClass('bg-success', 'bg-danger')
+                    .siblings('.text').switchClass('text-success', 'text-danger')
+                    .children().switchClass('fa-check', 'fa-times');
+            }
+        };
+        q.initDateRangeEditor = function (fromDateEditor, toDateEditor, onChangeHandler) {
+            var startDateTextBox = fromDateEditor.element;
+            var endDateTextBox = toDateEditor.element;
+            startDateTextBox.datepicker('option', 'onClose', function (dateText, inst) {
+                if (endDateTextBox.val() != '') {
+                    var testStartDate = startDateTextBox.datepicker('getDate');
+                    var testEndDate = endDateTextBox.datepicker('getDate');
+                    if (testStartDate > testEndDate)
+                        endDateTextBox.datepicker('setDate', testStartDate);
+                }
+                else {
+                    endDateTextBox.val(dateText);
+                }
+            });
+            endDateTextBox.datepicker('option', 'minDate', startDateTextBox.datepicker('getDate'));
+            startDateTextBox.datepicker('option', 'onSelect', function (selectedDateTime) {
+                endDateTextBox.datepicker('option', 'minDate', startDateTextBox.datepicker('getDate'));
+            });
+            endDateTextBox.datepicker('option', 'onClose', function (dateText, inst) {
+                if (startDateTextBox.val() != '') {
+                    var testStartDate = startDateTextBox.datepicker('getDate');
+                    var testEndDate = endDateTextBox.datepicker('getDate');
+                    if (testStartDate > testEndDate)
+                        startDateTextBox.datepicker('setDate', testEndDate);
+                }
+                else {
+                    startDateTextBox.val(dateText);
+                }
+            });
+            startDateTextBox.datepicker('option', 'maxDate', endDateTextBox.datepicker('getDate'));
+            endDateTextBox.datepicker('option', 'onSelect', function (selectedDateTime) {
+                startDateTextBox.datepicker('option', 'maxDate', endDateTextBox.datepicker('getDate'));
+            });
+            setTimeout(function () {
+                fromDateEditor.change(onChangeHandler);
+                toDateEditor.change(onChangeHandler);
+            }, 500);
+        };
+        q.initDateTimeRangeEditor = function (fromDateTimeEditor, toDateTimeEditor, onChangeHandler) {
+            //fromDateTimeEditor.destroy();
+            //toDateTimeEditor.destroy();
+            var startDateTextBox = fromDateTimeEditor.element;
+            var endDateTextBox = toDateTimeEditor.element;
+            //startDateTextBox.datetimepicker('option', 'timeFormat', 'HH:mm z')
+            startDateTextBox.datetimepicker('option', 'onClose', function (dateText, inst) {
+                if (endDateTextBox.val() != '') {
+                    var testStartDate = startDateTextBox.datetimepicker('getDate');
+                    var testEndDate = endDateTextBox.datetimepicker('getDate');
+                    if (testStartDate > testEndDate)
+                        endDateTextBox.datetimepicker('setDate', testStartDate);
+                }
+                else {
+                    endDateTextBox.val(dateText);
+                }
+            });
+            endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate'));
+            startDateTextBox.datetimepicker('option', 'onSelect', function (selectedDateTime) {
+                endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate'));
+            });
+            //endDateTextBox.datetimepicker('option', 'timeFormat', 'HH:mm z')
+            endDateTextBox.datetimepicker('option', 'onClose', function (dateText, inst) {
+                if (startDateTextBox.val() != '') {
+                    var testStartDate = startDateTextBox.datetimepicker('getDate');
+                    var testEndDate = endDateTextBox.datetimepicker('getDate');
+                    if (testStartDate > testEndDate)
+                        startDateTextBox.datetimepicker('setDate', testEndDate);
+                }
+                else {
+                    startDateTextBox.val(dateText);
+                }
+            });
+            startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate'));
+            endDateTextBox.datetimepicker('option', 'onSelect', function (selectedDateTime) {
+                startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate'));
+            });
+            setTimeout(function () {
+                fromDateTimeEditor.change(onChangeHandler);
+                toDateTimeEditor.change(onChangeHandler);
+            }, 500);
+        };
+        q.setEditorLabel = function (editor, value) {
+            editor.element.siblings('label').text(value);
+        };
+        q.hideEditorLabel = function (editor) {
+            editor.element.siblings('label').hide();
+        };
+        q.setEditorCategoryLabel = function (editor, value) {
+            var categoryAnchor = editor.element.closest('.category').find('.category-anchor');
+            categoryAnchor.text(value);
+            var categoryAnchorName = categoryAnchor.attr('name');
+            categoryAnchor.closest('.s-PropertyGrid').find("a[href='#" + categoryAnchorName + "']").text(value);
+        };
+        q.hideEditorCategory = function (editor) {
+            editor.element.closest('.category').hide();
+            var categoryAnchor = editor.element.closest('.category').find('.category-anchor');
+            var categoryAnchorName = categoryAnchor.attr('name');
+            categoryAnchor.closest('.s-PropertyGrid').find("a[href='#" + categoryAnchorName + "']").hide();
+        };
+        q.hideField = function (editor, value) {
+            if (value === void 0) { value = true; }
+            if (value == true)
+                editor.element.closest('.field').hide();
+            else
+                editor.element.closest('.field').show();
+        };
+        // for select2 lookup editor
+        q.getSelectedRow = function (e) {
+            var selectedItem = e.added;
+            var selectedRow = selectedItem.source;
+            return selectedRow;
+        };
+        q.getEnumText = function (enumKey, value) {
+            var title = Serenity.EnumFormatter.format(Serenity.EnumTypeRegistry.get(enumKey), value);
+            return title;
+        };
+        q.formatDecimal = function (value) {
+            var title = Serenity.NumberFormatter.format(value, '#,##0.00');
+            return title;
+        };
+        q.formatInt = function (value) {
+            var title = Serenity.NumberFormatter.format(value, '#,##0');
+            return title;
+        };
+        // Check numeric or not then return value, if NAN then return zero(0)
+        q.ToNumber = function (value) {
+            return isNaN(value) ? 0 : value;
+        };
+        q.ToBool = function (value) {
+            return value == 'true' ? true : false;
+        };
+        return q;
+    }());
+    q.queryString = {};
+    q.jsPDFHeaderImageData = null;
+    q.jsPDFHeaderTitle = 'Report Title';
+    _Ext.q = q;
+})(_Ext || (_Ext = {}));
+var _Ext;
+(function (_Ext) {
+    var DialogBase = (function (_super) {
+        __extends(DialogBase, _super);
+        function DialogBase(opt) {
+            var _this = _super.call(this, opt) || this;
+            _this.element.fadeTo(0, 0);
+            _Ext.DialogUtils.pendingChangesConfirmation(_this.element, function () { return _this.getSaveState() != _this.loadedState; });
+            return _this;
+        }
+        DialogBase.prototype.updateInterface = function () {
+            _super.prototype.updateInterface.call(this);
+            if (this.isReadOnly == true) {
+                this.saveAndCloseButton.addClass('disabled');
+                this.applyChangesButton.addClass('disabled');
+                this.deleteButton.addClass('disabled');
+                // remove required asterisk (*)
+                this.element.find('sup').hide();
+                for (var editor in this.form) {
+                    if (this.form[editor].widgetName) {
+                        Serenity.EditorUtils.setReadOnly(this.form[editor], this.isReadOnly);
+                    }
+                }
+            }
+        };
+        DialogBase.prototype.onDialogOpen = function () {
+            _super.prototype.onDialogOpen.call(this);
+            this.fullContentArea();
+            this.element.fadeTo(100, 1);
+        };
+        DialogBase.prototype.getToolbarButtons = function () {
+            var buttons = _super.prototype.getToolbarButtons.call(this);
+            //buttons.push({
+            //    title: 'Refresh',
+            //    icon: 'fa fa-refresh',
+            //    onClick: () => {
+            //        this.onRefreshClick();
+            //    }
+            //})
+            //buttons.push({
+            //    title: 'Change Log',
+            //    icon: 'fa fa-history',
+            //    onClick: () => {
+            //        let entityId = this.entity['Id'];
+            //        if (entityId) {
+            //            let dlg = new AuditLogViewerDialog({ FormKey: this.getFormKey(), EntityId: entityId });
+            //            dlg.dialogOpen();
+            //        } else {
+            //            Q.alert('No change log found for this entity.')
+            //        }
+            //    }
+            //})
+            return buttons;
+        };
+        DialogBase.prototype.onRefreshClick = function () {
+        };
+        DialogBase.prototype.getSaveState = function () {
+            try {
+                return $.toJSON(this.getSaveEntity());
+            }
+            catch (e) {
+                return null;
+            }
+        };
+        DialogBase.prototype.onSaveSuccess = function (response) {
+            _super.prototype.onSaveSuccess.call(this, response);
+            isPageRefreshRequired = true;
+            //Q.reloadLookup(this.getLookupKey());
+        };
+        DialogBase.prototype.loadResponse = function (data) {
+            _super.prototype.loadResponse.call(this, data);
+            this.loadedState = this.getSaveState();
+        };
+        DialogBase.prototype.maximize = function () {
+            this.element.closest(".ui-dialog").find(".ui-icon-maximize-window").click();
+        };
+        DialogBase.prototype.fullContentArea = function () {
+            this.setDialogSize();
+        };
+        // set the dialog size relative to content area (to shrink use negative value)
+        DialogBase.prototype.setDialogSize = function (width, height, top, left) {
+            var $content = $('section.content');
+            var dialogElement = this.element ? this.element.closest(".ui-dialog") : $(".ui-dialog");
+            if ($content.length > 0) {
+                this.element.dialog("option", "width", $content.width() + (width || 0));
+                this.element.dialog("option", "height", $content.height() + (height || 105));
+                dialogElement.css({
+                    left: $content.position().left + 15 + (left || 0),
+                    top: (top || 0),
+                });
+            }
+        };
+        DialogBase.prototype.hideEditorCaption = function (editor) {
+            editor.siblings('.caption').hide();
+        };
+        DialogBase.prototype.setGridEditorHeight = function (editor, heightInPx) {
+            editor.css('height', heightInPx + 'px');
+            editor.children('.grid-container').css('height', (heightInPx - 25) + 'px');
+        };
+        return DialogBase;
+    }(Serenity.EntityDialog));
+    DialogBase = __decorate([
+        Serenity.Decorators.responsive(),
+        Serenity.Decorators.maximizable()
+    ], DialogBase);
+    _Ext.DialogBase = DialogBase;
+})(_Ext || (_Ext = {}));
+var _Ext;
+(function (_Ext) {
+    var GridBase = (function (_super) {
+        __extends(GridBase, _super);
+        function GridBase(container, options) {
+            var _this = _super.call(this, container, options) || this;
+            _this.isAutosized = false;
+            _this.isChildGrid = false;
+            _this.slickContainer.fadeTo(0, 0);
+            return _this;
+        }
+        GridBase.prototype.markupReady = function () {
+            var _this = this;
+            _super.prototype.markupReady.call(this);
+            setTimeout(function () {
+                if (_this.isAutosized == false) {
+                    _this.resizeAllCulumn();
+                    _this.slickContainer.fadeTo(100, 1);
+                }
+            }, 100);
+        };
+        GridBase.prototype.getButtons = function () {
+            var _this = this;
+            var buttons = _super.prototype.getButtons.call(this);
+            var reportRequest = this.getReportRequest();
+            if (reportRequest.ListExcelServiceMethodName) {
+                buttons.push(_Ext.ExcelExportHelper.createToolButton({
+                    grid: this,
+                    service: this.getService() + '/' + reportRequest.ListExcelServiceMethodName,
+                    onViewSubmit: function () { return _this.onViewSubmit(); },
+                    separator: true
+                }));
+            }
+            if (reportRequest.ReportKey) {
+                buttons.push({
+                    title: 'Export to PDF',
+                    icon: 'fa fa-file-pdf-o',
+                    onClick: function () {
+                        _Ext.ReportHelper.execute({ reportKey: reportRequest.ReportKey, params: { request: _this.getReportRequest() } });
+                    }
+                });
+                buttons.push({
+                    title: 'View as Report',
+                    icon: 'fa fa-html5',
+                    onClick: function () {
+                        _Ext.ReportHelper.execute({ reportKey: reportRequest.ReportKey, params: { request: _this.getReportRequest() }, extension: 'html' });
+                    }
+                });
+            }
+            else if (reportRequest.ReportServiceMethodName) {
+                buttons.push({
+                    title: 'View as Report',
+                    icon: 'fa fa-eye',
+                    onClick: function () {
+                        Q.postToService({ service: Q.resolveUrl(_this.getService() + '/' + reportRequest.ReportServiceMethodName), request: _this.getReportRequest(), target: '_blank' });
+                    }
+                });
+            }
+            else {
+                buttons.push(_Ext.PdfExportHelper.createToolButton({
+                    grid: this,
+                    tableOptions: { theme: 'grid' },
+                    onViewSubmit: function () { return _this.onViewSubmit(); }
+                }));
+            }
+            return buttons;
+        };
+        GridBase.prototype.getReportRequest = function () {
+            var view = this.getView();
+            var request = Q.deepClone(view ? view.params : {}); //as _Ext.ReportRequest;
+            request.ReportServiceMethodName = null; // if some value found in this property than "view as report" button will appear
+            request.ReportKey = null; // if some value found in this property than "export to pdf" button will appear
+            request.ListExcelServiceMethodName = null; // if some value found in this property than "export to xls" button will appear
+            request.EqualityFilterWithTextValue = {};
+            if (view) {
+                var quickFilters = this.getQuickFilters();
+                for (var _i = 0, quickFilters_1 = quickFilters; _i < quickFilters_1.length; _i++) {
+                    var quickFilter = quickFilters_1[_i];
+                    var filterValue = request.EqualityFilter[quickFilter.field];
+                    if (filterValue) {
+                        if (quickFilter.options.lookupKey) {
+                            var lookup = Q.getLookup(quickFilter.options.lookupKey);
+                            request.EqualityFilterWithTextValue[quickFilter.title] = lookup.itemById[filterValue][lookup.textField];
+                        }
+                        else if (quickFilter.options.enumKey) {
+                            var enumKey = quickFilter.options.enumKey;
+                            var enumValue = Q.toId(filterValue);
+                            request.EqualityFilterWithTextValue[quickFilter.title] = Serenity.EnumFormatter.format(Serenity.EnumTypeRegistry.get(enumKey), enumValue);
+                        }
+                        else {
+                            request.EqualityFilterWithTextValue[quickFilter.title] = filterValue;
+                        }
+                    }
+                    else if (quickFilter.type == Serenity.DateEditor) {
+                        var qf = this.findQuickFilter(Serenity.DateEditor, quickFilter.field);
+                        var dateFrom = qf.element.val();
+                        var dateTo = qf.element.siblings('input').val();
+                        var filterText = '';
+                        if (!Q.isEmptyOrNull(dateFrom))
+                            filterText = 'From ' + dateFrom;
+                        if (!Q.isEmptyOrNull(dateTo))
+                            filterText = filterText + ' To ' + dateTo;
+                        if (!Q.isEmptyOrNull(filterText))
+                            request.EqualityFilterWithTextValue[quickFilter.title] = filterText;
+                    }
+                }
+            }
+            return request;
+        };
+        GridBase.prototype.getColumns = function () {
+            var cols = _super.prototype.getColumns.call(this);
+            var isEditable = this.getSlickOptions().editable;
+            cols.forEach(function (c) {
+                c.width = c.minWidth || c.width || 50;
+                c.cssClass = c.cssClass || '';
+                if (c.sourceItem) {
+                    if (c.sourceItem.filteringType == String("Lookup")) {
+                        c.cssClass += ' align-left';
+                        if (c.sourceItem.editorType == "Lookup") {
+                            c.lookup = Q.getLookup(c.sourceItem.editorParams.lookupKey);
+                            c.formatter = function (row, cell, value, columnDef, dataContext) {
+                                var item = columnDef.lookup.itemById[value];
+                                if (item)
+                                    return item[columnDef.lookup.textField];
+                                else
+                                    return '-';
+                            };
+                        }
+                    }
+                    else if (c.sourceItem.filteringType == String("Enum")) {
+                    }
+                    else if (c.sourceItem.formatterType == String("Date")) {
+                        c.cssClass += ' align-center';
+                        c.width = c.minWidth > 99 ? c.minWidth : 99;
+                    }
+                    else if (c.sourceItem.formatterType == String("DateTime")) {
+                        c.cssClass += ' align-center';
+                        c.width = c.minWidth > 140 ? c.minWidth : 140;
+                    }
+                    else if (c.sourceItem.formatterType == String("Number")) {
+                        c.cssClass += ' align-right';
+                        if (c.sourceItem.editorType == String("Decimal")) {
+                            c.format = function (ctx) { return Serenity.NumberFormatter.format(ctx.value, '#,##0.00'); };
+                        }
+                    }
+                    else if (c.sourceItem.formatterType == String("Checkbox")) {
+                        c.cssClass += ' align-center';
+                    }
+                    else {
+                        c.cssClass += ' align-left';
+                        c.width = c.minWidth > 99 ? c.minWidth : 99;
+                    }
+                    //editor
+                    if (isEditable == true && c.sourceItem.readOnly != true) {
+                        if (c.sourceItem.editorType == "Lookup") {
+                            c.editor = Slick['Editors']['Select2'];
+                            c.width = c.minWidth > 160 ? c.minWidth : 160;
+                        }
+                        else if (c.sourceItem.editorType == "Date") {
+                            c.editor = Slick['Editors']['Date'];
+                        }
+                        else if (c.sourceItem.editorType == "Enum") {
+                        }
+                        else if (c.sourceItem.editorType == "Boolean") {
+                            c.editor = Slick['Editors']['Checkbox'];
+                        }
+                        else if (c.sourceItem.editorType == "Integer") {
+                            c.editor = Slick['Editors']['Integer'];
+                        }
+                        else if (c.sourceItem.editorType == "Decimal") {
+                            c.editor = Slick['Editors']['Float'];
+                        }
+                        else if (c.sourceItem.editorType == "YesNoSelect") {
+                            c.editor = Slick['Editors']['YesNoSelect'];
+                        }
+                        else if (c.sourceItem.editorType == "PercentComplete") {
+                            c.editor = Slick['Editors']['PercentComplete'];
+                        }
+                        else if (c.sourceItem.editorType == "LongText") {
+                            c.editor = Slick['Editors']['LongText'];
+                        }
+                        else {
+                            c.editor = Slick['Editors']['Text'];
+                        }
+                    }
+                }
+                else {
+                    c.cssClass += ' align-left';
+                    c.width = c.minWidth > 99 ? c.minWidth : 99;
+                }
+            });
+            cols.unshift({
+                field: 'inline-actions',
+                name: '',
+                width: 25,
+                minWidth: 25,
+                maxWidth: 25,
+                format: function (ctx) { return '<a class="inline-action view-details" title="view details"><i class="view-details fa fa-pencil-square-o"></i></a>'; }
+            }, {
+                field: 'Serial',
+                name: '#',
+                cssClass: 'align-center',
+                headerCssClass: 'align-center',
+                width: 40,
+                minWidth: 40,
+                maxWidth: 40,
+            });
+            return cols;
+        };
+        GridBase.prototype.createSlickGrid = function () {
+            var grid = _super.prototype.createSlickGrid.call(this);
+            this.autoColumnSizePlugin = new Slick.AutoColumnSize();
+            grid.registerPlugin(this.autoColumnSizePlugin);
+            grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
+            return grid;
+        };
+        GridBase.prototype.resetColumns = function (columns) {
+            var _this = this;
+            this.slickContainer.fadeTo(0, 0);
+            this.slickGrid.setColumns(columns);
+            setTimeout(function () {
+                _this.resizeAllCulumn();
+                _this.slickContainer.fadeTo(100, 1);
+            }, 100);
+        };
+        GridBase.prototype.resizeAllCulumn = function () {
+            this.isAutosized = true;
+            var gridContainerWidth = this.slickContainer.width();
+            if (gridContainerWidth == 0) {
+                gridContainerWidth = this.element.closest('.s-Dialog').width() - 55;
+            }
+            this.slickGrid.setOptions({ forceFitColumns: false });
+            var allVisibleColumns = this.autoColumnSizePlugin.resizeAllColumns().filter(function (f) { return f.visible != false; }); // this.allColumns;
+            var allVisibleColumnWidth = 0;
+            allVisibleColumns.map(function (m) { return m.width; }).forEach(function (e) { return allVisibleColumnWidth += e; });
+            if (allVisibleColumnWidth > gridContainerWidth) {
+                this.autoColumnSizePlugin.resizeAllColumns();
+            }
+            else if (allVisibleColumnWidth < gridContainerWidth) {
+                this.autoColumnSizePlugin.resizeAllColumns();
+                var fixedSizeColumns_1 = [];
+                var resizableColumns_1 = [];
+                allVisibleColumns.forEach(function (c) {
+                    if (c.minWidth == c.maxWidth) {
+                        fixedSizeColumns_1.push(c);
+                        c.width = c.maxWidth;
+                    }
+                    else if (c.sourceItem) {
+                        if (c.sourceItem.formatterType == String("Number")) {
+                            fixedSizeColumns_1.push(c);
+                        }
+                        else if (c.sourceItem.filteringType == String("Enum")) {
+                            fixedSizeColumns_1.push(c);
+                            if (c.width < 80)
+                                c.width = 80;
+                        }
+                        else if (c.sourceItem.formatterType == String("Date")) {
+                            fixedSizeColumns_1.push(c);
+                            if (c.width < 80)
+                                c.width = 80;
+                        }
+                        else if (c.sourceItem.formatterType == String("DateTime")) {
+                            fixedSizeColumns_1.push(c);
+                            if (c.width < 140)
+                                c.width = 140;
+                        }
+                        else if (c.sourceItem.formatterType == String("Checkbox")) {
+                            fixedSizeColumns_1.push(c);
+                        }
+                        else {
+                            resizableColumns_1.push(c);
+                        }
+                    }
+                    else {
+                        resizableColumns_1.push(c);
+                    }
+                });
+                if (resizableColumns_1.length == 0) {
+                    fixedSizeColumns_1 = [];
+                    resizableColumns_1 = [];
+                    allVisibleColumns.forEach(function (c) {
+                        if (c.minWidth == c.maxWidth) {
+                            fixedSizeColumns_1.push(c);
+                            c.width = c.maxWidth;
+                        }
+                        else {
+                            resizableColumns_1.push(c);
+                        }
+                    });
+                }
+                var fixedSizeColumnsWidth_1 = 0;
+                fixedSizeColumns_1.map(function (m) { return m.width; }).forEach(function (e) { return fixedSizeColumnsWidth_1 += e; });
+                var stretchableGridAreaWidth_1 = gridContainerWidth - fixedSizeColumnsWidth_1 - 18;
+                var resizableColumnsWidth_1 = 0;
+                resizableColumns_1
+                    .map(function (m) { return m.width; })
+                    .forEach(function (e) { return resizableColumnsWidth_1 += e; });
+                resizableColumns_1.forEach(function (c) {
+                    c.width = c.width * (stretchableGridAreaWidth_1 / resizableColumnsWidth_1);
+                });
+                this.slickGrid.setColumns(allVisibleColumns);
+                this.slickGrid.onColumnsResized.notify();
+            }
+            this.setItems(this.getItems());
+        };
+        GridBase.prototype.getSlickOptions = function () {
+            var opt = _super.prototype.getSlickOptions.call(this);
+            opt.forceFitColumns = true;
+            opt.enableTextSelectionOnCells = true;
+            opt.enableCellNavigation = true;
+            opt.asyncEditorLoading = false;
+            opt.autoEdit = true;
+            return opt;
+        };
+        GridBase.prototype.onClick = function (e, row, cell) {
+            _super.prototype.onClick.call(this, e, row, cell);
+            if (e.isDefaultPrevented())
+                return;
+            var item = this.itemAt(row);
+            var recordId = item[this.getIdProperty()];
+            var target = $(e.target);
+            // if user clicks "i" element, e.g. icon
+            if (target.parent().hasClass('inline-action') || target.parent().hasClass('inline-btn'))
+                target = target.parent();
+            if (target.hasClass('inline-action') || target.hasClass('inline-btn')) {
+                //e.preventDefault();
+                this.onInlineActionClick(target, recordId, item);
+            }
+        };
+        GridBase.prototype.onInlineActionClick = function (target, recordId, item) {
+            var _this = this;
+            if (target.hasClass('delete-row')) {
+                Q.confirm('Delete record?', function () {
+                    var o = _this;
+                    if (o.deleteEntity) {
+                        o.deleteEntity(recordId);
+                    }
+                    else {
+                        Q.serviceRequest(_this.getService() + '/Delete', { EntityId: recordId }, function (response) {
+                            _this.refresh();
+                        });
+                    }
+                });
+            }
+            else if (target.hasClass('view-details')) {
+                this.editItem(recordId);
+            }
+        };
+        GridBase.prototype.onViewProcessData = function (response) {
+            var _this = this;
+            var r = _super.prototype.onViewProcessData.call(this, response);
+            var items = r.Entities;
+            var grouping_levels = this.view.getGrouping();
+            if (grouping_levels.length == 0) {
+                for (var i = 0; i < items.length; i++) {
+                    items[i].Serial = response.Skip + i + 1;
+                }
+            }
+            else if (grouping_levels.length = 1) {
+                var groups_1 = this.view.getGroups();
+                var generateSerialNo = function () {
+                    groups_1 = _this.view.getGroups();
+                    var _loop_1 = function (gi) {
+                        var rows = groups_1[gi].rows;
+                        var _loop_2 = function (i) {
+                            var item = items.filter(function (f) { return f.Id == rows[i].Id; })[0];
+                            if (item)
+                                item.Serial = i + 1;
+                        };
+                        for (var i = 0; i < rows.length; i++) {
+                            _loop_2(i);
+                        }
+                    };
+                    for (var gi = 0; gi < groups_1.length; gi++) {
+                        _loop_1(gi);
+                    }
+                };
+                if (groups_1.length == 0) {
+                    setTimeout(generateSerialNo);
+                }
+                else {
+                    generateSerialNo();
+                }
+            }
+            return r;
+        };
+        return GridBase;
+    }(Serenity.EntityGrid));
+    GridBase = __decorate([
+        Serenity.Decorators.filterable()
+    ], GridBase);
+    _Ext.GridBase = GridBase;
+})(_Ext || (_Ext = {}));
+var _Ext;
+(function (_Ext) {
+    var AutoCompleteEditor = (function (_super) {
+        __extends(AutoCompleteEditor, _super);
+        function AutoCompleteEditor(input, options) {
+            var _this = _super.call(this, input, options) || this;
+            _this.options = options;
+            input.bind('change', function (e) {
+                if (!Serenity.WX.hasOriginalEvent(e)) {
+                    return;
+                }
+            });
+            setTimeout(function () {
+                _this.bindAutoComplete(input);
+            }, 1000);
+            return _this;
+        }
+        AutoCompleteEditor.prototype.bindAutoComplete = function (input) {
+            var opt = this.options;
+            var source = opt.sourceArray;
+            if (opt.sourceCSV) {
+                source = opt.sourceCSV.split(',');
+            }
+            else if (this.options.lookupKey) {
+                var lookup_1 = Q.getLookup(opt.lookupKey);
+                source = lookup_1.items.map(function (m) { return m[lookup_1.textField]; });
+            }
+            input.autocomplete({
+                minLength: opt.minSearchLenth || 1,
+                autoFocus: true,
+                source: source,
+                focus: function (event, ui) {
+                    $(".ui-helper-hidden-accessible").hide(); //fix issue with the selected data showing up on webpage
+                    event.preventDefault();
+                    return false;
+                },
+            });
+            input.data("ui-autocomplete")._renderItem = function (ul, item) {
+                return $("<li>")
+                    .append("<a>" + item.label + "</a>")
+                    .appendTo(ul);
+            };
+        };
+        return AutoCompleteEditor;
+    }(Serenity.StringEditor));
+    AutoCompleteEditor = __decorate([
+        Serenity.Decorators.registerEditor()
+    ], AutoCompleteEditor);
+    _Ext.AutoCompleteEditor = AutoCompleteEditor;
+})(_Ext || (_Ext = {}));
+var _Ext;
+(function (_Ext) {
+    var ColorEditor = (function (_super) {
+        __extends(ColorEditor, _super);
+        function ColorEditor(container) {
+            var _this = _super.call(this, container) || this;
+            try {
+                _this.element.colorpicker({ format: "hex" });
+            }
+            catch (e) { }
+            return _this;
+        }
+        ColorEditor.prototype.getTemplate = function () {
+            usingBootstrapColorPicker();
+            return "<div class=\"input-group colorpicker-component\">\n                        <input type=\"text\" value=\"#00AABB\" class=\"form-control\" />\n                        <span class=\"input-group-addon\"><i></i></span>\n                    </div>";
+        };
+        ;
+        ColorEditor.prototype.getEditValue = function (property, target) {
+            try {
+                var editVal = this.element.colorpicker().data().color;
+                target[property.name] = editVal;
+            }
+            catch (e) { }
+        };
+        ColorEditor.prototype.setEditValue = function (source, property) {
+            var val = source[property.name];
+            //this.element.children('input').val(val);
+            try {
+                this.element.data('colorpicker').setValue(val);
+            }
+            catch (e) { }
+        };
+        return ColorEditor;
+    }(Serenity.TemplatedWidget));
+    ColorEditor = __decorate([
+        Serenity.Decorators.registerClass([Serenity.IGetEditValue, Serenity.ISetEditValue]),
+        Serenity.Decorators.editor(),
+        Serenity.Decorators.element("<div/>")
+    ], ColorEditor);
+    _Ext.ColorEditor = ColorEditor;
+})(_Ext || (_Ext = {}));
+var _Ext;
+(function (_Ext) {
+    var DateTimePickerEditor = (function (_super) {
+        __extends(DateTimePickerEditor, _super);
+        function DateTimePickerEditor(container) {
+            var _this = _super.call(this, container) || this;
+            usingJqueryUITimepickerAddon();
+            _this.element.datetimepicker({
+                timeInput: true,
+                controlType: 'select',
+                oneLine: true,
+                timeFormat: "HH:mm",
+                showOn: "button"
+            });
+            return _this;
+        }
+        DateTimePickerEditor.prototype.getEditValue = function (property, target) { target[property.name] = this.value; };
+        DateTimePickerEditor.prototype.setEditValue = function (source, property) { this.value = source[property.name]; };
+        Object.defineProperty(DateTimePickerEditor.prototype, "value", {
+            //http://trentrichardson.com/examples/timepicker
+            get: function () {
+                return Q.formatDate(this.valueAsDate, 'yyyy-MM-ddTHH:mm');
+            },
+            set: function (val) {
+                this.valueAsDate = Q.parseISODateTime(val);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(DateTimePickerEditor.prototype, "valueAsDate", {
+            get: function () {
+                var val = this.element.datetimepicker('getDate');
+                return val;
+            },
+            set: function (val) {
+                this.element.datetimepicker('setDate', val);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        DateTimePickerEditor.prototype.get_readOnly = function () {
+            return this.element.hasClass('readonly');
+        };
+        DateTimePickerEditor.prototype.set_readOnly = function (value) {
+            if (value == true) {
+                this.element.datetimepicker("option", "disabled", true);
+                this.element.addClass('readonly');
+                this.element.attr("disabled");
+            }
+            else {
+                this.element.datetimepicker("option", "disabled", false);
+                this.element.removeClass('readonly');
+                this.element.removeAttr("disabled");
+            }
+        };
+        DateTimePickerEditor.prototype.set_minDate = function (date) {
+            this.element.datetimepicker('option', 'minDate', date);
+        };
+        DateTimePickerEditor.prototype.set_maxDate = function (date) {
+            this.element.datetimepicker('option', 'maxDate', date);
+        };
+        DateTimePickerEditor.prototype.set_minDateTime = function (date) {
+            this.element.datetimepicker('option', 'minDateTime', date);
+        };
+        DateTimePickerEditor.prototype.set_maxDateTime = function (date) {
+            this.element.datetimepicker('option', 'maxDateTime', date);
+        };
+        return DateTimePickerEditor;
+    }(Serenity.Widget));
+    DateTimePickerEditor = __decorate([
+        Serenity.Decorators.registerClass([Serenity.IGetEditValue, Serenity.ISetEditValue, Serenity.IReadOnly]),
+        Serenity.Decorators.editor(),
+        Serenity.Decorators.element("<input/>")
+    ], DateTimePickerEditor);
+    _Ext.DateTimePickerEditor = DateTimePickerEditor;
+})(_Ext || (_Ext = {}));
+/// <reference path="../Bases/DialogBase.ts" />
+var _Ext;
+(function (_Ext) {
+    var EditorDialogBase = (function (_super) {
+        __extends(EditorDialogBase, _super);
+        function EditorDialogBase() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        EditorDialogBase.prototype.getIdProperty = function () { return "__id"; };
+        EditorDialogBase.prototype.destroy = function () {
+            this.onSave = null;
+            this.onDelete = null;
+            _super.prototype.destroy.call(this);
+        };
+        EditorDialogBase.prototype.updateInterface = function () {
+            _super.prototype.updateInterface.call(this);
+            this.saveAndCloseButton.find('.button-inner').text(this.isNew() ? 'Add' : 'Apply');
+            // apply changes button doesn't work properly with in-memory grids yet
+            if (this.applyChangesButton) {
+                this.applyChangesButton.hide();
+            }
+            if (this.parentEditor.isReadOnly == true) {
+                this.saveAndCloseButton.addClass('disabled');
+                this.deleteButton.addClass('disabled');
+                Serenity.EditorUtils.setReadonly(this.element.find('.editor'), true);
+                // remove required asterisk (*)
+                this.element.find('sup').hide();
+            }
+        };
+        EditorDialogBase.prototype.saveHandler = function (options, callback) {
+            this.onSave && this.onSave(options, callback);
+        };
+        EditorDialogBase.prototype.deleteHandler = function (options, callback) {
+            this.onDelete && this.onDelete(options, callback);
+        };
+        EditorDialogBase.prototype.setMasterEntity = function (entity) {
+            this.masterEntity = entity;
+        };
+        return EditorDialogBase;
+    }(_Ext.DialogBase));
+    EditorDialogBase = __decorate([
+        Serenity.Decorators.registerClass()
+    ], EditorDialogBase);
+    _Ext.EditorDialogBase = EditorDialogBase;
+})(_Ext || (_Ext = {}));
+/// <reference path="../Bases/GridBase.ts" />
+var _Ext;
+(function (_Ext) {
+    var GridEditorBase = (function (_super) {
+        __extends(GridEditorBase, _super);
+        function GridEditorBase(container) {
+            var _this = _super.call(this, container) || this;
+            _this.nextId = 1;
+            return _this;
+            //this.autoColumnSizePlugin.resizeAllColumns();
+        }
+        GridEditorBase.prototype.getIdProperty = function () { return "__id"; };
+        GridEditorBase.prototype.getQuickFilters = function () {
+            return [];
+        };
+        GridEditorBase.prototype.id = function (entity) {
+            return entity[this.getIdProperty()];
+        };
+        GridEditorBase.prototype.save = function (opt, callback) {
+            var _this = this;
+            var request = opt.request;
+            var row = Q.deepClone(request.Entity);
+            var id = this.id(row);
+            if (id == null) {
+                row[this.getIdProperty()] = "`" + this.nextId++;
+            }
+            if (!this.validateEntity(row, id)) {
+                return;
+            }
+            var items = this.view.getItems().slice();
+            if (id == null) {
+                items.push(row);
+            }
+            else {
+                var index = Q.indexOf(items, function (x) { return _this.id(x) === id; });
+                items[index] = Q.deepClone({}, items[index], row);
+            }
+            this.setEntities(items);
+            callback({});
+        };
+        GridEditorBase.prototype.deleteEntity = function (id) {
+            this.view.deleteItem(id);
+            this.onItemsChanged();
+            return true;
+        };
+        GridEditorBase.prototype.validateEntity = function (row, id) {
+            row['Serial'] = this.nextId;
+            return true;
+        };
+        GridEditorBase.prototype.setEntities = function (items) {
+            this.view.setItems(items, true);
+            this.onItemsChanged();
+            this.refresh();
+        };
+        GridEditorBase.prototype.getNewEntity = function () {
+            return {};
+        };
+        GridEditorBase.prototype.getButtons = function () {
+            var _this = this;
+            return [{
+                    title: this.getAddButtonCaption(),
+                    cssClass: 'add-button',
+                    onClick: function () { _this.addButtonClick(); }
+                }];
+        };
+        GridEditorBase.prototype.addButtonClick = function () {
+            var _this = this;
+            this.createEntityDialog(this.getItemType(), function (dlg) {
+                var dialog = dlg;
+                dialog.parentEditor = _this;
+                dialog.onSave = function (opt, callback) { return _this.save(opt, callback); };
+                dialog.loadEntityAndOpenDialog(_this.getNewEntity());
+            });
+        };
+        GridEditorBase.prototype.editItem = function (entityOrId) {
+            var _this = this;
+            var id = entityOrId;
+            var item = this.view.getItemById(id);
+            this.createEntityDialog(this.getItemType(), function (dlg) {
+                var dialog = dlg;
+                dialog.onDelete = function (opt, callback) {
+                    if (!_this.deleteEntity(id)) {
+                        return;
+                    }
+                    callback({});
+                };
+                dialog.parentEditor = _this;
+                dialog.onSave = function (opt, callback) { return _this.save(opt, callback); };
+                dialog.loadEntityAndOpenDialog(item);
+            });
+            ;
+        };
+        GridEditorBase.prototype.getEditValue = function (property, target) {
+            target[property.name] = this.value;
+        };
+        GridEditorBase.prototype.setEditValue = function (source, property) {
+            this.value = source[property.name];
+        };
+        Object.defineProperty(GridEditorBase.prototype, "value", {
+            get: function () {
+                var p = this.getIdProperty();
+                this.slickGrid.getEditController().commitCurrentEdit();
+                return this.view.getItems().map(function (x) {
+                    var y = Q.deepClone(x);
+                    var id = y[p];
+                    if (id && id.toString().charAt(0) == '`')
+                        delete y[p];
+                    if (y['Serial'])
+                        delete y['Serial'];
+                    return y;
+                });
+            },
+            set: function (value) {
+                var _this = this;
+                var p = this.getIdProperty();
+                var val = this.onViewProcessData({ Entities: value || [], Skip: 0 }).Entities; // to generate serial no.
+                this.setEntities(val.map(function (x) {
+                    var y = Q.deepClone(x);
+                    if (y[p] == null)
+                        y[p] = "`" + _this.nextId++;
+                    return y;
+                }));
+            },
+            enumerable: true,
+            configurable: true
+        });
+        GridEditorBase.prototype.getGridCanLoad = function () {
+            return false;
+        };
+        GridEditorBase.prototype.usePager = function () {
+            return false;
+        };
+        GridEditorBase.prototype.getInitialTitle = function () {
+            return null;
+        };
+        GridEditorBase.prototype.createToolbarExtensions = function () {
+            var _this = this;
+            //super.createToolbarExtensions();
+            Serenity.GridUtils.addQuickSearchInputCustom(this.toolbar.element, function (field, text) {
+                _this.searchText = Select2.util.stripDiacritics(Q.trimToNull(text) || '').toLowerCase();
+                _this.view.setItems(_this.view.getItems(), true);
+            });
+        };
+        GridEditorBase.prototype.onViewFilter = function (row) {
+            if (!_super.prototype.onViewFilter.call(this, row)) {
+                return false;
+            }
+            if (this.searchText) {
+                return this.matchContains(row);
+            }
+            return true;
+        };
+        GridEditorBase.prototype.matchContains = function (item) {
+            var result = false;
+            for (var prop in item) {
+                result = Select2.util.stripDiacritics(String(item[prop] || '')).toLowerCase().indexOf(this.searchText) >= 0;
+                if (result == true) {
+                    return result;
+                }
+            }
+            return result;
+        };
+        GridEditorBase.prototype.enableFiltering = function () { return false; };
+        GridEditorBase.prototype.onViewSubmit = function () { return false; };
+        GridEditorBase.prototype.getSlickOptions = function () {
+            var opt = _super.prototype.getSlickOptions.call(this);
+            opt.forceFitColumns = false;
+            return opt;
+        };
+        GridEditorBase.prototype.get_readOnly = function () {
+            return this.isReadOnly;
+        };
+        GridEditorBase.prototype.set_readOnly = function (value) {
+            this.isReadOnly = value;
+            if (value == true) {
+                this.element.find('.add-button').addClass('disabled');
+            }
+            else {
+                this.element.find('.add-button').removeClass('disabled');
+            }
+        };
+        //custom events
+        GridEditorBase.prototype.onItemsChanged = function () {
+        };
+        return GridEditorBase;
+    }(_Ext.GridBase));
+    GridEditorBase = __decorate([
+        Serenity.Decorators.registerClass([Serenity.IGetEditValue, Serenity.ISetEditValue, Serenity.IReadOnly]),
+        Serenity.Decorators.editor(),
+        Serenity.Decorators.element("<div/>")
+    ], GridEditorBase);
+    _Ext.GridEditorBase = GridEditorBase;
+})(_Ext || (_Ext = {}));
+var _Ext;
+(function (_Ext) {
+    var ExcelExportHelper;
+    (function (ExcelExportHelper) {
+        function createToolButton(options) {
+            return {
+                hint: Q.coalesce(options.title, 'Excel'),
+                title: Q.coalesce(options.hint, ''),
+                cssClass: 'export-xlsx-button',
+                onClick: function () {
+                    if (!options.onViewSubmit()) {
+                        return;
+                    }
+                    var grid = options.grid;
+                    var request = Q.deepClone(grid.getView().params);
+                    request.Take = 0;
+                    request.Skip = 0;
+                    var sortBy = grid.getView().sortBy;
+                    if (sortBy) {
+                        request.Sort = sortBy;
+                    }
+                    request.IncludeColumns = [];
+                    var columns = grid.getGrid().getColumns();
+                    for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
+                        var column = columns_1[_i];
+                        request.IncludeColumns.push(column.id || column.field);
+                    }
+                    Q.postToService({ service: options.service, request: request, target: '_blank' });
+                },
+                separator: options.separator
+            };
+        }
+        ExcelExportHelper.createToolButton = createToolButton;
+    })(ExcelExportHelper = _Ext.ExcelExportHelper || (_Ext.ExcelExportHelper = {}));
+})(_Ext || (_Ext = {}));
+var _Ext;
+(function (_Ext) {
+    var PdfExportHelper;
+    (function (PdfExportHelper) {
+        function toAutoTableColumns(srcColumns, columnStyles, columnTitles) {
+            return srcColumns.map(function (src) {
+                var col = {
+                    dataKey: src.id || src.field,
+                    title: src.name || ''
+                };
+                if (columnTitles && columnTitles[col.dataKey] != null)
+                    col.title = columnTitles[col.dataKey];
+                var style = {};
+                if ((src.cssClass || '').indexOf("align-right") >= 0)
+                    style.halign = 'right';
+                else if ((src.cssClass || '').indexOf("align-center") >= 0)
+                    style.halign = 'center';
+                columnStyles[col.dataKey] = style;
+                return col;
+            });
+        }
+        function toAutoTableData(entities, keys, srcColumns) {
+            var el = document.createElement('span');
+            var row = 0;
+            return entities.map(function (item) {
+                var dst = {};
+                for (var cell = 0; cell < srcColumns.length; cell++) {
+                    var src = srcColumns[cell];
+                    var fld = src.field || '';
+                    var key = keys[cell];
+                    var txt = void 0;
+                    var html = void 0;
+                    if (src.formatter) {
+                        html = src.formatter(row, cell, item[fld], src, item);
+                    }
+                    else if (src.format) {
+                        html = src.format({ row: row, cell: cell, item: item, value: item[fld] });
+                    }
+                    else {
+                        dst[key] = item[fld];
+                        continue;
+                    }
+                    if (!html || (html.indexOf('<') < 0 && html.indexOf('&') < 0))
+                        dst[key] = html;
+                    else {
+                        el.innerHTML = html;
+                        if (el.children.length == 1 &&
+                            $(el.children[0]).is(":input")) {
+                            dst[key] = $(el.children[0]).val();
+                        }
+                        else if (el.children.length == 1 &&
+                            $(el.children).is('.check-box')) {
+                            dst[key] = $(el.children).hasClass("checked") ? "Yes" : "No";
+                        }
+                        else
+                            dst[key] = el.textContent || '';
+                    }
+                }
+                row++;
+                return dst;
+            });
+        }
+        function exportToPdf(options) {
+            var g = options.grid;
+            if (!options.onViewSubmit())
+                return;
+            includeAutoTable();
+            var request = Q.deepClone(g.view.params);
+            request.Take = 0;
+            request.Skip = 0;
+            var sortBy = g.view.sortBy;
+            if (sortBy != null)
+                request.Sort = sortBy;
+            var gridColumns = g.slickGrid.getColumns();
+            gridColumns = gridColumns.filter(function (x) { return x.id !== "__select__" && x.name.length > 0; });
+            request.IncludeColumns = [];
+            for (var _i = 0, gridColumns_1 = gridColumns; _i < gridColumns_1.length; _i++) {
+                var column = gridColumns_1[_i];
+                request.IncludeColumns.push(column.id || column.field);
+            }
+            Q.serviceCall({
+                url: g.view.url,
+                request: request,
+                onSuccess: function (response) {
+                    var doc = new jsPDF('l', 'pt');
+                    var groupings = g.view.getGrouping(); //group fields
+                    var groupingColumns = gridColumns.filter(function (f) { return groupings.some(function (s) { return s.getter == f.field; }) == true; });
+                    var srcColumns = gridColumns.filter(function (f) { return groupings.some(function (s) { return s.getter == f.field; }) == false; });
+                    var columnStyles = {};
+                    var columns = toAutoTableColumns(srcColumns, columnStyles, options.columnTitles);
+                    var keys = columns.filter(function (f) { return groupings.some(function (s) { return s.getter == f; }) == false; }).map(function (x) { return x.dataKey; });
+                    var totalPagesExp = "{{T}}";
+                    var pageNumbers = options.pageNumbers == null || options.pageNumbers;
+                    var autoOptions = $.extend({
+                        margin: { top: 40, left: 40, right: 40, bottom: pageNumbers ? 110 : 100 },
+                        startY: 90,
+                        styles: {
+                            fontSize: 8,
+                            overflow: 'linebreak',
+                            cellPadding: 5,
+                            valign: 'middle',
+                            lineColor: 0
+                        },
+                        headerStyles: { fillColor: 255, textColor: 0, lineWidth: 1, fillStyle: 'S', halign: 'center', valign: 'middle' },
+                        columnStyles: columnStyles
+                    }, options.tableOptions);
+                    ///region Title
+                    {
+                        if (_Ext.q.jsPDFHeaderImageData) {
+                            doc.addImage(_Ext.q.jsPDFHeaderImageData, 'JPEG', 40, 40, 60, 60);
+                        }
+                        doc.autoTable([_Ext.q.jsPDFHeaderTitle], [], {
+                            margin: { bottom: 10, left: 110 },
+                            startY: options.titleTop || 45,
+                            headerStyles: { fillColor: 255, textColor: 0 },
+                            styles: { halign: 'left', fontSize: 18 }
+                        });
+                        var reportTitle = '';
+                        if (groupingColumns[0])
+                            reportTitle = groupingColumns.map(function (m) { return m.name; }).join(', ') + ' wise ';
+                        reportTitle += options.reportTitle || g.getTitle();
+                        reportTitle += " Report";
+                        doc.autoTable([reportTitle], [], {
+                            margin: { top: 10, bottom: 10, left: 110 },
+                            startY: doc.autoTableEndPosY(),
+                            headerStyles: { fillColor: 255, textColor: 0 },
+                            styles: { halign: 'left', fontSize: 14 }
+                        });
+                    }
+                    ///region Header
+                    {
+                        var header = function (data) {
+                        };
+                        autoOptions.beforePageContent = header;
+                    }
+                    ///region Footer
+                    {
+                        if (pageNumbers) {
+                            var footer = function (data) {
+                                var str = data.pageCount;
+                                // Total page number plugin only available in jspdf v1.0+
+                                if (typeof doc.putTotalPages === 'function') {
+                                    str = str + " / " + totalPagesExp;
+                                }
+                                doc.autoTableText(str, doc.internal.pageSize.width / 2, doc.internal.pageSize.height - autoOptions.margin.bottom, {
+                                    halign: 'center'
+                                });
+                            };
+                            autoOptions.afterPageContent = footer;
+                        }
+                    }
+                    ///region Content
+                    {
+                        //extra space after title
+                        doc.autoTable([''], [], {
+                            startY: doc.autoTableEndPosY() + 20,
+                            headerStyles: { fillColor: 255, textColor: 0 }
+                        });
+                        var headerHeight = 100;
+                        var headerFontSizeBase = 11;
+                        var entities = response.Entities || [];
+                        g.setItems(entities);
+                        var groups = g.view.getGroups(); //grouped data
+                        if (groups.length > 0) {
+                            var ggg = function (grps, parentGroupIndex) {
+                                var endPosY = doc.autoTableEndPosY();
+                                for (var i = 0; i < grps.length; i++) {
+                                    var group = grps[i];
+                                    var level = group.level + 1;
+                                    doc.autoTable([group.title], [], {
+                                        margin: { left: 30 + level * 10, top: 2 },
+                                        startY: doc.autoTableEndPosY(),
+                                        headerStyles: { fillColor: 255, textColor: 0, fontSize: 10 - group.level, cellPadding: 0 }
+                                    });
+                                    if (group.groups) {
+                                        ggg(group.groups, i);
+                                    }
+                                    else {
+                                        var data = toAutoTableData(group.rows, keys, srcColumns);
+                                        autoOptions.startY = doc.autoTableEndPosY();
+                                        autoOptions.margin.left = 30 + level * 10;
+                                        autoOptions.margin.bottom = 10;
+                                        doc.autoTable(columns, data, autoOptions);
+                                        //for extra space
+                                        doc.autoTable([''], [], {
+                                            margin: { left: 30 + level * 10, top: 2 },
+                                            startY: doc.autoTableEndPosY() + 10,
+                                            headerStyles: { fillColor: 255, textColor: 0 }
+                                        });
+                                    }
+                                }
+                            };
+                            ggg(groups, -1);
+                        }
+                        else {
+                            var data = toAutoTableData(g.getItems(), keys, srcColumns);
+                            autoOptions.startY = headerHeight;
+                            doc.autoTable(columns, data, autoOptions);
+                        }
+                    }
+                    if (typeof doc.putTotalPages === 'function') {
+                        doc.putTotalPages(totalPagesExp);
+                    }
+                    if (!options.output || options.output == "file") {
+                        var fileName = options.reportTitle || "{0}_{1}.pdf";
+                        fileName = Q.format(fileName, g.getTitle() || "report", Q.formatDate(new Date(), "yyyyMMdd_HHmm"));
+                        doc.save(fileName);
+                        return;
+                    }
+                    if (options.autoPrint)
+                        doc.autoPrint();
+                    var output = options.output;
+                    if (output == 'newwindow' || '_blank')
+                        output = 'dataurlnewwindow';
+                    else if (output == 'window')
+                        output = 'datauri';
+                    doc.output(output);
+                }
+            });
+        }
+        PdfExportHelper.exportToPdf = exportToPdf;
+        function createToolButton(options) {
+            return {
+                title: options.title || '',
+                hint: options.hint || 'PDF',
+                cssClass: 'export-pdf-button',
+                onClick: function () { return exportToPdf(options); },
+                separator: options.separator
+            };
+        }
+        PdfExportHelper.createToolButton = createToolButton;
+        function includeJsPDF() {
+            if (typeof jsPDF !== "undefined")
+                return;
+            var script = $("jsPDFScript");
+            if (script.length > 0)
+                return;
+            $("<script/>")
+                .attr("type", "text/javascript")
+                .attr("id", "jsPDFScript")
+                .attr("src", Q.resolveUrl("~/Scripts/jspdf.min.js"))
+                .appendTo(document.head);
+        }
+        function includeAutoTable() {
+            includeJsPDF();
+            if (typeof jsPDF === "undefined" ||
+                typeof jsPDF.API == "undefined" ||
+                typeof jsPDF.API.autoTable !== "undefined")
+                return;
+            var script = $("jsPDFAutoTableScript");
+            if (script.length > 0)
+                return;
+            $("<script/>")
+                .attr("type", "text/javascript")
+                .attr("id", "jsPDFAutoTableScript")
+                .attr("src", Q.resolveUrl("~/Scripts/jspdf.plugin.autotable.min.js"))
+                .appendTo(document.head);
+        }
+    })(PdfExportHelper = _Ext.PdfExportHelper || (_Ext.PdfExportHelper = {}));
+})(_Ext || (_Ext = {}));
+var _Ext;
+(function (_Ext) {
+    var ReportHelper;
+    (function (ReportHelper) {
+        function createToolButton(options) {
+            return {
+                title: Q.coalesce(options.title, 'Report'),
+                cssClass: Q.coalesce(options.cssClass, 'print-button'),
+                icon: options.icon,
+                onClick: function () {
+                    ReportHelper.execute(options);
+                }
+            };
+        }
+        ReportHelper.createToolButton = createToolButton;
+        function execute(options) {
+            var opt = options.getParams ? options.getParams() : options.params;
+            Q.postToUrl({
+                url: '~/Report/' + (options.download ? 'Download' : 'Render'),
+                params: {
+                    key: options.reportKey,
+                    ext: Q.coalesce(options.extension, 'pdf'),
+                    opt: opt ? $.toJSON(opt) : ''
+                },
+                target: Q.coalesce(options.target, '_blank')
+            });
+        }
+        ReportHelper.execute = execute;
+    })(ReportHelper = _Ext.ReportHelper || (_Ext.ReportHelper = {}));
+})(_Ext || (_Ext = {}));
+var _Ext;
+(function (_Ext) {
+    var DialogUtils;
+    (function (DialogUtils) {
+        function pendingChangesConfirmation(element, hasPendingChanges) {
+            element.bind('dialogbeforeclose', function (e) {
+                if (!Serenity.WX.hasOriginalEvent(e) || !hasPendingChanges()) {
+                    return;
+                }
+                e.preventDefault();
+                Q.confirm('You have pending changes. Save them?', function () { return element.find('div.save-and-close-button').click(); }, {
+                    onNo: function () {
+                        element.dialog().dialog('close');
+                    }
+                });
+            });
+        }
+        DialogUtils.pendingChangesConfirmation = pendingChangesConfirmation;
+    })(DialogUtils = _Ext.DialogUtils || (_Ext.DialogUtils = {}));
+})(_Ext || (_Ext = {}));
+function loadScriptAsync(url, callback) {
+    // Adding the script tag to the head as suggested before
+    var head = document.getElementsByTagName('head')[0];
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+    // Then bind the event to the callback function.
+    // There are several events for cross browser compatibility.
+    script.onload = callback;
+    // Fire the loading
+    head.appendChild(script);
+}
+function loadScript(url) {
+    $.ajax({
+        url: url,
+        dataType: "script",
+        async: false,
+        cache: true,
+        success: function () {
+            // all good...
+        },
+        error: function () {
+            throw new Error("Could not load script " + url);
+        }
+    });
+}
+function includeBootstrapColorPickerCss() {
+    var style = $("#colorpicker");
+    if (style.length > 0) {
+        return;
+    }
+    $("<link/>")
+        .attr("type", "text/css")
+        .attr("id", "colorpicker")
+        .attr("rel", "stylesheet")
+        .attr("href", Q.resolveUrl("~/Scripts/colorpicker/bootstrap-colorpicker.min.css"))
+        .appendTo(document.head);
+}
+function usingBootstrapColorPicker() {
+    if (window['colorpicker']) {
+        return;
+    }
+    else {
+        includeBootstrapColorPickerCss();
+        loadScript(Q.resolveUrl("~/Scripts/colorpicker/bootstrap-colorpicker.min.js"));
+    }
+}
+function includeJqueryUITimepickerAddonCss() {
+    var style = $("#datetimepicker");
+    if (style.length > 0) {
+        return;
+    }
+    $("<link/>")
+        .attr("type", "text/css")
+        .attr("id", "datetimepicker")
+        .attr("rel", "stylesheet")
+        .attr("href", Q.resolveUrl("~/Content/jquery-ui-timepicker-addon.css"))
+        .appendTo(document.head);
+}
+function usingJqueryUITimepickerAddon() {
+    if (window['datetimepicker']) {
+        return;
+    }
+    else {
+        includeJqueryUITimepickerAddonCss();
+        loadScript(Q.resolveUrl("~/Scripts/jquery-ui-timepicker-addon.js"));
+    }
+}
 var BowenSerene;
 (function (BowenSerene) {
     var Administration;
@@ -8568,8 +10193,8 @@ var BowenSerene;
                         }
                         request.IncludeColumns = [];
                         var columns = grid.getGrid().getColumns();
-                        for (var _i = 0, columns_1 = columns; _i < columns_1.length; _i++) {
-                            var column = columns_1[_i];
+                        for (var _i = 0, columns_2 = columns; _i < columns_2.length; _i++) {
+                            var column = columns_2[_i];
                             request.IncludeColumns.push(column.id || column.field);
                         }
                         Q.postToService({ service: options.service, request: request, target: '_blank' });
@@ -8814,8 +10439,8 @@ var BowenSerene;
                 var gridColumns = g.slickGrid.getColumns();
                 gridColumns = gridColumns.filter(function (x) { return x.id !== "__select__"; });
                 request.IncludeColumns = [];
-                for (var _i = 0, gridColumns_1 = gridColumns; _i < gridColumns_1.length; _i++) {
-                    var column = gridColumns_1[_i];
+                for (var _i = 0, gridColumns_2 = gridColumns; _i < gridColumns_2.length; _i++) {
+                    var column = gridColumns_2[_i];
                     request.IncludeColumns.push(column.id || column.field);
                 }
                 Q.serviceCall({
@@ -9130,7 +10755,7 @@ var BowenSerene;
     var ScriptInitialization;
     (function (ScriptInitialization) {
         Q.Config.responsiveDialogs = true;
-        Q.Config.rootNamespaces.push('BowenSerene');
+        Q.Config.rootNamespaces.push('_Ext');
         Serenity.EntityDialog.defaultLanguageList = BowenSerene.LanguageList.getValue;
     })(ScriptInitialization = BowenSerene.ScriptInitialization || (BowenSerene.ScriptInitialization = {}));
 })(BowenSerene || (BowenSerene = {}));
@@ -9611,10 +11236,8 @@ var BowenSerene;
             __extends(PurchaseOrderDialog, _super);
             function PurchaseOrderDialog() {
                 var _this = _super.call(this) || this;
-                // this.form = form;
-                Q.log(_this.idPrefix);
+                _this.form = new Default.PurchaseOrderForm(_this.idPrefix);
                 //this.form.OrderDetailsList.orderType = ordertype;
-                Q.log("dialog Id：" + _this.type);
                 //供应商改变事件
                 _this.form.SupplierId.changeSelect2(function (e) {
                     _this.supplierChange();
@@ -9626,9 +11249,6 @@ var BowenSerene;
             PurchaseOrderDialog.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
             PurchaseOrderDialog.prototype.getNameProperty = function () { return Default.PurchaseOrderRow.nameProperty; };
             PurchaseOrderDialog.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
-            PurchaseOrderDialog.prototype.getPrefix = function () {
-                return this.idPrefix;
-            };
             PurchaseOrderDialog.prototype.supplierChange = function () {
                 var supplierId = Q.toId(this.form.SupplierId.value);
                 var place = Q.first(Default.SuppliersRow.getLookup().items, function (x) { return x.SupplierId == supplierId; }).Place;
@@ -9649,36 +11269,8 @@ var BowenSerene;
                 //                this.form.OrderStoneList.clearView();
                 //            });
             };
-            //#david 加载实体完成事件
-            PurchaseOrderDialog.prototype.loadEntity = function (entity) {
-                console.log("load data...");
-                _super.prototype.loadEntity.call(this, entity);
-                var orderType = this.form.Type.value;
-                //默认为 stone 类型
-                if (Q.isEmptyOrNull(orderType)) {
-                    this.form.Type.value = Default.PurchaseType.Stone.toString();
-                }
-                var supplierId = Q.toId(this.form.SupplierId.value);
-                if (supplierId != null) {
-                    this.supplierChange();
-                }
-                //设置明细窗体的 type
-                //this.form.OrderDetailsList.orderType =this.form.Type.value;
-                // this.form.OrderDetailsList.getGrid();
-                var columns = this.form.OrderDetailsList.getGrid().getColumns().filter(function (x) { return x.name === "厚度"; });
-                columns[0].visible = false;
-                //this.form.OrderDetailsList ;
-                if (this.form.Type.value === Default.PurchaseType.Stone.toString()) {
-                    this.byId('ShareType').closest('.field').show();
-                }
-                else {
-                    this.byId('ShareType').closest('.field').hide();
-                }
-                //            Serenity.TabsExtensions.setDisabled(this.tabs, 'Customer',
-                //                !this.getCustomerID());
-            };
             return PurchaseOrderDialog;
-        }(Serenity.EntityDialog));
+        }(_Ext.DialogBase));
         PurchaseOrderDialog = __decorate([
             Serenity.Decorators.registerClass(),
             Serenity.Decorators.panel()
@@ -9692,21 +11284,23 @@ var BowenSerene;
     (function (Default) {
         var PurchaseOrderGrid = (function (_super) {
             __extends(PurchaseOrderGrid, _super);
-            function PurchaseOrderGrid(container) {
-                return _super.call(this, container) || this;
+            function PurchaseOrderGrid() {
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             PurchaseOrderGrid.prototype.getColumnsKey = function () { return 'Default.PurchaseOrder'; };
             PurchaseOrderGrid.prototype.getDialogType = function () { return Default.PurchaseOrderDialog; };
             PurchaseOrderGrid.prototype.getIdProperty = function () { return Default.PurchaseOrderRow.idProperty; };
             PurchaseOrderGrid.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
             PurchaseOrderGrid.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
+            PurchaseOrderGrid.prototype.getSlickOptions = function () {
+                var opt = _super.prototype.getSlickOptions.call(this);
+                opt.editable = true;
+                return opt;
+            };
             //打开窗体
             PurchaseOrderGrid.prototype.openOrderDialog = function (orderType) {
-                //var form = new PurchaseOrderForm(typeof (PurchaseOrderForm));
-                //form.OrderDetailsList.orderType = orderType.toString();
                 var dlg = new Default.PurchaseOrderDialog();
-                dlg.getPrefix();
-                this.initDialog(dlg);
+                _super.prototype.initDialog.call(this, dlg);
                 dlg.loadEntityAndOpenDialog({
                     Type: orderType
                 });
@@ -9735,14 +11329,14 @@ var BowenSerene;
                 return buttons;
             };
             return PurchaseOrderGrid;
-        }(Serenity.EntityGrid));
+        }(_Ext.GridBase));
         PurchaseOrderGrid = __decorate([
             Serenity.Decorators.registerClass()
         ], PurchaseOrderGrid);
         Default.PurchaseOrderGrid = PurchaseOrderGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
-/// <reference path="../../Common/Helpers/GridEditorBase.ts" />
+/// <reference path="../../_Ext/Editors/GridEditorBase.ts" />
 var BowenSerene;
 (function (BowenSerene) {
     var Default;
@@ -9756,25 +11350,13 @@ var BowenSerene;
                 _this.slickContainer.on('change', '.edit:input', function (e) { return _this.inputsChange(e); });
                 return _this;
             }
-            PurchaseOrderDetailEditor.prototype.validateEntity = function (row, id) {
-                if (!_super.prototype.validateEntity.call(this, row, id))
-                    return false;
-                row.Size = 2.11;
-                //row.PersonFullname = PersonRow.getLookup().itemById[row.PersonId].Fullname;
-                return true;
-            };
             PurchaseOrderDetailEditor.prototype.getColumnsKey = function () {
                 return "Default.PurchaseOrderDetail";
             };
             PurchaseOrderDetailEditor.prototype.getLocalTextPrefix = function () {
                 return Default.PurchaseOrderDetailRow.localTextPrefix;
             };
-            //        protected afterLoadEntity() {
-            //            super.afterLoadEntity();
-            //        }
             PurchaseOrderDetailEditor.prototype.createSlickGrid = function () {
-                var t = "11";
-                Q.log("slick details Id：" + t.indexOf("00"));
                 var grid = _super.prototype.createSlickGrid.call(this);
                 // need to register this plugin for grouping or you'll have errors
                 grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
@@ -9789,11 +11371,11 @@ var BowenSerene;
             //        protected usePager() {
             //            return false;
             //        }
-            PurchaseOrderDetailEditor.prototype.onViewProcessData = function (response) {
-                this.pendingChanges = {};
-                this.setSaveButtonState();
-                return _super.prototype.onViewProcessData.call(this, response);
-            };
+            //        protected onViewProcessData(response) {
+            //            this.pendingChanges = {};
+            //            this.setSaveButtonState();
+            //            return this.onViewProcessData(response);
+            //        }
             //数字输入框
             PurchaseOrderDetailEditor.prototype.numericInputFormatter = function (ctx) {
                 var klass = 'edit numeric';
@@ -9852,12 +11434,6 @@ var BowenSerene;
                 }
                 return markup + "</select>";
             };
-            PurchaseOrderDetailEditor.prototype.initEntityDialog = function (itemType, dialog) {
-                _super.prototype.initEntityDialog.call(this, itemType, dialog);
-                Q.log("dialog details Id：" + this.orderType);
-                // passing category ID from grid editor to detail dialog
-                //            (dialog as FilteredLookupOrderDetailDialog).categoryID = this.categoryID;
-            };
             //格式化列
             PurchaseOrderDetailEditor.prototype.getColumns = function () {
                 var _this = this;
@@ -9876,23 +11452,29 @@ var BowenSerene;
                     minWidth: 24,
                     maxWidth: 24
                 });
-                Q.first(columns, function (x) { return x.field === 'Container'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'BlockNumber'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Category'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Mine'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Grade'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Notes'; }).format = str;
-                var product = Q.first(columns, function (x) { return x.field === fld.ProductId; });
-                product.referencedFields = [fld.ProductId];
-                product.format = function (ctx) { return _this.selectFormatter(ctx, fld.ProductId, Default.ProductsRow.getLookup()); };
-                Q.first(columns, function (x) { return x.field === 'Weight'; })
-                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
-                Q.first(columns, function (x) { return x.field === 'Volume'; })
-                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
-                Q.first(columns, function (x) { return x.field === fld.Length; }).format = num;
-                Q.first(columns, function (x) { return x.field === fld.Width; }).format = num;
-                Q.first(columns, function (x) { return x.field === fld.Height; }).format = num;
-                Q.first(columns, function (x) { return x.field === fld.Weight; }).format = num;
+                _Ext.q.formatInt("Container");
+                _Ext.q.formatInt("BlockNumber");
+                //            Q.first(columns, x => x.field === 'Container').format = str;
+                //            Q.first(columns, x => x.field === 'BlockNumber').format = str;
+                //            Q.first(columns, x => x.field === 'Category').format = str;
+                //            Q.first(columns, x => x.field === 'Mine').format = str;
+                //            Q.first(columns, x => x.field === 'Grade').format = str;
+                //            Q.first(columns, x => x.field === 'Notes').format = str;
+                //
+                //            var product = Q.first(columns, x => x.field === fld.ProductId);
+                //            product.referencedFields = [fld.ProductId];
+                //            product.format = ctx => this.selectFormatter(ctx, fld.ProductId, ProductsRow.getLookup());
+                //
+                //            Q.first(columns, x => x.field === 'Weight')
+                //                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
+                //
+                //            Q.first(columns, x => x.field === 'Volume')
+                //                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
+                //
+                //            Q.first(columns, x => x.field === fld.Length).format = num;
+                //            Q.first(columns, x => x.field === fld.Width).format = num;
+                //            Q.first(columns, x => x.field === fld.Height).format = num;
+                //            Q.first(columns, x => x.field === fld.Weight).format = num;
                 //            if (orderType === PurchaseType.Stone.toString()) {
                 //                this.allColumns.splice(7, 3);
                 //            } else {
@@ -9902,40 +11484,13 @@ var BowenSerene;
             };
             //添加行
             PurchaseOrderDetailEditor.prototype.addRow = function () {
-                var row = this.getNewEntity();
-                row[this.getIdProperty()] = this.getNextId();
+                var row = _super.prototype.getNewEntity.call(this);
+                // (row as any)[this.getIdProperty()] = super.getView().getNextId();
                 var newRow = Q.deepClone({}, { Length: 0, Width: 0, Height: 0, Weight: 0.00, Volume: 0.00, Thick: 1, Container: '', BlockNumber: '' }, row);
                 // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
-                var items = this.view.getItems().slice();
+                var items = _super.prototype.getView.call(this).getItems().slice();
                 items.push(newRow);
                 this.setEntities(items);
-            };
-            PurchaseOrderDetailEditor.prototype.clearView = function () {
-                var items = this.view.getItems().slice();
-                for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
-                    var c = items_1[_i];
-                    this.view.deleteItem(c.__id);
-                }
-            };
-            PurchaseOrderDetailEditor.prototype.onClick = function (e, row, cell) {
-                var _this = this;
-                _super.prototype.onClick.call(this, e, row, cell);
-                if (e.isDefaultPrevented())
-                    return;
-                var item = this.itemAt(row);
-                var target = $(e.target);
-                // if user clicks "i" element, e.g. icon
-                if (target.parent().hasClass('inline-action'))
-                    target = target.parent();
-                if (target.hasClass('inline-action')) {
-                    e.preventDefault();
-                    if (target.hasClass('delete-row')) {
-                        Q.confirm('Delete record?', function () {
-                            _this.view.deleteItem(item.__id);
-                            return true;
-                        });
-                    }
-                }
             };
             //文本框改变事件
             PurchaseOrderDetailEditor.prototype.inputsChange = function (e) {
@@ -9984,33 +11539,8 @@ var BowenSerene;
                 input.val(value).addClass('dirty');
                 this.setSaveButtonState();
             };
-            PurchaseOrderDetailEditor.prototype.setSaveButtonState = function () {
-                this.toolbar.findButton('apply-changes-button').toggleClass('disabled', Object.keys(this.pendingChanges).length === 0);
-            };
-            PurchaseOrderDetailEditor.prototype.getSlickOptions = function () {
-                var opt = _super.prototype.getSlickOptions.call(this);
-                opt.showFooterRow = true;
-                return opt;
-            };
-            PurchaseOrderDetailEditor.prototype.getEffectiveValue = function (item, field) {
-                var pending = this.pendingChanges[item.OrderDetailId];
-                if (pending && pending[field] !== undefined) {
-                    return pending[field];
-                }
-                return item[field];
-            };
-            PurchaseOrderDetailEditor.prototype.getButtons = function () {
-                var _this = this;
-                return [{
-                        title: '新增',
-                        cssClass: 'add-button',
-                        onClick: function () {
-                            _this.addRow();
-                        }
-                    }];
-            };
             return PurchaseOrderDetailEditor;
-        }(BowenSerene.Common.GridEditorBase));
+        }(_Ext.GridEditorBase));
         PurchaseOrderDetailEditor = __decorate([
             Serenity.Decorators.registerEditor()
         ], PurchaseOrderDetailEditor);
