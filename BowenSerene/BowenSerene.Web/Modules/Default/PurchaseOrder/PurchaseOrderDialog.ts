@@ -16,10 +16,10 @@ namespace BowenSerene.Default {
 
         constructor() {
             super();
-           // this.form = form;
-            Q.log(this.idPrefix);
-            //this.form.OrderDetailsList.orderType = ordertype;
-            Q.log("dialog Id：" + this.type);
+            this.form = new PurchaseOrderForm(this.idPrefix);
+            this.form.OrderDetailsList.orderType = "1";
+           // this.form.hiddenField("Thick");
+            Q.log("form render...");
             //供应商改变事件
             this.form.SupplierId.changeSelect2(e => {
                 this.supplierChange();
@@ -53,7 +53,7 @@ namespace BowenSerene.Default {
 
         //#david 加载实体完成事件
         loadEntity(entity: PurchaseOrderRow) {
-            console.log("load data...");
+
             super.loadEntity(entity);
             var orderType = this.form.Type.value;
             //默认为 stone 类型

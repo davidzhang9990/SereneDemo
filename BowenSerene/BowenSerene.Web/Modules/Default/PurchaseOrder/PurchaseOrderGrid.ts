@@ -18,11 +18,12 @@ namespace BowenSerene.Default {
             //var form = new PurchaseOrderForm(typeof (PurchaseOrderForm));
             //form.OrderDetailsList.orderType = orderType.toString();
             var dlg = new PurchaseOrderDialog();
-            dlg.getPrefix();
-            
             this.initDialog(dlg);
             dlg.loadEntityAndOpenDialog(<PurchaseOrderRow>{
-                Type: orderType
+                Type: orderType,
+                OrderDetailsList: {
+                    Thick: 1
+                }
             });
         }
         //david 设置页面按钮

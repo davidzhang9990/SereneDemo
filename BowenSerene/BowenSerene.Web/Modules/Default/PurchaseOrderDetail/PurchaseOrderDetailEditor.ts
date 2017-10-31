@@ -26,10 +26,10 @@ namespace BowenSerene.Default {
 
         private pendingChanges: Q.Dictionary<any> = {};
 
-        constructor(container: JQuery) {
+        constructor(container: JQuery, entity: PurchaseOrderDetailRow) {
 
             super(container);
-            Q.log("container details Id：" + this.orderType);
+            Q.log(entity);
             this.slickContainer.on('change', '.edit:input', (e) => this.inputsChange(e));
         }
 
@@ -37,11 +37,10 @@ namespace BowenSerene.Default {
         //            super.afterLoadEntity();
         //        }
 
-        protected createSlickGrid() {
+        protected createSlickGrid(entity: PurchaseOrderDetailRow) {
 
-            var t = "11";
-
-            Q.log("slick details Id：" + t.indexOf("00"));
+            Q.log("slick details Id：" + this.orderType);
+            Q.log(entity);
             var grid = super.createSlickGrid();
             // need to register this plugin for grouping or you'll have errors
             grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
@@ -131,15 +130,11 @@ namespace BowenSerene.Default {
             return markup + "</select>";
         }
 
-        protected initEntityDialog(itemType: string, dialog: Serenity.Widget<any>) {
-            super.initEntityDialog(itemType, dialog);
-            Q.log("dialog details Id：" + this.orderType);
-            // passing category ID from grid editor to detail dialog
-            //            (dialog as FilteredLookupOrderDetailDialog).categoryID = this.categoryID;
-        }
         //格式化列
         protected getColumns() {
             Q.log("column details Id：" + this.orderType);
+           
+
             var columns = super.getColumns();
 
             var num = ctx => this.numericInputFormatter(ctx);
@@ -179,11 +174,11 @@ namespace BowenSerene.Default {
             Q.first(columns, x => x.field === fld.Height).format = num;
             Q.first(columns, x => x.field === fld.Weight).format = num;
 
-            //            if (orderType === PurchaseType.Stone.toString()) {
-            //                this.allColumns.splice(7, 3);
-            //            } else {
-            //                this.allColumns.splice(10, 3);
-            //            }
+            if (this.orderType === PurchaseType.Stone.toString()) {
+                columns.splice(7, 3);
+            } else {
+                columns.splice(10, 3);
+            }
 
             return columns;
         }
