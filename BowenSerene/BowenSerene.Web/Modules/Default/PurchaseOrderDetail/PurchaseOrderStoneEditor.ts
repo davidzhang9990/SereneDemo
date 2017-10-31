@@ -184,19 +184,18 @@ namespace BowenSerene.Default {
                         items.push(newRow);
                         this.setEntities(items);
                     }
+                }, {
+                    title: 'Group By Container and BlockNumber',
+                    cssClass: 'expand-all-button',
+                    onClick: () => this.view.setGrouping(
+                        [{
+                            formatter: x => 'Container: ' + x.value + ' (' + x.count + ' items)',
+                            getter: 'Container'
+                        }, {
+                            formatter: x => 'BlockNumber: ' + x.value + ' (' + x.count + ' items)',
+                            getter: 'BlockNumber'
+                        }])
                 }
-//            },{
-//                title: 'Group By Container and BlockNumber',
-//                cssClass: 'expand-all-button',
-//                onClick: () => this.view.setGrouping(
-//                    [{
-//                        formatter: x => 'Container: ' + x.value + ' (' + x.count + ' items)',
-//                        getter: 'Container'
-//                    }, {
-//                        formatter: x => 'BlockNumber: ' + x.value + ' (' + x.count + ' items)',
-//                        getter: 'BlockNumber'
-//                    }])
-//            }
             ];
         }
 
