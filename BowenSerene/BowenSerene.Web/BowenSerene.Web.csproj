@@ -2166,11 +2166,6 @@
     <Compile Include="Imports\ClientTypes\Default.PurchaseOrderStoneEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
-    <Compile Include="Imports\MVC\MVC1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171028_095500_PurchaseOrderDetail_TypeAndMine.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171028_091900_PurchaseOrderDetailNum.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171027_222900_PurchaseOrderDetailID.cs" />
