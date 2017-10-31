@@ -8302,30 +8302,38 @@ section.content > .s-DataGrid {
 .s-Default-SuppliersDialog .caption {
   width: 150px;
 }
-.s-Default-PurchaseOrderDialog > .size {
+.s-Default-PurchaseOrderStoneDialog > .size,
+.s-Default-PurchaseOrderSlabDialog > .size {
   width: 650px;
 }
-.s-Default-PurchaseOrderDialog .caption {
+.s-Default-PurchaseOrderStoneDialog .caption,
+.s-Default-PurchaseOrderSlabDialog .caption {
   width: 150px;
 }
 @media (min-width: 768px) {
-  .s-Default-PurchaseOrderDialog .field.PurchaseDate,
-  .s-Default-PurchaseOrderDialog .field.SupplierId,
-  .s-Default-PurchaseOrderDialog .field.Number,
-  .s-Default-PurchaseOrderDialog .field.Type,
-  .s-Default-PurchaseOrderDialog .field.ShareType,
-  .s-Default-PurchaseOrderDialog .field.PayWay {
+  .s-Default-PurchaseOrderStoneDialog .field.PurchaseDate,
+  .s-Default-PurchaseOrderSlabDialog .field.PurchaseDate,
+  .s-Default-PurchaseOrderStoneDialog .field.SupplierId,
+  .s-Default-PurchaseOrderSlabDialog .field.SupplierId,
+  .s-Default-PurchaseOrderStoneDialog .field.Number,
+  .s-Default-PurchaseOrderSlabDialog .field.Number,
+  .s-Default-PurchaseOrderStoneDialog .field.Type,
+  .s-Default-PurchaseOrderSlabDialog .field.Type,
+  .s-Default-PurchaseOrderStoneDialog .field.ShareType,
+  .s-Default-PurchaseOrderSlabDialog .field.ShareType,
+  .s-Default-PurchaseOrderStoneDialog .field.PayWay,
+  .s-Default-PurchaseOrderSlabDialog .field.PayWay {
     flex: auto;
     min-width: 50%;
   }
-  .s-Default-PurchaseOrderDialog .field.OrderStoneList > .caption {
+  .s-Default-PurchaseOrderStoneDialog .field.OrderDetailsList > .caption,
+  .s-Default-PurchaseOrderSlabDialog .field.OrderDetailsList > .caption {
     display: none;
   }
-  .s-Default-PurchaseOrderDialog .field.OrderSlabList > .caption {
-    display: none;
-  }
-  .s-Default-PurchaseOrderDialog .grid-container {
+  .s-Default-PurchaseOrderStoneDialog .grid-container,
+  .s-Default-PurchaseOrderSlabDialog .grid-container {
     height: 500px;
+    width: 100%;
   }
 }
 .s-Default-PurchaseOrderDetailDialog > .size {

@@ -56,18 +56,10 @@ namespace BowenSerene.Default.Entities
 
         [MasterDetailRelation(foreignKey: "ParentId")]
         [DisplayName("明细"), NotMapped]
-        public List<PurchaseOrderDetailRow> OrderStoneList
+        public List<PurchaseOrderDetailRow> OrderDetailsList
         {
-            get { return Fields.OrderStoneList[this]; }
-            set { Fields.OrderStoneList[this] = value; }
-        }
-
-        [MasterDetailRelation(foreignKey: "ParentId")]
-        [DisplayName("明细"), NotMapped]
-        public List<PurchaseOrderDetailRow> OrderSlabList
-        {
-            get { return Fields.OrderSlabList[this]; }
-            set { Fields.OrderSlabList[this] = value; }
+            get { return Fields.OrderDetailsList[this]; }
+            set { Fields.OrderDetailsList[this] = value; }
         }
 
         [DisplayName("供应商"), NotNull, ForeignKey(typeof(SuppliersRow), "SupplierId"), LeftJoin("jSupplier")]
@@ -215,8 +207,7 @@ namespace BowenSerene.Default.Entities
             public Int16Field ShareType;
             public DateTimeField PurchaseDate;
             public GuidField SupplierId;
-            public RowListField<PurchaseOrderDetailRow> OrderStoneList;
-            public RowListField<PurchaseOrderDetailRow> OrderSlabList;
+            public RowListField<PurchaseOrderDetailRow> OrderDetailsList;
             public StringField LetterNumber;
             public StringField AgentNumber;
             public Int16Field PayWay;

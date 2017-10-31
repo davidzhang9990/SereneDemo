@@ -76,3 +76,5 @@ xxxForm.cs 属性前 加
 
 #DEMO
 TranslationGrid.ts
+
+Q.reloadLookup('Northwind.Customer');

@@ -9,7 +9,7 @@ namespace BowenSerene.Northwind
     using System.Collections.Generic;
 
     [Report("Northwind.OrderDetail")]
-    [ReportDesign(MVC.Views.Northwind.Order.OrderDetailReport)]
+
     [RequiredPermission(PermissionKeys.General)]
     public class OrderDetailReport : IReport, ICustomizeHtmlToPdf
     {

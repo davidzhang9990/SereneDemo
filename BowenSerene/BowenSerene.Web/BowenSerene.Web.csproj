@@ -1175,13 +1175,22 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductsColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderBaseForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailColumns.ts">
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderSlabColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderSlabColumns.ts">
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderSlabForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderStoneColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderStoneForm.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchasePayWay.ts">
@@ -1455,7 +1464,8 @@
     <TypeScriptCompile Include="Modules\Default\Movie\GenreListFormatter.ts" />
     <TypeScriptCompile Include="Modules\Default\Person\PersonMovieGrid.ts" />
     <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderSlabEditor.ts" />
-    <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailEditor.ts" />
+    <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderStoneEditor.ts" />
+    <TypeScriptCompile Include="Modules\Default\PurchaseOrder\PurchaseOrderStoneDialog.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ChangePassword\ChangePasswordPanel.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ForgotPassword\ForgotPasswordPanel.ts" />
     <TypeScriptCompile Include="Modules\Membership\Account\ResetPassword\ResetPasswordPanel.ts" />
@@ -1779,7 +1789,7 @@
     <Content Include="Modules\AdminLTE\Charts\InlineCharts.cshtml" />
     <Content Include="Imports\MVC\MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MVC.cs</LastGenOutput>
+      <LastGenOutput>MVC1.cs</LastGenOutput>
     </Content>
     <Content Include="Modules\AdminLTE\UIElements\Buttons.cshtml" />
     <Content Include="Modules\AdminLTE\UIElements\General.cshtml" />
@@ -2107,11 +2117,8 @@
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <Content Include="Modules\Default\PurchaseOrder\PurchaseOrderIndex.cshtml" />
-    <TypeScriptCompile Include="Modules\Default\PurchaseOrder\PurchaseOrderDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\PurchaseOrder\PurchaseOrderSlabDialog.ts" />
     <TypeScriptCompile Include="Modules\Default\PurchaseOrder\PurchaseOrderGrid.ts" />
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderForm.ts">
-      <DependentUpon>ServerTypings.tt</DependentUpon>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderDetailRow.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -2153,11 +2160,16 @@
     <Compile Include="Imports\ClientTypes\Default.MovieCastEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
-    <Compile Include="Imports\ClientTypes\Default.PurchaseOrderDetailEditorAttribute.cs">
-      <DependentUpon>ClientTypes.tt</DependentUpon>
-    </Compile>
     <Compile Include="Imports\ClientTypes\Default.PurchaseOrderSlabEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Imports\ClientTypes\Default.PurchaseOrderStoneEditorAttribute.cs">
+      <DependentUpon>ClientTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Imports\MVC\MVC1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171028_095500_PurchaseOrderDetail_TypeAndMine.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171028_091900_PurchaseOrderDetailNum.cs" />
@@ -2232,8 +2244,10 @@
     <Compile Include="Modules\Default\Products\ProductsLookup.cs" />
     <Compile Include="Modules\Default\Products\ProductListRequest.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderSlabColumns.cs" />
-    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailColumns.cs" />
+    <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderStoneColumns.cs" />
     <Compile Include="Modules\Default\PurchaseOrder\PurchaseEnum.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderBaseForm.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderSlabForm.cs" />
     <Compile Include="Modules\Default\Suppliers\SuppliersLookup.cs" />
     <Compile Include="Modules\Texts.cs" />
     <Compile Include="Modules\Default\Movie\MovieKind.cs" />
@@ -2613,7 +2627,7 @@
     <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderEndpoint.cs" />
     <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderPage.cs" />
     <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderColumns.cs" />
-    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderForm.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderStoneForm.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailRow.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailRepository.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderDetailEndpoint.cs" />

@@ -6,8 +6,7 @@
         ShareType?: PurchaseShareType;
         PurchaseDate?: string;
         SupplierId?: string;
-        OrderStoneList?: PurchaseOrderDetailRow[];
-        OrderSlabList?: PurchaseOrderDetailRow[];
+        OrderDetailsList?: PurchaseOrderDetailRow[];
         LetterNumber?: string;
         AgentNumber?: string;
         PayWay?: PurchasePayWay;
@@ -42,8 +41,7 @@
             export declare const ShareType: string;
             export declare const PurchaseDate: string;
             export declare const SupplierId: string;
-            export declare const OrderStoneList: string;
-            export declare const OrderSlabList: string;
+            export declare const OrderDetailsList: string;
             export declare const LetterNumber: string;
             export declare const AgentNumber: string;
             export declare const PayWay: string;
@@ -73,8 +71,7 @@
             'ShareType', 
             'PurchaseDate', 
             'SupplierId', 
-            'OrderStoneList', 
-            'OrderSlabList', 
+            'OrderDetailsList', 
             'LetterNumber', 
             'AgentNumber', 
             'PayWay', 

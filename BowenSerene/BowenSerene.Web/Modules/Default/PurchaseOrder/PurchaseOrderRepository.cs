@@ -43,9 +43,9 @@ namespace BowenSerene.Default.Repositories
             {
                 base.BeforeSave();
 
-                if (Row.OrderStoneList != null)
+                if (Row.OrderDetailsList != null)
                 {
-                    foreach (var detail in Row.OrderStoneList)
+                    foreach (var detail in Row.OrderDetailsList)
                     {
                         detail.ParentId = this.Row.PurchaseOrderId.Value;
                     }
