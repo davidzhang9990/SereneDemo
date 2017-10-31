@@ -3102,6 +3102,8 @@ var BowenSerene;
                 var _this = _super.call(this) || this;
                 _this.form = new Default.PurchaseOrderForm(_this.idPrefix);
                 _this.form.OrderDetailsList.orderType = "1";
+                var dia = _this.form.OrderDetailsList.element;
+                _this.form.OrderDetailsList.init();
                 // this.form.hiddenField("Thick");
                 Q.log("form render...");
                 //供应商改变事件

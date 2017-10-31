@@ -18,7 +18,9 @@ namespace BowenSerene.Default {
             super();
             this.form = new PurchaseOrderForm(this.idPrefix);
             this.form.OrderDetailsList.orderType = "1";
-           // this.form.hiddenField("Thick");
+            var dia = this.form.OrderDetailsList.element;
+            this.form.OrderDetailsList.init();
+            // this.form.hiddenField("Thick");
             Q.log("form render...");
             //供应商改变事件
             this.form.SupplierId.changeSelect2(e => {
