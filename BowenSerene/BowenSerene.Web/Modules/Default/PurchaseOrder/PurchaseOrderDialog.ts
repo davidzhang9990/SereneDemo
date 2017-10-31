@@ -3,7 +3,7 @@ namespace BowenSerene.Default {
 
     @Serenity.Decorators.registerClass()
     @Serenity.Decorators.panel()
-    export class PurchaseOrderDialog extends _Ext.DialogBase<PurchaseOrderRow, any> {
+    export class PurchaseOrderDialog extends Serenity.EntityDialog<PurchaseOrderRow, any> {
         protected getFormKey() { return PurchaseOrderForm.formKey; }
         protected getIdProperty() { return PurchaseOrderRow.idProperty; }
         protected getLocalTextPrefix() { return PurchaseOrderRow.localTextPrefix; }
@@ -16,12 +16,18 @@ namespace BowenSerene.Default {
 
         constructor() {
             super();
-            this.form = new PurchaseOrderForm(this.idPrefix);
+           // this.form = form;
+            Q.log(this.idPrefix);
             //this.form.OrderDetailsList.orderType = ordertype;
+            Q.log("dialog Id：" + this.type);
             //供应商改变事件
             this.form.SupplierId.changeSelect2(e => {
                 this.supplierChange();
             });
+        }
+
+        public getPrefix() {
+            return this.idPrefix;
         }
 
         private supplierChange() {
@@ -46,36 +52,36 @@ namespace BowenSerene.Default {
         }
 
         //#david 加载实体完成事件
-        //        loadEntity(entity: PurchaseOrderRow) {
-        //            console.log("load data...");
-        //            super.loadEntity(entity);
-        //            var orderType = this.form.Type.value;
-        //            //默认为 stone 类型
-        //            if (Q.isEmptyOrNull(orderType)) {
-        //                this.form.Type.value = Default.PurchaseType.Stone.toString();
-        //            }
-        //
-        //            var supplierId = Q.toId(this.form.SupplierId.value);
-        //            if (supplierId != null) {
-        //                this.supplierChange();
-        //            }
-        //            //设置明细窗体的 type
-        //            //this.form.OrderDetailsList.orderType =this.form.Type.value;
-        //            // this.form.OrderDetailsList.getGrid();
-        //            var columns = this.form.OrderDetailsList.getGrid().getColumns().filter(function (x) { return x.name === "厚度" });
-        //            columns[0].visible = false;
-        //
-        //            //this.form.OrderDetailsList ;
-        //            if (this.form.Type.value === Default.PurchaseType.Stone.toString()) {
-        //                this.byId('ShareType').closest('.field').show();
-        //                //this.byId('OrderSlabList').closest('.field').show();
-        //            } else {
-        //                this.byId('ShareType').closest('.field').hide();
-        //                // this.byId('OrderStoneList').closest('.field').show();
-        //                //this.form.OrderStoneList.getGridField().toggle(false);
-        //            }
-        //            //            Serenity.TabsExtensions.setDisabled(this.tabs, 'Customer',
-        //            //                !this.getCustomerID());
-        //        }
+        loadEntity(entity: PurchaseOrderRow) {
+            console.log("load data...");
+            super.loadEntity(entity);
+            var orderType = this.form.Type.value;
+            //默认为 stone 类型
+            if (Q.isEmptyOrNull(orderType)) {
+                this.form.Type.value = Default.PurchaseType.Stone.toString();
+            }
+
+            var supplierId = Q.toId(this.form.SupplierId.value);
+            if (supplierId != null) {
+                this.supplierChange();
+            }
+            //设置明细窗体的 type
+            //this.form.OrderDetailsList.orderType =this.form.Type.value;
+            // this.form.OrderDetailsList.getGrid();
+            var columns = this.form.OrderDetailsList.getGrid().getColumns().filter(function (x) { return x.name === "厚度" });
+            columns[0].visible = false;
+
+            //this.form.OrderDetailsList ;
+            if (this.form.Type.value === Default.PurchaseType.Stone.toString()) {
+                this.byId('ShareType').closest('.field').show();
+                //this.byId('OrderSlabList').closest('.field').show();
+            } else {
+                this.byId('ShareType').closest('.field').hide();
+                // this.byId('OrderStoneList').closest('.field').show();
+                //this.form.OrderStoneList.getGridField().toggle(false);
+            }
+            //            Serenity.TabsExtensions.setDisabled(this.tabs, 'Customer',
+            //                !this.getCustomerID());
+        }
     }
 }
