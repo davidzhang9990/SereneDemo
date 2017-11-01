@@ -697,14 +697,17 @@ declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
     class PurchaseOrderStoneEditor extends Common.GridEditorBase<PurchaseOrderDetailRow> {
-        protected validateEntity(row: PurchaseOrderDetailRow, id: number): boolean;
+        protected validateEntity(row: PurchaseOrderDetailRow): boolean;
         protected getColumnsKey(): string;
         protected getLocalTextPrefix(): string;
         place: string;
         private pendingChanges;
         constructor(container: JQuery);
         protected createSlickGrid(): Slick.Grid;
+        private getEffectiveValue(item, field);
+        private inputsChange(e);
         private numericInputFormatter(ctx);
+        private floatInputFormatter(ctx);
         private stringInputFormatter(ctx);
         /**
         * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
@@ -718,10 +721,8 @@ declare namespace BowenSerene.Default {
             onClick: () => void;
         }[];
         clearView(): void;
-        protected onClick(e: JQueryEventObject, row: number, cell: number): void;
-        private inputsChange(e);
+        protected onClick(e: JQueryEventObject, row: number, cell: number): boolean;
         protected getSlickOptions(): Slick.GridOptions;
-        private getEffectiveValue(item, field);
     }
 }
 declare namespace BowenSerene.Default {
@@ -3106,31 +3107,6 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
-    class PurchaseOrderBaseForm extends Serenity.PrefixedContext {
-        static formKey: string;
-    }
-    interface PurchaseOrderBaseForm {
-        Number: Serenity.StringEditor;
-        PurchaseDate: Serenity.DateEditor;
-        Type: Serenity.EnumEditor;
-        ShareType: Serenity.EnumEditor;
-        SupplierId: Serenity.LookupEditor;
-        PayWay: Serenity.EnumEditor;
-        Notes: Serenity.TextAreaEditor;
-        LetterNumber: Serenity.StringEditor;
-        AgentNumber: Serenity.StringEditor;
-        Behalf: Serenity.StringEditor;
-        BillLadingNumber: Serenity.StringEditor;
-        BillLadingDate: Serenity.DateEditor;
-        ArrivalDate: Serenity.DateEditor;
-        CompanyShip: Serenity.StringEditor;
-        PortDepart: Serenity.StringEditor;
-        PortDest: Serenity.StringEditor;
-        PriceTerms: Serenity.StringEditor;
-        Attachment: Serenity.MultipleImageUploadEditor;
-    }
-}
-declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
     interface PurchaseOrderDetailRow {
@@ -3139,6 +3115,7 @@ declare namespace BowenSerene.Default {
         Container?: string;
         BlockNumber?: string;
         ProductId?: string;
+        ProductName?: string;
         Category?: string;
         Mine?: string;
         Grade?: string;
@@ -3181,6 +3158,7 @@ declare namespace BowenSerene.Default {
             const Container: string;
             const BlockNumber: string;
             const ProductId: string;
+            const ProductName: string;
             const Category: string;
             const Mine: string;
             const Grade: string;

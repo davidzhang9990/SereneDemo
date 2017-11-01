@@ -53,6 +53,13 @@ namespace BowenSerene.Default.Entities
             set { Fields.ProductId[this] = value; }
         }
 
+        [DisplayName("品目名"), Expression("jProduct.[Name]"), LookupInclude]
+        public String ProductName
+        {
+            get { return Fields.ProductName[this]; }
+            set { Fields.ProductName[this] = value; }
+        }
+
         [DisplayName("类别"), Size(50)]
         public String Category
         {
@@ -109,21 +116,21 @@ namespace BowenSerene.Default.Entities
             set { Fields.Thick[this] = value; }
         }
 
-        [DisplayName("面积"), Size(19), Scale(5)]
+        [DisplayName("面积"), Size(19), Scale(2)]
         public Decimal? Size
         {
             get { return Fields.Size[this]; }
             set { Fields.Size[this] = value; }
         }
 
-        [DisplayName("重量"), Size(19), Scale(5)]
+        [DisplayName("重量"), Size(19), Scale(2)]
         public Decimal? Weight
         {
             get { return Fields.Weight[this]; }
             set { Fields.Weight[this] = value; }
         }
 
-        [DisplayName("体积"), Size(19), Scale(5), Expression("(t0.[Length] * t0.[Width] *t0.[Height])")]
+        [DisplayName("体积"), Size(19), Scale(2)]
         public Decimal? Volume
         {
             get { return Fields.Volume[this]; }
@@ -267,6 +274,7 @@ namespace BowenSerene.Default.Entities
             public StringField Container;
             public StringField BlockNumber;
             public GuidField ProductId;
+            public StringField ProductName;
             public StringField Category;
             public StringField Mine;
             public StringField Grade;

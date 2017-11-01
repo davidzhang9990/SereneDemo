@@ -5,6 +5,7 @@
         Container?: string;
         BlockNumber?: string;
         ProductId?: string;
+        ProductName?: string;
         Category?: string;
         Mine?: string;
         Grade?: string;
@@ -49,6 +50,7 @@
             export declare const Container: string;
             export declare const BlockNumber: string;
             export declare const ProductId: string;
+            export declare const ProductName: string;
             export declare const Category: string;
             export declare const Mine: string;
             export declare const Grade: string;
@@ -88,6 +90,7 @@
             'Container', 
             'BlockNumber', 
             'ProductId', 
+            'ProductName', 
             'Category', 
             'Mine', 
             'Grade', 

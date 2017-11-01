@@ -5,11 +5,8 @@ namespace BowenSerene.Default {
     @Serenity.Decorators.registerEditor()
     export class PurchaseOrderStoneEditor extends Common.GridEditorBase<PurchaseOrderDetailRow>{
 
-        protected validateEntity(row: PurchaseOrderDetailRow, id: number) {
-            if (!super.validateEntity(row, id))
-                return false;
-            row.Size = 2.11;
-            //row.PersonFullname = PersonRow.getLookup().itemById[row.PersonId].Fullname;
+        protected validateEntity(row: PurchaseOrderDetailRow) {
+            row.ProductName = ProductsRow.getLookup().itemById[row.ProductId].Name;
             return true;
         }
         protected getColumnsKey() {
@@ -25,12 +22,15 @@ namespace BowenSerene.Default {
 
         constructor(container: JQuery) {
             super(container);
-            this.slickContainer.on('change', '.edit:input', (e) => this.inputsChange(e));
+            this.slickContainer.on('keyup', '.edit:input.numeric', (e) => this.inputsChange(e));
+            //this.slickContainer.on('keydown', '.edit:input', (e) => this.inputsNext(e));
         }
 
         protected createSlickGrid() {
 
             var grid = super.createSlickGrid();
+            //let autoSize = new Slick.AutoColumnSize(true); // *** If you want to make it autoresize when grid is loaded, use: new Slick.AutoColumnSize(true);
+            // grid.registerPlugin(autoSize);
             // need to register this plugin for grouping or you'll have errors
             grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
 
@@ -42,6 +42,79 @@ namespace BowenSerene.Default {
             });
 
             return grid;
+        }
+
+        private getEffectiveValue(item, field): any {
+            var pending = this.pendingChanges[item.OrderDetailId];
+            if (pending && pending[field] !== undefined) {
+                return pending[field];
+            }
+            return item[field];
+        }
+        //文本框改变事件
+        private inputsChange(e: JQueryEventObject) {
+
+            var input = $(e.target);
+            var key = e.which;
+            //next
+            if (key === 13) {
+                event.preventDefault();
+                var parent = input.parent().parent();
+                var nxtIdx = parent.find("input").index(input) + 1;
+                var nextselector = parent.find("input:eq(" + nxtIdx + ")");
+                nextselector.focus();
+                nextselector.select();
+                return;
+            }
+            var cell = this.slickGrid.getCellFromEvent(e);
+            var item = this.itemAt(cell.row);
+            var field = input.data('field');
+            var text = Q.coalesce(Q.trimToNull(input.val()), '0');
+            Q.log(text);
+            var effective = this.getEffectiveValue(item, field);
+            var oldText: string;
+            if (input.hasClass("numeric"))
+                oldText = Q.formatNumber(effective, '0.##');
+            else if (input.hasClass("decimal"))
+                oldText = Q.formatNumber(effective, '0.00');
+            else
+                oldText = effective as string;
+
+            var value;
+            if (input.hasClass("decimal")) {
+                value = Q.parseDecimal(text);
+                if (value == null || isNaN(value)) {
+                    Q.notifyError(Q.text('Validation.Decimal'), '', null);
+                    input.val(oldText);
+                    input.focus();
+                    return;
+                }
+            }
+            else if (input.hasClass("numeric")) {
+                var i = Q.parseInteger(text);
+                if (isNaN(i) || i > 32767 || i < 0) {
+                    Q.notifyError(Q.text('Validation.Integer'), '', null);
+                    input.val(oldText);
+                    input.focus();
+                    return;
+                }
+                value = i;
+                item[field] = value;
+                //计算体积
+                var volumn = item["Length"] * item["Width"] * item["Height"] / 1000000;
+                item["Volume"] = volumn;
+                input.parent().parent().find("input[data-field='Volume']").val(Q.formatNumber(volumn, '0.00'));
+            }
+            else
+                value = text;
+
+            item[field] = value;
+            this.view.refresh();
+
+            if (input.hasClass("numeric"))
+                value = Q.formatNumber(value, '0.##');
+
+            input.val(value).addClass('dirty');
         }
 
         //数字输入框
@@ -59,6 +132,22 @@ namespace BowenSerene.Default {
             return "<input type='text' class='" + klass +
                 "' data-field='" + ctx.column.field +
                 "' value='" + Q.formatNumber(value, '0.##') + "'/>";
+        }
+        //浮点数输入框
+        private floatInputFormatter(ctx) {
+            var klass = 'edit decimal';
+            var item = ctx.item as PurchaseOrderDetailRow;
+            var pending = this.pendingChanges[item.OrderDetailId];
+
+            if (pending && pending[ctx.column.field] !== undefined) {
+                klass += ' dirty';
+            }
+
+            var value = this.getEffectiveValue(item, ctx.column.field) as number;
+
+            return "<input type='text' class='" + klass +
+                "' data-field='" + ctx.column.field +
+                "' value='" + Q.formatNumber(value, '0.00') + "'/>";
         }
         //文本输入 框
         private stringInputFormatter(ctx) {
@@ -114,6 +203,7 @@ namespace BowenSerene.Default {
             var columns = super.getColumns();
 
             var num = ctx => this.numericInputFormatter(ctx);
+            var decimal = ctx => this.floatInputFormatter(ctx);
             var str = ctx => this.stringInputFormatter(ctx);
             var fld = PurchaseOrderDetailRow.Fields;
 
@@ -140,15 +230,17 @@ namespace BowenSerene.Default {
             product.format = ctx => this.selectFormatter(ctx, fld.ProductId, ProductsRow.getLookup());
 
             Q.first(columns, x => x.field === 'Weight')
-                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
+                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('重量: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.00'), '')) : '');
 
             Q.first(columns, x => x.field === 'Volume')
-                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
+                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('体积: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.00'), '')) : '');
 
             Q.first(columns, x => x.field === fld.Length).format = num;
             Q.first(columns, x => x.field === fld.Width).format = num;
             Q.first(columns, x => x.field === fld.Height).format = num;
-            Q.first(columns, x => x.field === fld.Weight).format = num;
+            Q.first(columns, x => x.field === fld.Weight).format = decimal;
+            Q.first(columns, x => x.field === fld.Volume).format = decimal;
+
             return columns;
         }
 
@@ -177,24 +269,40 @@ namespace BowenSerene.Default {
                             },
                             row);
 
-                        //            if (!this.validateEntity(newRow, id)) {
-                        //                return;
-                        //            }
+                        if (!this.validateEntity(newRow)) {
+                            return;
+                        }
 
                         items.push(newRow);
                         this.setEntities(items);
                     }
                 }, {
-                    title: 'Group By Container and BlockNumber',
+                    title: '货柜分组',
                     cssClass: 'expand-all-button',
                     onClick: () => this.view.setGrouping(
                         [{
-                            formatter: x => 'Container: ' + x.value + ' (' + x.count + ' items)',
+                            formatter: x => '货柜号: ' + x.value + ' (' + x.count + ' items)',
                             getter: 'Container'
                         }, {
-                            formatter: x => 'BlockNumber: ' + x.value + ' (' + x.count + ' items)',
+                            formatter: x => '荒料号: ' + x.value + ' (' + x.count + ' items)',
                             getter: 'BlockNumber'
                         }])
+                }, {
+                    title: '品目分组',
+                    cssClass: 'expand-all-button',
+                    onClick: () => this.view.setGrouping(
+                        [{
+                            formatter: x => '品目: ' + x.value + ' (' + x.count + ' items)',
+                            getter: 'ProductName'
+                        }, {
+                            formatter: x => '类别: ' + x.value + ' (' + x.count + ' items)',
+                            getter: 'Category'
+                        }])
+                },
+                {
+                    title: 'No Grouping',
+                    cssClass: 'collapse-all-button',
+                    onClick: () => this.view.setGrouping([])
                 }
             ];
         }
@@ -206,10 +314,10 @@ namespace BowenSerene.Default {
             }
         }
 
-        //        protected getItemCssClass(item: Northwind.ProductRow, index: number): string {
+        //        protected getItemCssClass(item: PurchaseOrderDetailRow, index: number): string {
         //            let klass: string = "";
         //
-        //            if (item.Discontinued == true)
+        //            if (item.Width == 0)
         //                klass += " discontinued";
         //            else if (item.UnitsInStock <= 0)
         //                klass += " out-of-stock";
@@ -226,33 +334,6 @@ namespace BowenSerene.Default {
         //                klass += " low-price";
         //
         //            return Q.trimToNull(klass);
-        //        }
-
-        //        protected getButtons() {
-        //            return [{
-        //                title: 'Group By Category',
-        //                cssClass: 'expand-all-button',
-        //                onClick: () => this.view.setGrouping(
-        //                    [{
-        //                        getter: 'CategoryName'
-        //                    }])
-        //            },
-        //            {
-        //                title: 'Group By Category and Supplier',
-        //                cssClass: 'expand-all-button',
-        //                onClick: () => this.view.setGrouping(
-        //                    [{
-        //                        formatter: x => 'Category: ' + x.value + ' (' + x.count + ' items)',
-        //                        getter: 'CategoryName'
-        //                    }, {
-        //                        formatter: x => 'Supplier: ' + x.value + ' (' + x.count + ' items)',
-        //                        getter: 'SupplierCompanyName'
-        //                    }])
-        //            }, {
-        //                title: 'No Grouping',
-        //                cssClass: 'collapse-all-button',
-        //                onClick: () => this.view.setGrouping([])
-        //            }];
         //        }
 
         protected onClick(e: JQueryEventObject, row: number, cell: number) {
@@ -272,65 +353,14 @@ namespace BowenSerene.Default {
                 e.preventDefault();
 
                 if (target.hasClass('delete-row')) {
-                    Q.confirm('Delete record?', () => {
-                        this.view.deleteItem(item.__id);
-                        return true;
-                    });
+                    this.view.deleteItem(item.__id);
+                    return true;
+                    //                    Q.confirm('Delete record?', () => {
+                    //                        this.view.deleteItem(item.__id);
+                    //                        return true;
+                    //                    });
                 }
             }
-        }
-
-        //文本框改变事件
-        private inputsChange(e: JQueryEventObject) {
-            var cell = this.slickGrid.getCellFromEvent(e);
-            var item = this.itemAt(cell.row);
-            var input = $(e.target);
-            var field = input.data('field');
-            var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-            var pending = this.pendingChanges[item.OrderDetailId];
-
-            var effective = this.getEffectiveValue(item, field);
-            var oldText: string;
-            if (input.hasClass("numeric"))
-                oldText = Q.formatNumber(effective, '0.##');
-            else
-                oldText = effective as string;
-
-            var value;
-            if (field === 'Weight') {
-                value = Q.parseDecimal(text);
-                if (value == null || isNaN(value)) {
-                    Q.notifyError(Q.text('Validation.Decimal'), '', null);
-                    input.val(oldText);
-                    input.focus();
-                    return;
-                }
-            }
-            else if (input.hasClass("numeric")) {
-                var i = Q.parseInteger(text);
-                if (isNaN(i) || i > 32767 || i < 0) {
-                    Q.notifyError(Q.text('Validation.Integer'), '', null);
-                    input.val(oldText);
-                    input.focus();
-                    return;
-                }
-                value = i;
-            }
-            else
-                value = text;
-
-            if (!pending) {
-                this.pendingChanges[item.OrderDetailId] = pending = {};
-            }
-
-            pending[field] = value;
-            item[field] = value;
-            this.view.refresh();
-
-            if (input.hasClass("numeric"))
-                value = Q.formatNumber(value, '0.##');
-
-            input.val(value).addClass('dirty');
         }
 
         protected getSlickOptions() {
@@ -338,15 +368,5 @@ namespace BowenSerene.Default {
             opt.showFooterRow = true;
             return opt;
         }
-
-        private getEffectiveValue(item, field): any {
-            var pending = this.pendingChanges[item.OrderDetailId];
-            if (pending && pending[field] !== undefined) {
-                return pending[field];
-            }
-            return item[field];
-        }
-
-
     }
 }

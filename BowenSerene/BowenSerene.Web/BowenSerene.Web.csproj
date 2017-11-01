@@ -512,6 +512,10 @@
     <Content Include="Content\serenity\serenity.css" />
     <Content Include="Content\simple-line-icons.css" />
     <Content Include="Content\site\images\accordion-arrows.png" />
+    <Content Include="Imports\MVC\MVC.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MVC.cs</LastGenOutput>
+    </Content>
     <Content Include="Modules\Default\PurchaseOrder\Default.PurchaseOrderDialog.Template.html" />
     <Content Include="Scripts\SlickGrid\Plugins\slick.autocolumnsize.js" />
     <Content Include="wkhtmltopdf-license.txt" />
@@ -1175,9 +1179,6 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductsColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderBaseForm.ts">
-      <DependentUpon>ServerTypings.tt</DependentUpon>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -1787,10 +1788,6 @@
     <Content Include="Modules\AdminLTE\Charts\ChartJS.cshtml" />
     <Content Include="Modules\AdminLTE\Charts\Flot.cshtml" />
     <Content Include="Modules\AdminLTE\Charts\InlineCharts.cshtml" />
-    <Content Include="Imports\MVC\MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MVC1.cs</LastGenOutput>
-    </Content>
     <Content Include="Modules\AdminLTE\UIElements\Buttons.cshtml" />
     <Content Include="Modules\AdminLTE\UIElements\General.cshtml" />
     <Content Include="Modules\AdminLTE\UIElements\Icons.cshtml" />
@@ -2166,6 +2163,11 @@
     <Compile Include="Imports\ClientTypes\Default.PurchaseOrderStoneEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Imports\MVC\MVC.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171028_095500_PurchaseOrderDetail_TypeAndMine.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171028_091900_PurchaseOrderDetailNum.cs" />
     <Compile Include="Migrations\DefaultDB\DefaultDB_20171027_222900_PurchaseOrderDetailID.cs" />
@@ -2339,11 +2341,6 @@
     <Compile Include="Modules\Administration\Translation\TranslationItem.cs" />
     <Compile Include="Modules\Common\Dashboard\DashboardPage.cs" />
     <Compile Include="Modules\Common\Helpers\SqlExceptionHelper.cs" />
-    <Compile Include="Imports\MVC\MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Modules\Common\Navigation\NavigationItems.cs" />
     <Compile Include="Modules\Common\Navigation\NavigationModel.cs" />
     <Content Include="Modules\Northwind\Customer\Northwind.CustomerDialog.Template.html" />

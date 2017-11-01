@@ -2832,14 +2832,12 @@ var BowenSerene;
             function PurchaseOrderStoneEditor(container) {
                 var _this = _super.call(this, container) || this;
                 _this.pendingChanges = {};
-                _this.slickContainer.on('change', '.edit:input', function (e) { return _this.inputsChange(e); });
+                _this.slickContainer.on('keyup', '.edit:input.numeric', function (e) { return _this.inputsChange(e); });
                 return _this;
+                //this.slickContainer.on('keydown', '.edit:input', (e) => this.inputsNext(e));
             }
-            PurchaseOrderStoneEditor.prototype.validateEntity = function (row, id) {
-                if (!_super.prototype.validateEntity.call(this, row, id))
-                    return false;
-                row.Size = 2.11;
-                //row.PersonFullname = PersonRow.getLookup().itemById[row.PersonId].Fullname;
+            PurchaseOrderStoneEditor.prototype.validateEntity = function (row) {
+                row.ProductName = Default.ProductsRow.getLookup().itemById[row.ProductId].Name;
                 return true;
             };
             PurchaseOrderStoneEditor.prototype.getColumnsKey = function () {
@@ -2850,6 +2848,8 @@ var BowenSerene;
             };
             PurchaseOrderStoneEditor.prototype.createSlickGrid = function () {
                 var grid = _super.prototype.createSlickGrid.call(this);
+                //let autoSize = new Slick.AutoColumnSize(true); // *** If you want to make it autoresize when grid is loaded, use: new Slick.AutoColumnSize(true);
+                // grid.registerPlugin(autoSize);
                 // need to register this plugin for grouping or you'll have errors
                 grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
                 this.view.setSummaryOptions({
@@ -2859,6 +2859,73 @@ var BowenSerene;
                     ]
                 });
                 return grid;
+            };
+            PurchaseOrderStoneEditor.prototype.getEffectiveValue = function (item, field) {
+                var pending = this.pendingChanges[item.OrderDetailId];
+                if (pending && pending[field] !== undefined) {
+                    return pending[field];
+                }
+                return item[field];
+            };
+            //文本框改变事件
+            PurchaseOrderStoneEditor.prototype.inputsChange = function (e) {
+                var input = $(e.target);
+                var key = e.which;
+                //next
+                if (key === 13) {
+                    event.preventDefault();
+                    var parent = input.parent().parent();
+                    var nxtIdx = parent.find("input").index(input) + 1;
+                    var nextselector = parent.find("input:eq(" + nxtIdx + ")");
+                    nextselector.focus();
+                    nextselector.select();
+                    return;
+                }
+                var cell = this.slickGrid.getCellFromEvent(e);
+                var item = this.itemAt(cell.row);
+                var field = input.data('field');
+                var text = Q.coalesce(Q.trimToNull(input.val()), '0');
+                Q.log(text);
+                var effective = this.getEffectiveValue(item, field);
+                var oldText;
+                if (input.hasClass("numeric"))
+                    oldText = Q.formatNumber(effective, '0.##');
+                else if (input.hasClass("decimal"))
+                    oldText = Q.formatNumber(effective, '0.00');
+                else
+                    oldText = effective;
+                var value;
+                if (input.hasClass("decimal")) {
+                    value = Q.parseDecimal(text);
+                    if (value == null || isNaN(value)) {
+                        Q.notifyError(Q.text('Validation.Decimal'), '', null);
+                        input.val(oldText);
+                        input.focus();
+                        return;
+                    }
+                }
+                else if (input.hasClass("numeric")) {
+                    var i = Q.parseInteger(text);
+                    if (isNaN(i) || i > 32767 || i < 0) {
+                        Q.notifyError(Q.text('Validation.Integer'), '', null);
+                        input.val(oldText);
+                        input.focus();
+                        return;
+                    }
+                    value = i;
+                    item[field] = value;
+                    //计算体积
+                    var volumn = item["Length"] * item["Width"] * item["Height"] / 1000000;
+                    item["Volume"] = volumn;
+                    input.parent().parent().find("input[data-field='Volume']").val(Q.formatNumber(volumn, '0.00'));
+                }
+                else
+                    value = text;
+                item[field] = value;
+                this.view.refresh();
+                if (input.hasClass("numeric"))
+                    value = Q.formatNumber(value, '0.##');
+                input.val(value).addClass('dirty');
             };
             //数字输入框
             PurchaseOrderStoneEditor.prototype.numericInputFormatter = function (ctx) {
@@ -2872,6 +2939,19 @@ var BowenSerene;
                 return "<input type='text' class='" + klass +
                     "' data-field='" + ctx.column.field +
                     "' value='" + Q.formatNumber(value, '0.##') + "'/>";
+            };
+            //浮点数输入框
+            PurchaseOrderStoneEditor.prototype.floatInputFormatter = function (ctx) {
+                var klass = 'edit decimal';
+                var item = ctx.item;
+                var pending = this.pendingChanges[item.OrderDetailId];
+                if (pending && pending[ctx.column.field] !== undefined) {
+                    klass += ' dirty';
+                }
+                var value = this.getEffectiveValue(item, ctx.column.field);
+                return "<input type='text' class='" + klass +
+                    "' data-field='" + ctx.column.field +
+                    "' value='" + Q.formatNumber(value, '0.00') + "'/>";
             };
             //文本输入 框
             PurchaseOrderStoneEditor.prototype.stringInputFormatter = function (ctx) {
@@ -2923,6 +3003,7 @@ var BowenSerene;
                 var _this = this;
                 var columns = _super.prototype.getColumns.call(this);
                 var num = function (ctx) { return _this.numericInputFormatter(ctx); };
+                var decimal = function (ctx) { return _this.floatInputFormatter(ctx); };
                 var str = function (ctx) { return _this.stringInputFormatter(ctx); };
                 var fld = Default.PurchaseOrderDetailRow.Fields;
                 //增加删除按钮
@@ -2945,13 +3026,14 @@ var BowenSerene;
                 product.referencedFields = [fld.ProductId];
                 product.format = function (ctx) { return _this.selectFormatter(ctx, fld.ProductId, Default.ProductsRow.getLookup()); };
                 Q.first(columns, function (x) { return x.field === 'Weight'; })
-                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
+                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('重量: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.00'), '')) : ''); };
                 Q.first(columns, function (x) { return x.field === 'Volume'; })
-                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
+                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('体积: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.00'), '')) : ''); };
                 Q.first(columns, function (x) { return x.field === fld.Length; }).format = num;
                 Q.first(columns, function (x) { return x.field === fld.Width; }).format = num;
                 Q.first(columns, function (x) { return x.field === fld.Height; }).format = num;
-                Q.first(columns, function (x) { return x.field === fld.Weight; }).format = num;
+                Q.first(columns, function (x) { return x.field === fld.Weight; }).format = decimal;
+                Q.first(columns, function (x) { return x.field === fld.Volume; }).format = decimal;
                 return columns;
             };
             PurchaseOrderStoneEditor.prototype.getIdProperty = function () { return "__id"; };
@@ -2975,22 +3057,37 @@ var BowenSerene;
                                 Container: '',
                                 BlockNumber: ''
                             }, row);
-                            //            if (!this.validateEntity(newRow, id)) {
-                            //                return;
-                            //            }
+                            if (!_this.validateEntity(newRow)) {
+                                return;
+                            }
                             items.push(newRow);
                             _this.setEntities(items);
                         }
                     }, {
-                        title: 'Group By Container and BlockNumber',
+                        title: '货柜分组',
                         cssClass: 'expand-all-button',
                         onClick: function () { return _this.view.setGrouping([{
-                                formatter: function (x) { return 'Container: ' + x.value + ' (' + x.count + ' items)'; },
+                                formatter: function (x) { return '货柜号: ' + x.value + ' (' + x.count + ' items)'; },
                                 getter: 'Container'
                             }, {
-                                formatter: function (x) { return 'BlockNumber: ' + x.value + ' (' + x.count + ' items)'; },
+                                formatter: function (x) { return '荒料号: ' + x.value + ' (' + x.count + ' items)'; },
                                 getter: 'BlockNumber'
                             }]); }
+                    }, {
+                        title: '品目分组',
+                        cssClass: 'expand-all-button',
+                        onClick: function () { return _this.view.setGrouping([{
+                                formatter: function (x) { return '品目: ' + x.value + ' (' + x.count + ' items)'; },
+                                getter: 'ProductName'
+                            }, {
+                                formatter: function (x) { return '类别: ' + x.value + ' (' + x.count + ' items)'; },
+                                getter: 'Category'
+                            }]); }
+                    },
+                    {
+                        title: 'No Grouping',
+                        cssClass: 'collapse-all-button',
+                        onClick: function () { return _this.view.setGrouping([]); }
                     }
                 ];
             };
@@ -3001,10 +3098,10 @@ var BowenSerene;
                     this.view.deleteItem(c.__id);
                 }
             };
-            //        protected getItemCssClass(item: Northwind.ProductRow, index: number): string {
+            //        protected getItemCssClass(item: PurchaseOrderDetailRow, index: number): string {
             //            let klass: string = "";
             //
-            //            if (item.Discontinued == true)
+            //            if (item.Width == 0)
             //                klass += " discontinued";
             //            else if (item.UnitsInStock <= 0)
             //                klass += " out-of-stock";
@@ -3022,34 +3119,7 @@ var BowenSerene;
             //
             //            return Q.trimToNull(klass);
             //        }
-            //        protected getButtons() {
-            //            return [{
-            //                title: 'Group By Category',
-            //                cssClass: 'expand-all-button',
-            //                onClick: () => this.view.setGrouping(
-            //                    [{
-            //                        getter: 'CategoryName'
-            //                    }])
-            //            },
-            //            {
-            //                title: 'Group By Category and Supplier',
-            //                cssClass: 'expand-all-button',
-            //                onClick: () => this.view.setGrouping(
-            //                    [{
-            //                        formatter: x => 'Category: ' + x.value + ' (' + x.count + ' items)',
-            //                        getter: 'CategoryName'
-            //                    }, {
-            //                        formatter: x => 'Supplier: ' + x.value + ' (' + x.count + ' items)',
-            //                        getter: 'SupplierCompanyName'
-            //                    }])
-            //            }, {
-            //                title: 'No Grouping',
-            //                cssClass: 'collapse-all-button',
-            //                onClick: () => this.view.setGrouping([])
-            //            }];
-            //        }
             PurchaseOrderStoneEditor.prototype.onClick = function (e, row, cell) {
-                var _this = this;
                 _super.prototype.onClick.call(this, e, row, cell);
                 if (e.isDefaultPrevented())
                     return;
@@ -3061,70 +3131,19 @@ var BowenSerene;
                 if (target.hasClass('inline-action')) {
                     e.preventDefault();
                     if (target.hasClass('delete-row')) {
-                        Q.confirm('Delete record?', function () {
-                            _this.view.deleteItem(item.__id);
-                            return true;
-                        });
+                        this.view.deleteItem(item.__id);
+                        return true;
+                        //                    Q.confirm('Delete record?', () => {
+                        //                        this.view.deleteItem(item.__id);
+                        //                        return true;
+                        //                    });
                     }
                 }
-            };
-            //文本框改变事件
-            PurchaseOrderStoneEditor.prototype.inputsChange = function (e) {
-                var cell = this.slickGrid.getCellFromEvent(e);
-                var item = this.itemAt(cell.row);
-                var input = $(e.target);
-                var field = input.data('field');
-                var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-                var pending = this.pendingChanges[item.OrderDetailId];
-                var effective = this.getEffectiveValue(item, field);
-                var oldText;
-                if (input.hasClass("numeric"))
-                    oldText = Q.formatNumber(effective, '0.##');
-                else
-                    oldText = effective;
-                var value;
-                if (field === 'Weight') {
-                    value = Q.parseDecimal(text);
-                    if (value == null || isNaN(value)) {
-                        Q.notifyError(Q.text('Validation.Decimal'), '', null);
-                        input.val(oldText);
-                        input.focus();
-                        return;
-                    }
-                }
-                else if (input.hasClass("numeric")) {
-                    var i = Q.parseInteger(text);
-                    if (isNaN(i) || i > 32767 || i < 0) {
-                        Q.notifyError(Q.text('Validation.Integer'), '', null);
-                        input.val(oldText);
-                        input.focus();
-                        return;
-                    }
-                    value = i;
-                }
-                else
-                    value = text;
-                if (!pending) {
-                    this.pendingChanges[item.OrderDetailId] = pending = {};
-                }
-                pending[field] = value;
-                item[field] = value;
-                this.view.refresh();
-                if (input.hasClass("numeric"))
-                    value = Q.formatNumber(value, '0.##');
-                input.val(value).addClass('dirty');
             };
             PurchaseOrderStoneEditor.prototype.getSlickOptions = function () {
                 var opt = _super.prototype.getSlickOptions.call(this);
                 opt.showFooterRow = true;
                 return opt;
-            };
-            PurchaseOrderStoneEditor.prototype.getEffectiveValue = function (item, field) {
-                var pending = this.pendingChanges[item.OrderDetailId];
-                if (pending && pending[field] !== undefined) {
-                    return pending[field];
-                }
-                return item[field];
             };
             PurchaseOrderStoneEditor = __decorate([
                 Serenity.Decorators.registerEditor()
@@ -9691,22 +9710,6 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
-        var PurchaseOrderBaseForm = /** @class */ (function (_super) {
-            __extends(PurchaseOrderBaseForm, _super);
-            function PurchaseOrderBaseForm() {
-                return _super !== null && _super.apply(this, arguments) || this;
-            }
-            PurchaseOrderBaseForm.formKey = 'Default.PurchaseOrder';
-            return PurchaseOrderBaseForm;
-        }(Serenity.PrefixedContext));
-        Default.PurchaseOrderBaseForm = PurchaseOrderBaseForm;
-        [['Number', function () { return Serenity.StringEditor; }], ['PurchaseDate', function () { return Serenity.DateEditor; }], ['Type', function () { return Serenity.EnumEditor; }], ['ShareType', function () { return Serenity.EnumEditor; }], ['SupplierId', function () { return Serenity.LookupEditor; }], ['PayWay', function () { return Serenity.EnumEditor; }], ['Notes', function () { return Serenity.TextAreaEditor; }], ['LetterNumber', function () { return Serenity.StringEditor; }], ['AgentNumber', function () { return Serenity.StringEditor; }], ['Behalf', function () { return Serenity.StringEditor; }], ['BillLadingNumber', function () { return Serenity.StringEditor; }], ['BillLadingDate', function () { return Serenity.DateEditor; }], ['ArrivalDate', function () { return Serenity.DateEditor; }], ['CompanyShip', function () { return Serenity.StringEditor; }], ['PortDepart', function () { return Serenity.StringEditor; }], ['PortDest', function () { return Serenity.StringEditor; }], ['PriceTerms', function () { return Serenity.StringEditor; }], ['Attachment', function () { return Serenity.MultipleImageUploadEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderBaseForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
-    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
-})(BowenSerene || (BowenSerene = {}));
-var BowenSerene;
-(function (BowenSerene) {
-    var Default;
-    (function (Default) {
         var PurchaseOrderDetailRow;
         (function (PurchaseOrderDetailRow) {
             PurchaseOrderDetailRow.idProperty = 'OrderDetailId';
@@ -9721,6 +9724,7 @@ var BowenSerene;
                 'Container',
                 'BlockNumber',
                 'ProductId',
+                'ProductName',
                 'Category',
                 'Mine',
                 'Grade',

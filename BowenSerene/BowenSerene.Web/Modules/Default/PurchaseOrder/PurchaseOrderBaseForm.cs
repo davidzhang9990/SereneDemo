@@ -1,19 +1,10 @@
 ﻿
-using MVC;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
-
 namespace BowenSerene.Default.Forms
 {
-    using Serenity;
     using Serenity.ComponentModel;
-    using Serenity.Data;
     using System;
     using System.ComponentModel;
-    using System.Collections.Generic;
-    using System.IO;
 
-    [FormScript("Default.PurchaseOrder")]
-    [BasedOnRow(typeof(Entities.PurchaseOrderRow))]
     public class PurchaseOrderBaseForm
     {
         [Tab("基本信息")]
