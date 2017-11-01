@@ -5,10 +5,6 @@ namespace BowenSerene.Default {
     @Serenity.Decorators.registerEditor()
     export class PurchaseOrderStoneEditor extends Common.GridEditorBase<PurchaseOrderDetailRow>{
 
-        //        protected validateEntity(row: PurchaseOrderDetailRow) {
-        //            row.ProductName = ProductsRow.getLookup().itemById[row.ProductId].Name;
-        //            return true;
-        //        }
         protected getColumnsKey() {
             return "Default.PurchaseOrderStone";
         }
@@ -23,8 +19,8 @@ namespace BowenSerene.Default {
         constructor(container: JQuery) {
             super(container);
             this.slickContainer
-                .on('keyup', '.edit:input.numeric', (e) => this.inputsChange(e));
-            // .on('change', 'select', (e) => this.productsChange(e));
+                .on('keyup', '.edit:input', (e) => this.inputsChange(e))
+                .on('change', 'select', (e) => this.productsChange(e));
             //this.slickContainer.on('keydown', '.edit:input', (e) => this.inputsNext(e));
         }
 
@@ -60,12 +56,12 @@ namespace BowenSerene.Default {
             var select = $(e.target);
             var scell = this.slickGrid.getCellFromEvent(e);
             var single = this.itemAt(scell.row);
+            var field = select.data('field');
             var productId = Q.coalesce(Q.trimToNull(select.val()), '0');
             var proName = ProductsRow.getLookup().items.filter(x => x.ProductId == productId)[0].Name;
 
-            Q.log(proName);
-            single["ProductId"] = productId;
-            single["ProductName"] = proName;
+            single[field] = productId;
+            single.ProductName = proName;
             this.view.refresh();
         }
         //文本框改变事件
