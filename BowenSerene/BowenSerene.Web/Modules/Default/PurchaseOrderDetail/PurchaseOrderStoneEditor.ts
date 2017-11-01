@@ -5,10 +5,10 @@ namespace BowenSerene.Default {
     @Serenity.Decorators.registerEditor()
     export class PurchaseOrderStoneEditor extends Common.GridEditorBase<PurchaseOrderDetailRow>{
 
-        protected validateEntity(row: PurchaseOrderDetailRow) {
-            row.ProductName = ProductsRow.getLookup().itemById[row.ProductId].Name;
-            return true;
-        }
+        //        protected validateEntity(row: PurchaseOrderDetailRow) {
+        //            row.ProductName = ProductsRow.getLookup().itemById[row.ProductId].Name;
+        //            return true;
+        //        }
         protected getColumnsKey() {
             return "Default.PurchaseOrderStone";
         }
@@ -22,7 +22,9 @@ namespace BowenSerene.Default {
 
         constructor(container: JQuery) {
             super(container);
-            this.slickContainer.on('keyup', '.edit:input.numeric', (e) => this.inputsChange(e));
+            this.slickContainer
+                .on('keyup', '.edit:input.numeric', (e) => this.inputsChange(e));
+            // .on('change', 'select', (e) => this.productsChange(e));
             //this.slickContainer.on('keydown', '.edit:input', (e) => this.inputsNext(e));
         }
 
@@ -51,6 +53,21 @@ namespace BowenSerene.Default {
             }
             return item[field];
         }
+
+        //品目改变事件
+        private productsChange(e: JQueryEventObject) {
+
+            var select = $(e.target);
+            var scell = this.slickGrid.getCellFromEvent(e);
+            var single = this.itemAt(scell.row);
+            var productId = Q.coalesce(Q.trimToNull(select.val()), '0');
+            var proName = ProductsRow.getLookup().items.filter(x => x.ProductId == productId)[0].Name;
+
+            Q.log(proName);
+            single["ProductId"] = productId;
+            single["ProductName"] = proName;
+            this.view.refresh();
+        }
         //文本框改变事件
         private inputsChange(e: JQueryEventObject) {
 
@@ -70,7 +87,7 @@ namespace BowenSerene.Default {
             var item = this.itemAt(cell.row);
             var field = input.data('field');
             var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-            Q.log(text);
+
             var effective = this.getEffectiveValue(item, field);
             var oldText: string;
             if (input.hasClass("numeric"))
@@ -269,9 +286,9 @@ namespace BowenSerene.Default {
                             },
                             row);
 
-                        if (!this.validateEntity(newRow)) {
-                            return;
-                        }
+                        //                        if (!this.validateEntity(newRow)) {
+                        //                            return;
+                        //                        }
 
                         items.push(newRow);
                         this.setEntities(items);

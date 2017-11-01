@@ -75,7 +75,7 @@ namespace BowenSerene.Default.Entities
 
         StringField INameRow.NameField
         {
-            get { return Fields.Number; }
+            get { return Fields.Name; }
         }
 
         Int16Field IIsActiveRow.IsActiveField

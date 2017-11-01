@@ -2832,14 +2832,16 @@ var BowenSerene;
             function PurchaseOrderStoneEditor(container) {
                 var _this = _super.call(this, container) || this;
                 _this.pendingChanges = {};
-                _this.slickContainer.on('keyup', '.edit:input.numeric', function (e) { return _this.inputsChange(e); });
+                _this.slickContainer
+                    .on('keyup', '.edit:input.numeric', function (e) { return _this.inputsChange(e); });
                 return _this;
+                // .on('change', 'select', (e) => this.productsChange(e));
                 //this.slickContainer.on('keydown', '.edit:input', (e) => this.inputsNext(e));
             }
-            PurchaseOrderStoneEditor.prototype.validateEntity = function (row) {
-                row.ProductName = Default.ProductsRow.getLookup().itemById[row.ProductId].Name;
-                return true;
-            };
+            //        protected validateEntity(row: PurchaseOrderDetailRow) {
+            //            row.ProductName = ProductsRow.getLookup().itemById[row.ProductId].Name;
+            //            return true;
+            //        }
             PurchaseOrderStoneEditor.prototype.getColumnsKey = function () {
                 return "Default.PurchaseOrderStone";
             };
@@ -2867,6 +2869,18 @@ var BowenSerene;
                 }
                 return item[field];
             };
+            //品目改变事件
+            PurchaseOrderStoneEditor.prototype.productsChange = function (e) {
+                var select = $(e.target);
+                var scell = this.slickGrid.getCellFromEvent(e);
+                var single = this.itemAt(scell.row);
+                var productId = Q.coalesce(Q.trimToNull(select.val()), '0');
+                var proName = Default.ProductsRow.getLookup().items.filter(function (x) { return x.ProductId == productId; })[0].Name;
+                Q.log(proName);
+                single["ProductId"] = productId;
+                single["ProductName"] = proName;
+                this.view.refresh();
+            };
             //文本框改变事件
             PurchaseOrderStoneEditor.prototype.inputsChange = function (e) {
                 var input = $(e.target);
@@ -2885,7 +2899,6 @@ var BowenSerene;
                 var item = this.itemAt(cell.row);
                 var field = input.data('field');
                 var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-                Q.log(text);
                 var effective = this.getEffectiveValue(item, field);
                 var oldText;
                 if (input.hasClass("numeric"))
@@ -3057,9 +3070,9 @@ var BowenSerene;
                                 Container: '',
                                 BlockNumber: ''
                             }, row);
-                            if (!_this.validateEntity(newRow)) {
-                                return;
-                            }
+                            //                        if (!this.validateEntity(newRow)) {
+                            //                            return;
+                            //                        }
                             items.push(newRow);
                             _this.setEntities(items);
                         }
@@ -9654,7 +9667,7 @@ var BowenSerene;
         (function (ProductsRow) {
             ProductsRow.idProperty = 'ProductId';
             ProductsRow.isActiveProperty = 'IsActive';
-            ProductsRow.nameProperty = 'Number';
+            ProductsRow.nameProperty = 'Name';
             ProductsRow.localTextPrefix = 'Default.Products';
             ProductsRow.lookupKey = 'Default.Products';
             function getLookup() {

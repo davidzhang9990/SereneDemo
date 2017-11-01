@@ -697,7 +697,6 @@ declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
     class PurchaseOrderStoneEditor extends Common.GridEditorBase<PurchaseOrderDetailRow> {
-        protected validateEntity(row: PurchaseOrderDetailRow): boolean;
         protected getColumnsKey(): string;
         protected getLocalTextPrefix(): string;
         place: string;
@@ -705,6 +704,7 @@ declare namespace BowenSerene.Default {
         constructor(container: JQuery);
         protected createSlickGrid(): Slick.Grid;
         private getEffectiveValue(item, field);
+        private productsChange(e);
         private inputsChange(e);
         private numericInputFormatter(ctx);
         private floatInputFormatter(ctx);
@@ -3068,7 +3068,7 @@ declare namespace BowenSerene.Default {
     namespace ProductsRow {
         const idProperty = "ProductId";
         const isActiveProperty = "IsActive";
-        const nameProperty = "Number";
+        const nameProperty = "Name";
         const localTextPrefix = "Default.Products";
         const lookupKey = "Default.Products";
         function getLookup(): Q.Lookup<ProductsRow>;

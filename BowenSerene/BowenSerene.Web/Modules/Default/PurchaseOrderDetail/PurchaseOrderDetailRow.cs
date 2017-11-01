@@ -53,7 +53,7 @@ namespace BowenSerene.Default.Entities
             set { Fields.ProductId[this] = value; }
         }
 
-        [DisplayName("品目名"), Expression("jProduct.[Name]"), LookupInclude]
+        [DisplayName("品目名"), Expression("jProduct.[Name]")]
         public String ProductName
         {
             get { return Fields.ProductName[this]; }
