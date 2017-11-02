@@ -4,13 +4,14 @@ namespace BowenSerene.Default {
     @Serenity.Decorators.registerClass()
     @Serenity.Decorators.panel()
     export class PurchaseOrderSlabDialog extends Serenity.EntityDialog<PurchaseOrderRow, any> {
+
         protected getFormKey() { return PurchaseOrderSlabForm.formKey; }
         protected getIdProperty() { return PurchaseOrderRow.idProperty; }
         protected getLocalTextPrefix() { return PurchaseOrderRow.localTextPrefix; }
         protected getNameProperty() { return PurchaseOrderRow.nameProperty; }
         protected getService() { return PurchaseOrderService.baseUrl; }
 
-        protected form = new PurchaseOrderSlabForm(this.idPrefix);;
+        protected form = new PurchaseOrderSlabForm(this.idPrefix);
         private supplierId: string;
         public type: string;
 
@@ -68,14 +69,14 @@ namespace BowenSerene.Default {
             columns[0].visible = false;
 
             //this.form.OrderDetailsList ;
-            if (this.form.Type.value === Default.PurchaseType.Stone.toString()) {
-                this.byId('ShareType').closest('.field').show();
-                //this.byId('OrderSlabList').closest('.field').show();
-            } else {
-                this.byId('ShareType').closest('.field').hide();
-                // this.byId('OrderStoneList').closest('.field').show();
-                //this.form.OrderStoneList.getGridField().toggle(false);
-            }
+//            if (this.form.Type.value === Default.PurchaseType.Stone.toString()) {
+//                this.byId('ShareType').closest('.field').show();
+//                //this.byId('OrderSlabList').closest('.field').show();
+//            } else {
+//                this.byId('ShareType').closest('.field').hide();
+//                // this.byId('OrderStoneList').closest('.field').show();
+//                //this.form.OrderStoneList.getGridField().toggle(false);
+//            }
             //            Serenity.TabsExtensions.setDisabled(this.tabs, 'Customer',
             //                !this.getCustomerID());
         }

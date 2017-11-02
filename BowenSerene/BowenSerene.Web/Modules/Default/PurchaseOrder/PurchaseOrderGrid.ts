@@ -3,11 +3,14 @@ namespace BowenSerene.Default {
 
     @Serenity.Decorators.registerClass()
     export class PurchaseOrderGrid extends Serenity.EntityGrid<PurchaseOrderRow, any> {
-        protected getColumnsKey() { return 'Default.PurchaseOrder'; }
 
+
+        protected getColumnsKey() { return 'Default.PurchaseOrder'; }
         protected getIdProperty() { return PurchaseOrderRow.idProperty; }
         protected getLocalTextPrefix() { return PurchaseOrderRow.localTextPrefix; }
         protected getService() { return PurchaseOrderService.baseUrl; }
+
+        //        protected getDialogType() { return PurchaseOrderDialog; }
 
         constructor(container: JQuery) {
             super(container);
@@ -30,12 +33,6 @@ namespace BowenSerene.Default {
             var buttons = super.getButtons();
             //删除默认添加按钮
             buttons.splice(Q.indexOf(buttons, x => x.cssClass == "add-button"), 1);
-//            buttons.push(Common.ExcelExportHelper.createCustomToolButton({
-//                grid: this,
-//                service: ProductsService.baseUrl + '/ListExcel',
-//                onViewSubmit: () => this.onViewSubmit(),
-//                separator: true
-//            }));
             buttons.push({
                 title: '导出Excel模板',
                 cssClass: 'export-xlsx-button',
@@ -83,7 +80,6 @@ namespace BowenSerene.Default {
             if (e.isDefaultPrevented()) {
                 return;
             }
-
             // get reference to current item
             var item = this.itemAt(row);
 
@@ -99,7 +95,6 @@ namespace BowenSerene.Default {
                     new Default.PurchaseOrderSlabDialog().loadByIdAndOpenDialog(item.PurchaseOrderId);
                 }
             }
-            
         }
     }
 }

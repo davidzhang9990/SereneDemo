@@ -4,6 +4,7 @@ namespace BowenSerene.Default {
     @Serenity.Decorators.registerClass()
     @Serenity.Decorators.panel()
     export class PurchaseOrderStoneDialog extends Serenity.EntityDialog<PurchaseOrderRow, any> {
+
         protected getFormKey() { return PurchaseOrderStoneForm.formKey; }
         protected getIdProperty() { return PurchaseOrderRow.idProperty; }
         protected getLocalTextPrefix() { return PurchaseOrderRow.localTextPrefix; }
