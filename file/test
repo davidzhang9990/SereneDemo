@@ -78,3 +78,10 @@ xxxForm.cs 属性前 加
 TranslationGrid.ts
 
 Q.reloadLookup('Northwind.Customer');
+
+protected updateInterface() {
+            super.updateInterface();
+            if (Authorization.userDefinition.IsAdmin) {
+                this.form.ServiceId.getGridField().toggle(false);
+            }
+        }

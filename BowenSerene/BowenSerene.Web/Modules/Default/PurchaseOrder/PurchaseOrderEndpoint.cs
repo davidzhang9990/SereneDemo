@@ -1,4 +1,10 @@
 ﻿
+using System;
+using System.Collections.Generic;
+using Serenity.Reporting;
+using Serenity.Util.Offices;
+using Serenity.Web;
+
 namespace BowenSerene.Default.Endpoints
 {
     using Serenity;
@@ -24,7 +30,7 @@ namespace BowenSerene.Default.Endpoints
         {
             return new MyRepository().Update(uow, request);
         }
- 
+
         [HttpPost, AuthorizeDelete(typeof(MyRow))]
         public DeleteResponse Delete(IUnitOfWork uow, DeleteRequest request)
         {
@@ -41,6 +47,18 @@ namespace BowenSerene.Default.Endpoints
         public ListResponse<MyRow> List(IDbConnection connection, ListRequest request)
         {
             return new MyRepository().List(connection, request);
+        }
+
+        public FileContentResult ListExcel(ExcelDownRequest request)
+        {
+            var templateName = "HLPurchaseOrder.xlsx";
+            var templateFileName = "ProductList_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".xlsx";
+            var dataJson = request.ProductsList.Split(',');
+//            ExcelHelper.ExcelCustomDownload(dataJson, 30, templateName, templateFileName, "0");
+
+            //执行导出
+            var bytes = ExcelHelper.ExportListByTempale(dataJson, 30, templateName, "0");
+            return ExcelContentResult.Create(bytes.ToArray(), templateFileName);
         }
     }
 }

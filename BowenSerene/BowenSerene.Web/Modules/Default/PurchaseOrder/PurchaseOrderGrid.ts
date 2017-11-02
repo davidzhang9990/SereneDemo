@@ -30,6 +30,25 @@ namespace BowenSerene.Default {
             var buttons = super.getButtons();
             //删除默认添加按钮
             buttons.splice(Q.indexOf(buttons, x => x.cssClass == "add-button"), 1);
+//            buttons.push(Common.ExcelExportHelper.createCustomToolButton({
+//                grid: this,
+//                service: ProductsService.baseUrl + '/ListExcel',
+//                onViewSubmit: () => this.onViewSubmit(),
+//                separator: true
+//            }));
+            buttons.push({
+                title: '导出Excel模板',
+                cssClass: 'export-xlsx-button',
+                onClick: () => {
+                    // open import dialog, let it handle rest
+                    var dialog = new TemplateDownDialog();
+                    dialog.element.on('dialogclose', () => {
+                        this.refresh();
+                        dialog = null;
+                    });
+                    dialog.dialogOpen();
+                }
+            });
             buttons.push({
                 title: '新增荒料',
                 cssClass: 'add-button',
