@@ -20,7 +20,7 @@
         PriceTerms?: string;
         Attachment?: string;
         Notes?: string;
-        Status?: number;
+        Status?: PurchaseOrderStatus;
         SupplierName?: string;
         SupplierSuffix?: string;
         InsertUserId?: number;

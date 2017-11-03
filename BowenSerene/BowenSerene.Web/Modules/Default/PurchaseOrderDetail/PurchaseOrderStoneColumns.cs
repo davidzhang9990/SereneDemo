@@ -16,14 +16,13 @@ namespace BowenSerene.Default.Columns
     public class PurchaseOrderStoneColumns
     {
 
+        [Width(120)]
         public Guid? ProductId { get; set; }
-        [Hidden]
-        public String ProductName { get; set; }
-
+        [Width(120)]
         public String Category { get; set; }
-
+        [Width(120)]
         public String Container { get; set; }
-
+        [Width(120)]
         public String BlockNumber { get; set; }
 
         public Int32 Length { get; set; }

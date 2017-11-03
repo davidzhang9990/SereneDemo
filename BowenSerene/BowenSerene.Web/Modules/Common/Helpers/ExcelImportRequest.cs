@@ -16,4 +16,9 @@ namespace BowenSerene
         public int Updated { get; set; }
         public List<string> ErrorList { get; set; }
     }
+
+    public class ProductsImportResponse<T> : ListResponse<T>
+    {
+        public List<string> ErrorList { get; set; }
+    }
 }

@@ -1193,6 +1193,9 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductFinishTypeColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductImportForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductListRequest.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -1206,6 +1209,9 @@
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderSlabForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderStatus.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderStoneColumns.ts">
@@ -1242,6 +1248,12 @@
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Northwind.CustomerGrossSalesRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\ProductsImportResponse`1.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\T.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Modules\Administration\Language\LanguageDialog.ts" />
@@ -1493,6 +1505,7 @@
     <TypeScriptCompile Include="Modules\Default\MovieCast\MovieCastEditor.ts" />
     <TypeScriptCompile Include="Modules\Default\Movie\GenreListFormatter.ts" />
     <TypeScriptCompile Include="Modules\Default\Person\PersonMovieGrid.ts" />
+    <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\ProductImportDialog.ts" />
     <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderSlabEditor.ts" />
     <TypeScriptCompile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderStoneEditor.ts" />
     <TypeScriptCompile Include="Modules\Default\PurchaseOrder\TemplateDownDialog.ts" />
@@ -2278,6 +2291,7 @@
     <Compile Include="Modules\Common\RowActive.cs" />
     <Compile Include="Modules\Default\Products\ProductsLookup.cs" />
     <Compile Include="Modules\Default\Products\ProductListRequest.cs" />
+    <Compile Include="Modules\Default\PurchaseOrderDetail\ProductImportForm.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderSlabColumns.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderStoneColumns.cs" />
     <Compile Include="Modules\Default\PurchaseOrder\TemplateDownDialogForm.cs" />

@@ -10,7 +10,7 @@ namespace BowenSerene.Default {
         protected getLocalTextPrefix() { return PurchaseOrderRow.localTextPrefix; }
         protected getService() { return PurchaseOrderService.baseUrl; }
 
-        //        protected getDialogType() { return PurchaseOrderDialog; }
+        protected getDialogType() { return PurchaseOrderStoneDialog; }
 
         constructor(container: JQuery) {
             super(container);
@@ -64,7 +64,8 @@ namespace BowenSerene.Default {
                     var dlg = new PurchaseOrderSlabDialog();
                     this.initDialog(dlg);
                     dlg.loadEntityAndOpenDialog(<PurchaseOrderRow>{
-                        Type: Default.PurchaseType.Slab
+                        Type: Default.PurchaseType.Slab,
+                        ShareType:Default.PurchaseShareType.VolumeShare
                     });
                 }
             });
@@ -90,9 +91,13 @@ namespace BowenSerene.Default {
                 e.preventDefault();
 
                 if (item.Type == 0) {
-                    new Default.PurchaseOrderStoneDialog().loadByIdAndOpenDialog(item.PurchaseOrderId);
+                    var stonedlg = new PurchaseOrderStoneDialog();
+                    this.initDialog(stonedlg);
+                    stonedlg.loadByIdAndOpenDialog(item.PurchaseOrderId);
                 } else {
-                    new Default.PurchaseOrderSlabDialog().loadByIdAndOpenDialog(item.PurchaseOrderId);
+                    var slabdlg = new PurchaseOrderSlabDialog();
+                    this.initDialog(slabdlg);
+                    slabdlg.loadByIdAndOpenDialog(slabdlg);
                 }
             }
         }

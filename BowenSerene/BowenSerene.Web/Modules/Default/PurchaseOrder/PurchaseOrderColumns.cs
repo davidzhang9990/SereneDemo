@@ -13,7 +13,7 @@ namespace BowenSerene.Default.Columns
     [BasedOnRow(typeof(Entities.PurchaseOrderRow))]
     public class PurchaseOrderColumns
     {
-        [EditLink,AlignCenter]
+        [EditLink]
         public String Number { get; set; }
         public Int16 Type { get; set; }
         public DateTime PurchaseDate { get; set; }

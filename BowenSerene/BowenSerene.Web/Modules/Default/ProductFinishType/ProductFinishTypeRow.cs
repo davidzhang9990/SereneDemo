@@ -32,7 +32,7 @@ namespace BowenSerene.Default.Entities
             set { Fields.Name[this] = value; }
         }
 
-        [DisplayName("排序")]
+        [DisplayName("排序"),SortOrder(1)]
         public Int32? SortCode
         {
             get { return Fields.SortCode[this]; }
