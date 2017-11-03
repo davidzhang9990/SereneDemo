@@ -15,4 +15,7 @@ using MyPages = BowenSerene.Default.Pages;
 [assembly: NavigationLink(3300, "采购管理/供应商", typeof(MyPages.SuppliersController), icon: null)]
 [assembly: NavigationLink(3400, "采购管理/完成面", typeof(MyPages.ProductFinishTypeController), icon: null)]
 
+[assembly: NavigationMenu(4000, "验货单管理", icon: "icon-film")]
+[assembly: NavigationLink(4100, "验货单管理/验货单", typeof(MyPages.PurchaseOrderController), action: "InspectionIndex")]
+
 [assembly: NavigationLink(9100, "Administration/Tenants", typeof(MyPages.TenantsController), icon: null)]

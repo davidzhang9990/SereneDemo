@@ -13,11 +13,14 @@ namespace BowenSerene.Default.Columns
     [BasedOnRow(typeof(Entities.PurchaseOrderRow))]
     public class PurchaseOrderColumns
     {
-        [EditLink]
+        [EditLink, QuickFilter]
         public String Number { get; set; }
+        [QuickFilter]
         public Int16 Type { get; set; }
         public DateTime PurchaseDate { get; set; }
+        [QuickFilter]
         public String SupplierName { get; set; }
+        [QuickFilter]
         public Int16 Status { get; set; }
         public String Notes { get; set; }
     }

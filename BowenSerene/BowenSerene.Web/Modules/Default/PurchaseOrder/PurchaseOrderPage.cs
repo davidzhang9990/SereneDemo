@@ -13,5 +13,10 @@ namespace BowenSerene.Default.Pages
         {
             return View("~/Modules/Default/PurchaseOrder/PurchaseOrderIndex.cshtml");
         }
+
+        public ActionResult InspectionIndex()
+        {
+            return View("~/Modules/Default/Inspection/InspectionOrderIndex.cshtml");
+        }
     }
 }
