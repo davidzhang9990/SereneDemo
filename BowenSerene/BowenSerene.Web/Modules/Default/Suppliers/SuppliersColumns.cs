@@ -13,11 +13,10 @@ namespace BowenSerene.Default.Columns
     [BasedOnRow(typeof(Entities.SuppliersRow))]
     public class SuppliersColumns
     {
-       
-        public String Name { get; set; }
-
         [EditLink]
         public String Number { get; set; }
+        [EditLink]
+        public String Name { get; set; }
 
         public String Suffix { get; set; }
         public String Country { get; set; }

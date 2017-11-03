@@ -176,10 +176,10 @@ namespace BowenSerene.Default.Entities
         }
 
         [DisplayName("状态"), NotNull]
-        public Int16? Status
+        public PurchaseOrderStatus? Status
         {
-            get { return Fields.Status[this]; }
-            set { Fields.Status[this] = value; }
+            get { return (PurchaseOrderStatus?)Fields.Status[this]; }
+            set { Fields.Status[this] = (Int16?)value; }
         }
 
         IIdField IIdRow.IdField

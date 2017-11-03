@@ -5,15 +5,9 @@ namespace BowenSerene.Default {
     @Serenity.Decorators.registerEditor()
     export class PurchaseOrderStoneEditor extends Common.GridEditorBase<PurchaseOrderDetailRow>{
 
-        protected getColumnsKey() {
-            return "Default.PurchaseOrderStone";
-        }
-
-        protected getLocalTextPrefix() {
-            return PurchaseOrderDetailRow.localTextPrefix;
-        }
+        protected getColumnsKey() { return "Default.PurchaseOrderStone"; }
+        protected getLocalTextPrefix() { return PurchaseOrderDetailRow.localTextPrefix; }
         public place: string;
-
         private pendingChanges: Q.Dictionary<any> = {};
 
         constructor(container: JQuery) {
@@ -21,7 +15,6 @@ namespace BowenSerene.Default {
             this.slickContainer
                 .on('keyup', '.edit:input', (e) => this.inputsChange(e))
                 .on('change', 'select', (e) => this.productsChange(e));
-            //this.slickContainer.on('keydown', '.edit:input', (e) => this.inputsNext(e));
         }
 
         protected createSlickGrid() {
@@ -231,21 +224,21 @@ namespace BowenSerene.Default {
                 maxWidth: 24
             });
 
-            Q.first(columns, x => x.field === 'Container').format = str;
-            Q.first(columns, x => x.field === 'BlockNumber').format = str;
-            Q.first(columns, x => x.field === 'Category').format = str;
-            Q.first(columns, x => x.field === 'Mine').format = str;
-            Q.first(columns, x => x.field === 'Grade').format = str;
-            Q.first(columns, x => x.field === 'Notes').format = str;
+            Q.first(columns, x => x.field === fld.Container).format = str;
+            Q.first(columns, x => x.field === fld.BlockNumber).format = str;
+            Q.first(columns, x => x.field === fld.Category).format = str;
+            Q.first(columns, x => x.field === fld.Mine).format = str;
+            Q.first(columns, x => x.field === fld.Grade).format = str;
+            Q.first(columns, x => x.field === fld.Notes).format = str;
 
             var product = Q.first(columns, x => x.field === fld.ProductId);
             product.referencedFields = [fld.ProductId];
             product.format = ctx => this.selectFormatter(ctx, fld.ProductId, ProductsRow.getLookup());
 
-            Q.first(columns, x => x.field === 'Weight')
+            Q.first(columns, x => x.field === fld.Weight)
                 .groupTotalsFormatter = (totals, col) => (totals.sum ? ('重量: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.00'), '')) : '');
 
-            Q.first(columns, x => x.field === 'Volume')
+            Q.first(columns, x => x.field === fld.Volume)
                 .groupTotalsFormatter = (totals, col) => (totals.sum ? ('体积: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.00'), '')) : '');
 
             Q.first(columns, x => x.field === fld.Length).format = num;
@@ -259,45 +252,70 @@ namespace BowenSerene.Default {
 
         protected getIdProperty() { return "__id"; }
 
+        //row:新增行
+        //isImport:0-新增 1-导入数据
+        private addSingle(row: PurchaseOrderDetailRow, isImport: number) {
+            var items = this.view.getItems().slice();
+            (row as any)[this.getIdProperty()] = this.getNextId();
+            var newRow = Q.deepClone({} as PurchaseOrderDetailRow,
+                {
+                    OrderDetailId: items.length + 100,
+                    Length: 0,
+                    Width: 0,
+                    Height: 0,
+                    Weight: 0.00,
+                    Volume: 0.00,
+                    Container: '',
+                    BlockNumber: ''
+                },
+                row);
+
+            var pr = ProductsRow.getLookup().items.filter(x => x.ProductId == newRow.ProductId && x.Place == this.place);
+            if (pr.length > 0 || isImport === 0) {
+                items.push(newRow);
+                this.setEntities(items);
+            } else {
+                Q.notifyError("品目:" + row.ProductName + "不存在或者不匹配，导入失败！");
+            }
+        }
+
         protected getButtons() {
             return [
                 {
                     title: '新增',
                     cssClass: 'add-button',
                     onClick: () => {
-
                         var row = this.getNewEntity();
-                        var items = this.view.getItems().slice();
-                        (row as any)[this.getIdProperty()] = this.getNextId();
-                        var newRow = Q.deepClone({} as PurchaseOrderDetailRow,
-                            {
-                                OrderDetailId: items.length + 100,
-                                Length: 0,
-                                Width: 0,
-                                Height: 0,
-                                Weight: 0.00,
-                                Volume: 0.00,
-                                Container: '',
-                                BlockNumber: ''
-                            },
-                            row);
-
-                        //                        if (!this.validateEntity(newRow)) {
-                        //                            return;
-                        //                        }
-
-                        items.push(newRow);
-                        this.setEntities(items);
+                        this.addSingle(row, 0);
                     }
-                }, {
+                },
+                {
+                    title: '导入',
+                    cssClass: 'export-xlsx-button',
+                    onClick: () => {
+                        // open import dialog, let it handle rest
+                        var dialog = new ProductImportDialog();
+                        dialog.element.on('dialogclose', () => {
+                            var insertRows = dialog.orderDetails.Entities;
+                            for (var p of insertRows) {
+                                this.addSingle(p, 1);
+                            }
+                            this.refresh();
+                            Q.notifyInfo('成功导入明细: ' + (dialog.orderDetails.TotalCount || 0));
+                            dialog = null;
+                        });
+                        dialog.dialogOpen();
+                    }
+                },
+                {
                     title: '货柜分组',
                     cssClass: 'expand-all-button',
                     onClick: () => this.view.setGrouping(
                         [{
-                            formatter: x => '货柜号: ' + x.value + ' (' + x.count + ' items)',
+                            formatter: x => x.value + '/' + x.count + '',
                             getter: 'Container'
                         }, {
-                            formatter: x => '荒料号: ' + x.value + ' (' + x.count + ' items)',
+                            formatter: x => x.value + '/' + x.count + '',
                             getter: 'BlockNumber'
                         }])
                 }, {
@@ -305,10 +323,10 @@ namespace BowenSerene.Default {
                     cssClass: 'expand-all-button',
                     onClick: () => this.view.setGrouping(
                         [{
-                            formatter: x => '品目: ' + x.value + ' (' + x.count + ' items)',
+                            formatter: x => x.value + '/' + x.count + '',
                             getter: 'ProductName'
                         }, {
-                            formatter: x => '类别: ' + x.value + ' (' + x.count + ' items)',
+                            formatter: x => x.value + '/' + x.count + '',
                             getter: 'Category'
                         }])
                 },

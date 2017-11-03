@@ -15,6 +15,7 @@ namespace BowenSerene.Default {
 
         constructor() {
             super();
+            this.form.Type.value = Default.PurchaseType.Slab.toString();
             //供应商改变事件
             this.form.SupplierId.changeSelect2(e => {
                 this.supplierChange();
@@ -24,6 +25,13 @@ namespace BowenSerene.Default {
             var supplierId = Q.toId(this.form.SupplierId.value);
             var place = Q.first(Default.SuppliersRow.getLookup().items, x => x.SupplierId == supplierId).Place;
             this.form.OrderDetailsList.place = place;
+        }
+
+        //状态是已完成，关闭新增按钮
+        protected updateInterface(): void {
+            if (this.entity.Status === 1) {
+                this.element.find('.add-button').hide();
+            }
         }
 
         //#david 加载实体完成事件

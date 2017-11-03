@@ -1012,6 +1012,14 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
+    class ProductImportForm extends Serenity.PrefixedContext {
+        static formKey: string;
+    }
+    interface ProductImportForm {
+        FileName: Serenity.ImageUploadEditor;
+    }
+}
+declare namespace BowenSerene.Default {
     interface ProductListRequest extends Serenity.ServiceRequest {
         SupplierId?: string;
     }
@@ -1181,12 +1189,14 @@ declare namespace BowenSerene.Default {
         function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<PurchaseOrderDetailRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<PurchaseOrderDetailRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function ExcelImport(request: ExcelImportRequest, onSuccess?: (response: ProductsImportResponse<PurchaseOrderDetailRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         namespace Methods {
             const Create: string;
             const Update: string;
             const Delete: string;
             const Retrieve: string;
             const List: string;
+            const ExcelImport: string;
         }
     }
 }
@@ -1212,7 +1222,7 @@ declare namespace BowenSerene.Default {
         PriceTerms?: string;
         Attachment?: string;
         Notes?: string;
-        Status?: number;
+        Status?: PurchaseOrderStatus;
         SupplierName?: string;
         SupplierSuffix?: string;
         InsertUserId?: number;
@@ -1298,6 +1308,12 @@ declare namespace BowenSerene.Default {
         PriceTerms: Serenity.StringEditor;
         Attachment: Serenity.MultipleImageUploadEditor;
         OrderDetailsList: PurchaseOrderSlabEditor;
+    }
+}
+declare namespace BowenSerene.Default {
+    enum PurchaseOrderStatus {
+        VolumeShare = 0,
+        WeightShare = 1,
     }
 }
 declare namespace BowenSerene.Default {
@@ -3571,6 +3587,11 @@ declare namespace BowenSerene.Organization {
     }
 }
 declare namespace BowenSerene {
+    interface ProductsImportResponse<T> extends Serenity.ListResponse<T> {
+        ErrorList?: string[];
+    }
+}
+declare namespace BowenSerene {
     interface ScriptUserDefinition {
         Username?: string;
         DisplayName?: string;
@@ -3578,6 +3599,10 @@ declare namespace BowenSerene {
         Permissions?: {
             [key: string]: boolean;
         };
+    }
+}
+declare namespace BowenSerene {
+    interface T {
     }
 }
 declare namespace BowenSerene.Administration {
@@ -5003,6 +5028,7 @@ declare namespace BowenSerene.Default {
         protected getLocalTextPrefix(): string;
         protected getService(): string;
         constructor(container: JQuery);
+        protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[];
     }
 }
 declare namespace BowenSerene.Default {
@@ -5023,6 +5049,7 @@ declare namespace BowenSerene.Default {
         protected getLocalTextPrefix(): string;
         protected getService(): string;
         constructor(container: JQuery);
+        protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[];
     }
 }
 declare namespace BowenSerene.Default {
@@ -5031,6 +5058,7 @@ declare namespace BowenSerene.Default {
         protected getIdProperty(): string;
         protected getLocalTextPrefix(): string;
         protected getService(): string;
+        protected getDialogType(): typeof PurchaseOrderStoneDialog;
         constructor(container: JQuery);
         protected getColumns(): Slick.Column[];
         protected getButtons(): Serenity.ToolButton[];
@@ -5045,12 +5073,8 @@ declare namespace BowenSerene.Default {
         protected getNameProperty(): string;
         protected getService(): string;
         protected form: PurchaseOrderSlabForm;
-        private supplierId;
-        type: string;
         constructor();
-        getPrefix(): string;
         private supplierChange();
-        private setProducts();
         loadEntity(entity: PurchaseOrderRow): void;
     }
 }
@@ -5064,6 +5088,7 @@ declare namespace BowenSerene.Default {
         protected form: PurchaseOrderStoneForm;
         constructor();
         private supplierChange();
+        protected updateInterface(): void;
         loadEntity(entity: PurchaseOrderRow): void;
     }
 }
@@ -5076,34 +5101,43 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
+    class ProductImportDialog extends Serenity.PropertyDialog<any, any> {
+        private form;
+        orderDetails: ProductsImportResponse<PurchaseOrderDetailRow>;
+        constructor();
+        protected getDialogTitle(): string;
+        protected getDialogButtons(): Serenity.DialogButton[];
+    }
+}
+declare namespace BowenSerene.Default {
     class PurchaseOrderSlabEditor extends Common.GridEditorBase<PurchaseOrderDetailRow> {
-        protected validateEntity(row: PurchaseOrderDetailRow, id: number): boolean;
         protected getColumnsKey(): string;
         protected getLocalTextPrefix(): string;
-        orderType: string;
-        supplierId: string;
+        place: string;
         private pendingChanges;
         constructor(container: JQuery);
         protected createSlickGrid(): Slick.Grid;
-        protected onViewProcessData(response: any): Serenity.ListResponse<PurchaseOrderDetailRow>;
+        private getEffectiveValue(item, field);
+        private productsChange(e);
+        private inputsChange(e);
         private numericInputFormatter(ctx);
+        private floatInputFormatter(ctx);
         private stringInputFormatter(ctx);
         /**
         * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
         */
         private selectFormatter(ctx, idField, lookup);
         protected getColumns(): Slick.Column[];
-        private addRow();
-        protected onClick(e: JQueryEventObject, row: number, cell: number): void;
-        private inputsChange(e);
-        private setSaveButtonState();
-        protected getSlickOptions(): Slick.GridOptions;
-        private getEffectiveValue(item, field);
+        protected getIdProperty(): string;
+        private addSingle(row, isImport);
         protected getButtons(): {
             title: string;
             cssClass: string;
             onClick: () => void;
         }[];
+        clearView(): void;
+        protected onClick(e: JQueryEventObject, row: number, cell: number): boolean;
+        protected getSlickOptions(): Slick.GridOptions;
     }
 }
 declare namespace BowenSerene.Default {
@@ -5126,6 +5160,7 @@ declare namespace BowenSerene.Default {
         private selectFormatter(ctx, idField, lookup);
         protected getColumns(): Slick.Column[];
         protected getIdProperty(): string;
+        private addSingle(row, isImport);
         protected getButtons(): {
             title: string;
             cssClass: string;
@@ -5154,6 +5189,7 @@ declare namespace BowenSerene.Default {
         protected getLocalTextPrefix(): string;
         protected getService(): string;
         constructor(container: JQuery);
+        protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[];
     }
 }
 declare namespace BowenSerene.Default {

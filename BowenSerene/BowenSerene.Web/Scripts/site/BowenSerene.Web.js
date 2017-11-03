@@ -1097,6 +1097,22 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
+        var ProductImportForm = (function (_super) {
+            __extends(ProductImportForm, _super);
+            function ProductImportForm() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            return ProductImportForm;
+        }(Serenity.PrefixedContext));
+        ProductImportForm.formKey = 'Default.ProductImport';
+        Default.ProductImportForm = ProductImportForm;
+        [['FileName', function () { return Serenity.ImageUploadEditor; }]].forEach(function (x) { return Object.defineProperty(ProductImportForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
         var ProductsForm = (function (_super) {
             __extends(ProductsForm, _super);
             function ProductsForm() {
@@ -1238,7 +1254,8 @@ var BowenSerene;
                 'Update',
                 'Delete',
                 'Retrieve',
-                'List'
+                'List',
+                'ExcelImport'
             ].forEach(function (x) {
                 PurchaseOrderDetailService[x] = function (r, s, o) {
                     return Q.serviceRequest(PurchaseOrderDetailService.baseUrl + '/' + x, r, s, o);
@@ -1331,6 +1348,18 @@ var BowenSerene;
         PurchaseOrderSlabForm.formKey = 'Default.PurchaseOrderSlab';
         Default.PurchaseOrderSlabForm = PurchaseOrderSlabForm;
         [['Number', function () { return Serenity.StringEditor; }], ['PurchaseDate', function () { return Serenity.DateEditor; }], ['Type', function () { return Serenity.EnumEditor; }], ['ShareType', function () { return Serenity.EnumEditor; }], ['SupplierId', function () { return Serenity.LookupEditor; }], ['PayWay', function () { return Serenity.EnumEditor; }], ['Notes', function () { return Serenity.TextAreaEditor; }], ['LetterNumber', function () { return Serenity.StringEditor; }], ['AgentNumber', function () { return Serenity.StringEditor; }], ['Behalf', function () { return Serenity.StringEditor; }], ['BillLadingNumber', function () { return Serenity.StringEditor; }], ['BillLadingDate', function () { return Serenity.DateEditor; }], ['ArrivalDate', function () { return Serenity.DateEditor; }], ['CompanyShip', function () { return Serenity.StringEditor; }], ['PortDepart', function () { return Serenity.StringEditor; }], ['PortDest', function () { return Serenity.StringEditor; }], ['PriceTerms', function () { return Serenity.StringEditor; }], ['Attachment', function () { return Serenity.MultipleImageUploadEditor; }], ['OrderDetailsList', function () { return Default.PurchaseOrderSlabEditor; }]].forEach(function (x) { return Object.defineProperty(PurchaseOrderSlabForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var PurchaseOrderStatus;
+        (function (PurchaseOrderStatus) {
+            PurchaseOrderStatus[PurchaseOrderStatus["VolumeShare"] = 0] = "VolumeShare";
+            PurchaseOrderStatus[PurchaseOrderStatus["WeightShare"] = 1] = "WeightShare";
+        })(PurchaseOrderStatus = Default.PurchaseOrderStatus || (Default.PurchaseOrderStatus = {}));
+        Serenity.Decorators.registerEnum(PurchaseOrderStatus, 'Purchase.OrderStatus');
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -9609,6 +9638,14 @@ var BowenSerene;
             ProductFinishTypeGrid.prototype.getIdProperty = function () { return Default.ProductFinishTypeRow.idProperty; };
             ProductFinishTypeGrid.prototype.getLocalTextPrefix = function () { return Default.ProductFinishTypeRow.localTextPrefix; };
             ProductFinishTypeGrid.prototype.getService = function () { return Default.ProductFinishTypeService.baseUrl; };
+            ProductFinishTypeGrid.prototype.getQuickFilters = function () {
+                var filters = _super.prototype.getQuickFilters.call(this);
+                var fld = Default.ProductFinishTypeRow.Fields;
+                Q.first(filters, function (x) { return x.field == fld.IsActive; }).init = function (w) {
+                    w.value = Default.RowActive.Active.toString();
+                };
+                return filters;
+            };
             return ProductFinishTypeGrid;
         }(Serenity.EntityGrid));
         ProductFinishTypeGrid = __decorate([
@@ -9656,6 +9693,14 @@ var BowenSerene;
             ProductsGrid.prototype.getIdProperty = function () { return Default.ProductsRow.idProperty; };
             ProductsGrid.prototype.getLocalTextPrefix = function () { return Default.ProductsRow.localTextPrefix; };
             ProductsGrid.prototype.getService = function () { return Default.ProductsService.baseUrl; };
+            ProductsGrid.prototype.getQuickFilters = function () {
+                var filters = _super.prototype.getQuickFilters.call(this);
+                var fld = Default.ProductsRow.Fields;
+                Q.first(filters, function (x) { return x.field == fld.IsActive; }).init = function (w) {
+                    w.value = Default.RowActive.Active.toString();
+                };
+                return filters;
+            };
             return ProductsGrid;
         }(Serenity.EntityGrid));
         ProductsGrid = __decorate([
@@ -9670,7 +9715,6 @@ var BowenSerene;
     (function (Default) {
         var PurchaseOrderGrid = (function (_super) {
             __extends(PurchaseOrderGrid, _super);
-            //        protected getDialogType() { return PurchaseOrderDialog; }
             function PurchaseOrderGrid(container) {
                 return _super.call(this, container) || this;
             }
@@ -9678,6 +9722,7 @@ var BowenSerene;
             PurchaseOrderGrid.prototype.getIdProperty = function () { return Default.PurchaseOrderRow.idProperty; };
             PurchaseOrderGrid.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
             PurchaseOrderGrid.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
+            PurchaseOrderGrid.prototype.getDialogType = function () { return Default.PurchaseOrderStoneDialog; };
             PurchaseOrderGrid.prototype.getColumns = function () {
                 var columns = _super.prototype.getColumns.call(this);
                 var fld = Default.PurchaseOrderRow.Fields;
@@ -9723,7 +9768,8 @@ var BowenSerene;
                         var dlg = new Default.PurchaseOrderSlabDialog();
                         _this.initDialog(dlg);
                         dlg.loadEntityAndOpenDialog({
-                            Type: Default.PurchaseType.Slab
+                            Type: Default.PurchaseType.Slab,
+                            ShareType: Default.PurchaseShareType.VolumeShare
                         });
                     }
                 });
@@ -9743,10 +9789,14 @@ var BowenSerene;
                 if (target.hasClass("customer-link")) {
                     e.preventDefault();
                     if (item.Type == 0) {
-                        new Default.PurchaseOrderStoneDialog().loadByIdAndOpenDialog(item.PurchaseOrderId);
+                        var stonedlg = new Default.PurchaseOrderStoneDialog();
+                        this.initDialog(stonedlg);
+                        stonedlg.loadByIdAndOpenDialog(item.PurchaseOrderId);
                     }
                     else {
-                        new Default.PurchaseOrderSlabDialog().loadByIdAndOpenDialog(item.PurchaseOrderId);
+                        var slabdlg = new Default.PurchaseOrderSlabDialog();
+                        this.initDialog(slabdlg);
+                        slabdlg.loadByIdAndOpenDialog(slabdlg);
                     }
                 }
             };
@@ -9767,6 +9817,7 @@ var BowenSerene;
             function PurchaseOrderSlabDialog() {
                 var _this = _super.call(this) || this;
                 _this.form = new Default.PurchaseOrderSlabForm(_this.idPrefix);
+                _this.form.Type.value = Default.PurchaseType.Slab.toString();
                 //供应商改变事件
                 _this.form.SupplierId.changeSelect2(function (e) {
                     _this.supplierChange();
@@ -9778,57 +9829,18 @@ var BowenSerene;
             PurchaseOrderSlabDialog.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
             PurchaseOrderSlabDialog.prototype.getNameProperty = function () { return Default.PurchaseOrderRow.nameProperty; };
             PurchaseOrderSlabDialog.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
-            PurchaseOrderSlabDialog.prototype.getPrefix = function () {
-                return this.idPrefix;
-            };
             PurchaseOrderSlabDialog.prototype.supplierChange = function () {
                 var supplierId = Q.toId(this.form.SupplierId.value);
                 var place = Q.first(Default.SuppliersRow.getLookup().items, function (x) { return x.SupplierId == supplierId; }).Place;
-                //this.form.OrderDetailsList.place = place;
-            };
-            PurchaseOrderSlabDialog.prototype.setProducts = function () {
-                var supplierId = Q.toId(this.form.SupplierId.value);
-                var place = Q.first(Default.SuppliersRow.getLookup().items, function (x) { return x.SupplierId == supplierId; }).Place;
-                // this.form.OrderDetailsList.place = place;
-                //            this.form.OrderStoneList.customProductList = [];
-                //            if (Q.isEmptyOrNull(supplierId)) {
-                //                return;
-                //            }
-                //            Default.ProductsService.ListProductsBySupplier({
-                //                SupplierId: supplierId
-                //            }, response => {
-                //                this.form.OrderStoneList.customProductList = response.Entities;
-                //                this.form.OrderStoneList.clearView();
-                //            });
+                this.form.OrderDetailsList.place = place;
             };
             //#david 加载实体完成事件
             PurchaseOrderSlabDialog.prototype.loadEntity = function (entity) {
                 _super.prototype.loadEntity.call(this, entity);
-                var orderType = this.form.Type.value;
-                //默认为 stone 类型
-                if (Q.isEmptyOrNull(orderType)) {
-                    this.form.Type.value = Default.PurchaseType.Stone.toString();
-                }
                 var supplierId = Q.toId(this.form.SupplierId.value);
                 if (supplierId != null) {
                     this.supplierChange();
                 }
-                //设置明细窗体的 type
-                //this.form.OrderDetailsList.orderType =this.form.Type.value;
-                // this.form.OrderDetailsList.getGrid();
-                var columns = this.form.OrderDetailsList.getGrid().getColumns().filter(function (x) { return x.name === "厚度"; });
-                columns[0].visible = false;
-                //this.form.OrderDetailsList ;
-                //            if (this.form.Type.value === Default.PurchaseType.Stone.toString()) {
-                //                this.byId('ShareType').closest('.field').show();
-                //                //this.byId('OrderSlabList').closest('.field').show();
-                //            } else {
-                //                this.byId('ShareType').closest('.field').hide();
-                //                // this.byId('OrderStoneList').closest('.field').show();
-                //                //this.form.OrderStoneList.getGridField().toggle(false);
-                //            }
-                //            Serenity.TabsExtensions.setDisabled(this.tabs, 'Customer',
-                //                !this.getCustomerID());
             };
             return PurchaseOrderSlabDialog;
         }(Serenity.EntityDialog));
@@ -9848,6 +9860,7 @@ var BowenSerene;
             function PurchaseOrderStoneDialog() {
                 var _this = _super.call(this) || this;
                 _this.form = new Default.PurchaseOrderStoneForm(_this.idPrefix);
+                _this.form.Type.value = Default.PurchaseType.Slab.toString();
                 //供应商改变事件
                 _this.form.SupplierId.changeSelect2(function (e) {
                     _this.supplierChange();
@@ -9863,6 +9876,12 @@ var BowenSerene;
                 var supplierId = Q.toId(this.form.SupplierId.value);
                 var place = Q.first(Default.SuppliersRow.getLookup().items, function (x) { return x.SupplierId == supplierId; }).Place;
                 this.form.OrderDetailsList.place = place;
+            };
+            //状态是已完成，关闭新增按钮
+            PurchaseOrderStoneDialog.prototype.updateInterface = function () {
+                if (this.entity.Status === 1) {
+                    this.element.find('.add-button').hide();
+                }
             };
             //#david 加载实体完成事件
             PurchaseOrderStoneDialog.prototype.loadEntity = function (entity) {
@@ -9965,6 +9984,60 @@ var BowenSerene;
         Default.TemplateDownDialog = TemplateDownDialog;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var ProductImportDialog = (function (_super) {
+            __extends(ProductImportDialog, _super);
+            function ProductImportDialog() {
+                var _this = _super.call(this) || this;
+                _this.form = new Default.ProductImportForm(_this.idPrefix);
+                return _this;
+            }
+            ProductImportDialog.prototype.getDialogTitle = function () {
+                return "导入采购荒料数据";
+            };
+            ProductImportDialog.prototype.getDialogButtons = function () {
+                var _this = this;
+                return [
+                    {
+                        text: '导入',
+                        click: function () {
+                            if (!_this.validateBeforeSave())
+                                return;
+                            if (_this.form.FileName.value == null ||
+                                Q.isEmptyOrNull(_this.form.FileName.value.Filename)) {
+                                Q.notifyError("请选择文件!");
+                                return;
+                            }
+                            Default.PurchaseOrderDetailService.ExcelImport({
+                                FileName: _this.form.FileName.value.Filename
+                            }, function (response) {
+                                if (response.ErrorList != null && response.ErrorList.length > 0) {
+                                    Q.notifyError(response.ErrorList.join(',\r\n '));
+                                }
+                                else {
+                                    _this.orderDetails = response;
+                                }
+                                _this.dialogClose();
+                            });
+                        },
+                    },
+                    {
+                        text: '关闭',
+                        click: function () { return _this.dialogClose(); }
+                    }
+                ];
+            };
+            return ProductImportDialog;
+        }(Serenity.PropertyDialog));
+        ProductImportDialog = __decorate([
+            Serenity.Decorators.registerClass()
+        ], ProductImportDialog);
+        Default.ProductImportDialog = ProductImportDialog;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
 /// <reference path="../../Common/Helpers/GridEditorBase.ts" />
 var BowenSerene;
 (function (BowenSerene) {
@@ -9975,28 +10048,15 @@ var BowenSerene;
             function PurchaseOrderSlabEditor(container) {
                 var _this = _super.call(this, container) || this;
                 _this.pendingChanges = {};
-                _this.slickContainer.on('change', '.edit:input', function (e) { return _this.inputsChange(e); });
+                _this.slickContainer
+                    .on('keyup', '.edit:input', function (e) { return _this.inputsChange(e); })
+                    .on('change', 'select', function (e) { return _this.productsChange(e); });
                 return _this;
             }
-            PurchaseOrderSlabEditor.prototype.validateEntity = function (row, id) {
-                if (!_super.prototype.validateEntity.call(this, row, id))
-                    return false;
-                row.Size = 2.11;
-                //row.PersonFullname = PersonRow.getLookup().itemById[row.PersonId].Fullname;
-                return true;
-            };
-            PurchaseOrderSlabEditor.prototype.getColumnsKey = function () {
-                return "Default.PurchaseOrderSlab";
-            };
-            PurchaseOrderSlabEditor.prototype.getLocalTextPrefix = function () {
-                return Default.PurchaseOrderDetailRow.localTextPrefix;
-            };
-            //        protected afterLoadEntity() {
-            //            super.afterLoadEntity();
-            //        }
+            PurchaseOrderSlabEditor.prototype.getColumnsKey = function () { return "Default.PurchaseOrderSlab"; };
+            PurchaseOrderSlabEditor.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderDetailRow.localTextPrefix; };
             PurchaseOrderSlabEditor.prototype.createSlickGrid = function () {
                 var grid = _super.prototype.createSlickGrid.call(this);
-                // need to register this plugin for grouping or you'll have errors
                 grid.registerPlugin(new Slick.Data.GroupItemMetadataProvider());
                 this.view.setSummaryOptions({
                     aggregators: [
@@ -10005,13 +10065,83 @@ var BowenSerene;
                 });
                 return grid;
             };
-            //        protected usePager() {
-            //            return false;
-            //        }
-            PurchaseOrderSlabEditor.prototype.onViewProcessData = function (response) {
-                this.pendingChanges = {};
-                this.setSaveButtonState();
-                return _super.prototype.onViewProcessData.call(this, response);
+            PurchaseOrderSlabEditor.prototype.getEffectiveValue = function (item, field) {
+                var pending = this.pendingChanges[item.OrderDetailId];
+                if (pending && pending[field] !== undefined) {
+                    return pending[field];
+                }
+                return item[field];
+            };
+            //品目改变事件
+            PurchaseOrderSlabEditor.prototype.productsChange = function (e) {
+                var select = $(e.target);
+                var scell = this.slickGrid.getCellFromEvent(e);
+                var single = this.itemAt(scell.row);
+                var field = select.data('field');
+                var productId = Q.coalesce(Q.trimToNull(select.val()), '0');
+                var proName = Default.ProductsRow.getLookup().items.filter(function (x) { return x.ProductId == productId; })[0].Name;
+                single[field] = productId;
+                single.ProductName = proName;
+                this.view.refresh();
+            };
+            //文本框改变事件
+            PurchaseOrderSlabEditor.prototype.inputsChange = function (e) {
+                var input = $(e.target);
+                var key = e.which;
+                //next
+                if (key === 13) {
+                    event.preventDefault();
+                    var parent = input.parent().parent();
+                    var nxtIdx = parent.find("input").index(input) + 1;
+                    var nextselector = parent.find("input:eq(" + nxtIdx + ")");
+                    nextselector.focus();
+                    nextselector.select();
+                    return;
+                }
+                var cell = this.slickGrid.getCellFromEvent(e);
+                var item = this.itemAt(cell.row);
+                var field = input.data('field');
+                var text = Q.coalesce(Q.trimToNull(input.val()), '0');
+                var effective = this.getEffectiveValue(item, field);
+                var oldText;
+                if (input.hasClass("numeric"))
+                    oldText = Q.formatNumber(effective, '0.##');
+                else if (input.hasClass("decimal"))
+                    oldText = Q.formatNumber(effective, '0.00');
+                else
+                    oldText = effective;
+                var value;
+                if (input.hasClass("decimal")) {
+                    value = Q.parseDecimal(text);
+                    if (value == null || isNaN(value)) {
+                        Q.notifyError(Q.text('Validation.Decimal'), '', null);
+                        input.val(oldText);
+                        input.focus();
+                        return;
+                    }
+                }
+                else if (input.hasClass("numeric")) {
+                    var i = Q.parseInteger(text);
+                    if (isNaN(i) || i > 32767 || i < 0) {
+                        Q.notifyError(Q.text('Validation.Integer'), '', null);
+                        input.val(oldText);
+                        input.focus();
+                        return;
+                    }
+                    value = i;
+                    item[field] = value;
+                    //计算体积
+                    var size = item["Length"] * item["Width"] / 10000;
+                    item["Size"] = size;
+                    input.parent().parent().find("input[data-field='Size']").val(Q.formatNumber(size, '0.00'));
+                }
+                else
+                    value = text;
+                item[field] = value;
+                this.view.refresh();
+                if (input.hasClass("numeric"))
+                    value = Q.formatNumber(value, '0.##');
+                input.val(value).addClass('dirty');
             };
             //数字输入框
             PurchaseOrderSlabEditor.prototype.numericInputFormatter = function (ctx) {
@@ -10025,6 +10155,19 @@ var BowenSerene;
                 return "<input type='text' class='" + klass +
                     "' data-field='" + ctx.column.field +
                     "' value='" + Q.formatNumber(value, '0.##') + "'/>";
+            };
+            //浮点数输入框
+            PurchaseOrderSlabEditor.prototype.floatInputFormatter = function (ctx) {
+                var klass = 'edit decimal';
+                var item = ctx.item;
+                var pending = this.pendingChanges[item.OrderDetailId];
+                if (pending && pending[ctx.column.field] !== undefined) {
+                    klass += ' dirty';
+                }
+                var value = this.getEffectiveValue(item, ctx.column.field);
+                return "<input type='text' class='" + klass +
+                    "' data-field='" + ctx.column.field +
+                    "' value='" + Q.formatNumber(value, '0.00') + "'/>";
             };
             //文本输入 框
             PurchaseOrderSlabEditor.prototype.stringInputFormatter = function (ctx) {
@@ -10056,7 +10199,8 @@ var BowenSerene;
                 var value = this.getEffectiveValue(item, idField);
                 var markup = "<select class='" + klass +
                     "' data-field='" + idField +
-                    "' style='width: 100%; max-width: 100%'>";
+                    "' style='width: 100%; max-width: 100%'>"
+                    + " <option value=''>请选择</option>";
                 for (var _i = 0, _a = lookup.items; _i < _a.length; _i++) {
                     var c = _a[_i];
                     var id = c[lookup.idField];
@@ -10073,6 +10217,7 @@ var BowenSerene;
                 var _this = this;
                 var columns = _super.prototype.getColumns.call(this);
                 var num = function (ctx) { return _this.numericInputFormatter(ctx); };
+                var decimal = function (ctx) { return _this.floatInputFormatter(ctx); };
                 var str = function (ctx) { return _this.stringInputFormatter(ctx); };
                 var fld = Default.PurchaseOrderDetailRow.Fields;
                 //增加删除按钮
@@ -10085,38 +10230,99 @@ var BowenSerene;
                     minWidth: 24,
                     maxWidth: 24
                 });
-                Q.first(columns, function (x) { return x.field === 'Container'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'BlockNumber'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Category'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Mine'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Grade'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Notes'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Size'; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.Container; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.BlockNumber; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.Category; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.Mine; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.Grade; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.Notes; }).format = str;
                 var product = Q.first(columns, function (x) { return x.field === fld.ProductId; });
                 product.referencedFields = [fld.ProductId];
                 product.format = function (ctx) { return _this.selectFormatter(ctx, fld.ProductId, Default.ProductsRow.getLookup()); };
                 var finishType = Q.first(columns, function (x) { return x.field === fld.IsFinishType; });
                 finishType.referencedFields = [fld.IsFinishType];
                 finishType.format = function (ctx) { return _this.selectFormatter(ctx, fld.IsFinishType, Default.ProductFinishTypeRow.getLookup()); };
-                Q.first(columns, function (x) { return x.field === 'Size'; })
-                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('sum: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
+                Q.first(columns, function (x) { return x.field === fld.Size; })
+                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('面积: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
                 Q.first(columns, function (x) { return x.field === fld.Length; }).format = num;
                 Q.first(columns, function (x) { return x.field === fld.Width; }).format = num;
-                Q.first(columns, function (x) { return x.field === fld.Thick; }).format = num;
+                Q.first(columns, function (x) { return x.field === fld.Thick; }).format = decimal;
+                Q.first(columns, function (x) { return x.field === fld.Size; }).format = decimal;
                 return columns;
             };
-            //添加行
-            PurchaseOrderSlabEditor.prototype.addRow = function () {
-                var row = this.getNewEntity();
-                row[this.getIdProperty()] = this.getNextId();
-                var newRow = Q.deepClone({}, { Length: 0, Width: 0, Thick: 0, Size: 0.00, Container: '', BlockNumber: '' }, row);
-                // row.LineTotal = (row.Quantity || 0) * (row.UnitPrice || 0) - (row.Discount || 0);
+            PurchaseOrderSlabEditor.prototype.getIdProperty = function () { return "__id"; };
+            //row:新增行
+            //isImport:0-新增 1-导入数据
+            PurchaseOrderSlabEditor.prototype.addSingle = function (row, isImport) {
+                var _this = this;
                 var items = this.view.getItems().slice();
-                items.push(newRow);
-                this.setEntities(items);
+                row[this.getIdProperty()] = this.getNextId();
+                var newRow = Q.deepClone({}, {
+                    OrderDetailId: items.length + 100,
+                    Length: 0,
+                    Width: 0,
+                    Height: 0,
+                    Weight: 0.00,
+                    Volume: 0.00,
+                    Container: '',
+                    BlockNumber: ''
+                }, row);
+                var pr = Default.ProductsRow.getLookup().items.filter(function (x) { return x.ProductId == newRow.ProductId && x.Place == _this.place; });
+                if (pr.length > 0 || isImport === 0) {
+                    items.push(newRow);
+                    this.setEntities(items);
+                }
+                else {
+                    Q.notifyError("品目:" + row.ProductName + "不存在或者不匹配，导入失败！");
+                }
+            };
+            PurchaseOrderSlabEditor.prototype.getButtons = function () {
+                var _this = this;
+                return [
+                    {
+                        title: '新增',
+                        cssClass: 'add-button',
+                        onClick: function () {
+                            var row = _this.getNewEntity();
+                            _this.addSingle(row, 0);
+                        }
+                    },
+                    {
+                        title: '货柜分组',
+                        cssClass: 'expand-all-button',
+                        onClick: function () { return _this.view.setGrouping([{
+                                formatter: function (x) { return x.value + '/' + x.count + ''; },
+                                getter: 'Container'
+                            }, {
+                                formatter: function (x) { return x.value + '/' + x.count + ''; },
+                                getter: 'BlockNumber'
+                            }]); }
+                    }, {
+                        title: '品目分组',
+                        cssClass: 'expand-all-button',
+                        onClick: function () { return _this.view.setGrouping([{
+                                formatter: function (x) { return x.value + '/' + x.count + ''; },
+                                getter: 'ProductName'
+                            }, {
+                                formatter: function (x) { return x.value + '/' + x.count + ''; },
+                                getter: 'Category'
+                            }]); }
+                    },
+                    {
+                        title: 'No Grouping',
+                        cssClass: 'collapse-all-button',
+                        onClick: function () { return _this.view.setGrouping([]); }
+                    }
+                ];
+            };
+            PurchaseOrderSlabEditor.prototype.clearView = function () {
+                var items = this.view.getItems().slice();
+                for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
+                    var c = items_1[_i];
+                    this.view.deleteItem(c.__id);
+                }
             };
             PurchaseOrderSlabEditor.prototype.onClick = function (e, row, cell) {
-                var _this = this;
                 _super.prototype.onClick.call(this, e, row, cell);
                 if (e.isDefaultPrevented())
                     return;
@@ -10128,84 +10334,15 @@ var BowenSerene;
                 if (target.hasClass('inline-action')) {
                     e.preventDefault();
                     if (target.hasClass('delete-row')) {
-                        Q.confirm('Delete record?', function () {
-                            _this.view.deleteItem(item.__id);
-                            return true;
-                        });
+                        this.view.deleteItem(item.__id);
+                        return true;
                     }
                 }
-            };
-            //文本框改变事件
-            PurchaseOrderSlabEditor.prototype.inputsChange = function (e) {
-                var cell = this.slickGrid.getCellFromEvent(e);
-                var item = this.itemAt(cell.row);
-                var input = $(e.target);
-                var field = input.data('field');
-                var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-                var pending = this.pendingChanges[item.OrderDetailId];
-                var effective = this.getEffectiveValue(item, field);
-                var oldText;
-                if (input.hasClass("numeric"))
-                    oldText = Q.formatNumber(effective, '0.##');
-                else
-                    oldText = effective;
-                var value;
-                if (field === 'Thick') {
-                    value = Q.parseDecimal(text);
-                    if (value == null || isNaN(value)) {
-                        Q.notifyError(Q.text('Validation.Decimal'), '', null);
-                        input.val(oldText);
-                        input.focus();
-                        return;
-                    }
-                }
-                else if (input.hasClass("numeric")) {
-                    var i = Q.parseInteger(text);
-                    if (isNaN(i) || i > 32767 || i < 0) {
-                        Q.notifyError(Q.text('Validation.Integer'), '', null);
-                        input.val(oldText);
-                        input.focus();
-                        return;
-                    }
-                    value = i;
-                }
-                else
-                    value = text;
-                if (!pending) {
-                    this.pendingChanges[item.OrderDetailId] = pending = {};
-                }
-                pending[field] = value;
-                item[field] = value;
-                this.view.refresh();
-                if (input.hasClass("numeric"))
-                    value = Q.formatNumber(value, '0.##');
-                input.val(value).addClass('dirty');
-                this.setSaveButtonState();
-            };
-            PurchaseOrderSlabEditor.prototype.setSaveButtonState = function () {
-                this.toolbar.findButton('apply-changes-button').toggleClass('disabled', Object.keys(this.pendingChanges).length === 0);
             };
             PurchaseOrderSlabEditor.prototype.getSlickOptions = function () {
                 var opt = _super.prototype.getSlickOptions.call(this);
                 opt.showFooterRow = true;
                 return opt;
-            };
-            PurchaseOrderSlabEditor.prototype.getEffectiveValue = function (item, field) {
-                var pending = this.pendingChanges[item.OrderDetailId];
-                if (pending && pending[field] !== undefined) {
-                    return pending[field];
-                }
-                return item[field];
-            };
-            PurchaseOrderSlabEditor.prototype.getButtons = function () {
-                var _this = this;
-                return [{
-                        title: '新增',
-                        cssClass: 'add-button',
-                        onClick: function () {
-                            _this.addRow();
-                        }
-                    }];
             };
             return PurchaseOrderSlabEditor;
         }(BowenSerene.Common.GridEditorBase));
@@ -10229,14 +10366,9 @@ var BowenSerene;
                     .on('keyup', '.edit:input', function (e) { return _this.inputsChange(e); })
                     .on('change', 'select', function (e) { return _this.productsChange(e); });
                 return _this;
-                //this.slickContainer.on('keydown', '.edit:input', (e) => this.inputsNext(e));
             }
-            PurchaseOrderStoneEditor.prototype.getColumnsKey = function () {
-                return "Default.PurchaseOrderStone";
-            };
-            PurchaseOrderStoneEditor.prototype.getLocalTextPrefix = function () {
-                return Default.PurchaseOrderDetailRow.localTextPrefix;
-            };
+            PurchaseOrderStoneEditor.prototype.getColumnsKey = function () { return "Default.PurchaseOrderStone"; };
+            PurchaseOrderStoneEditor.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderDetailRow.localTextPrefix; };
             PurchaseOrderStoneEditor.prototype.createSlickGrid = function () {
                 var grid = _super.prototype.createSlickGrid.call(this);
                 //let autoSize = new Slick.AutoColumnSize(true); // *** If you want to make it autoresize when grid is loaded, use: new Slick.AutoColumnSize(true);
@@ -10418,18 +10550,18 @@ var BowenSerene;
                     minWidth: 24,
                     maxWidth: 24
                 });
-                Q.first(columns, function (x) { return x.field === 'Container'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'BlockNumber'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Category'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Mine'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Grade'; }).format = str;
-                Q.first(columns, function (x) { return x.field === 'Notes'; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.Container; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.BlockNumber; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.Category; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.Mine; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.Grade; }).format = str;
+                Q.first(columns, function (x) { return x.field === fld.Notes; }).format = str;
                 var product = Q.first(columns, function (x) { return x.field === fld.ProductId; });
                 product.referencedFields = [fld.ProductId];
                 product.format = function (ctx) { return _this.selectFormatter(ctx, fld.ProductId, Default.ProductsRow.getLookup()); };
-                Q.first(columns, function (x) { return x.field === 'Weight'; })
+                Q.first(columns, function (x) { return x.field === fld.Weight; })
                     .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('重量: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.00'), '')) : ''); };
-                Q.first(columns, function (x) { return x.field === 'Volume'; })
+                Q.first(columns, function (x) { return x.field === fld.Volume; })
                     .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('体积: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.00'), '')) : ''); };
                 Q.first(columns, function (x) { return x.field === fld.Length; }).format = num;
                 Q.first(columns, function (x) { return x.field === fld.Width; }).format = num;
@@ -10439,6 +10571,31 @@ var BowenSerene;
                 return columns;
             };
             PurchaseOrderStoneEditor.prototype.getIdProperty = function () { return "__id"; };
+            //row:新增行
+            //isImport:0-新增 1-导入数据
+            PurchaseOrderStoneEditor.prototype.addSingle = function (row, isImport) {
+                var _this = this;
+                var items = this.view.getItems().slice();
+                row[this.getIdProperty()] = this.getNextId();
+                var newRow = Q.deepClone({}, {
+                    OrderDetailId: items.length + 100,
+                    Length: 0,
+                    Width: 0,
+                    Height: 0,
+                    Weight: 0.00,
+                    Volume: 0.00,
+                    Container: '',
+                    BlockNumber: ''
+                }, row);
+                var pr = Default.ProductsRow.getLookup().items.filter(function (x) { return x.ProductId == newRow.ProductId && x.Place == _this.place; });
+                if (pr.length > 0 || isImport === 0) {
+                    items.push(newRow);
+                    this.setEntities(items);
+                }
+                else {
+                    Q.notifyError("品目:" + row.ProductName + "不存在或者不匹配，导入失败！");
+                }
+            };
             PurchaseOrderStoneEditor.prototype.getButtons = function () {
                 var _this = this;
                 return [
@@ -10447,42 +10604,46 @@ var BowenSerene;
                         cssClass: 'add-button',
                         onClick: function () {
                             var row = _this.getNewEntity();
-                            var items = _this.view.getItems().slice();
-                            row[_this.getIdProperty()] = _this.getNextId();
-                            var newRow = Q.deepClone({}, {
-                                OrderDetailId: items.length + 100,
-                                Length: 0,
-                                Width: 0,
-                                Height: 0,
-                                Weight: 0.00,
-                                Volume: 0.00,
-                                Container: '',
-                                BlockNumber: ''
-                            }, row);
-                            //                        if (!this.validateEntity(newRow)) {
-                            //                            return;
-                            //                        }
-                            items.push(newRow);
-                            _this.setEntities(items);
+                            _this.addSingle(row, 0);
                         }
-                    }, {
+                    },
+                    {
+                        title: '导入',
+                        cssClass: 'export-xlsx-button',
+                        onClick: function () {
+                            // open import dialog, let it handle rest
+                            var dialog = new Default.ProductImportDialog();
+                            dialog.element.on('dialogclose', function () {
+                                var insertRows = dialog.orderDetails.Entities;
+                                for (var _i = 0, insertRows_1 = insertRows; _i < insertRows_1.length; _i++) {
+                                    var p = insertRows_1[_i];
+                                    _this.addSingle(p, 1);
+                                }
+                                _this.refresh();
+                                Q.notifyInfo('成功导入明细: ' + (dialog.orderDetails.TotalCount || 0));
+                                dialog = null;
+                            });
+                            dialog.dialogOpen();
+                        }
+                    },
+                    {
                         title: '货柜分组',
                         cssClass: 'expand-all-button',
                         onClick: function () { return _this.view.setGrouping([{
-                                formatter: function (x) { return '货柜号: ' + x.value + ' (' + x.count + ' items)'; },
+                                formatter: function (x) { return x.value + '/' + x.count + ''; },
                                 getter: 'Container'
                             }, {
-                                formatter: function (x) { return '荒料号: ' + x.value + ' (' + x.count + ' items)'; },
+                                formatter: function (x) { return x.value + '/' + x.count + ''; },
                                 getter: 'BlockNumber'
                             }]); }
                     }, {
                         title: '品目分组',
                         cssClass: 'expand-all-button',
                         onClick: function () { return _this.view.setGrouping([{
-                                formatter: function (x) { return '品目: ' + x.value + ' (' + x.count + ' items)'; },
+                                formatter: function (x) { return x.value + '/' + x.count + ''; },
                                 getter: 'ProductName'
                             }, {
-                                formatter: function (x) { return '类别: ' + x.value + ' (' + x.count + ' items)'; },
+                                formatter: function (x) { return x.value + '/' + x.count + ''; },
                                 getter: 'Category'
                             }]); }
                     },
@@ -10495,8 +10656,8 @@ var BowenSerene;
             };
             PurchaseOrderStoneEditor.prototype.clearView = function () {
                 var items = this.view.getItems().slice();
-                for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
-                    var c = items_1[_i];
+                for (var _i = 0, items_2 = items; _i < items_2.length; _i++) {
+                    var c = items_2[_i];
                     this.view.deleteItem(c.__id);
                 }
             };
@@ -10590,6 +10751,14 @@ var BowenSerene;
             SuppliersGrid.prototype.getIdProperty = function () { return Default.SuppliersRow.idProperty; };
             SuppliersGrid.prototype.getLocalTextPrefix = function () { return Default.SuppliersRow.localTextPrefix; };
             SuppliersGrid.prototype.getService = function () { return Default.SuppliersService.baseUrl; };
+            SuppliersGrid.prototype.getQuickFilters = function () {
+                var filters = _super.prototype.getQuickFilters.call(this);
+                var fld = Default.SuppliersRow.Fields;
+                Q.first(filters, function (x) { return x.field == fld.IsActive; }).init = function (w) {
+                    w.value = Default.RowActive.Active.toString();
+                };
+                return filters;
+            };
             return SuppliersGrid;
         }(Serenity.EntityGrid));
         SuppliersGrid = __decorate([
