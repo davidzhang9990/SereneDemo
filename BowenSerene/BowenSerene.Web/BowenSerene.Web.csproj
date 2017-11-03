@@ -1205,6 +1205,9 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderListRequest.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.PurchaseOrderSlabColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -2296,6 +2299,7 @@
     <Compile Include="Modules\Default\PurchaseOrderDetail\ProductImportForm.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderSlabColumns.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\PurchaseOrderStoneColumns.cs" />
+    <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderListRequest.cs" />
     <Compile Include="Modules\Default\PurchaseOrder\TemplateDownDialogForm.cs" />
     <Compile Include="Modules\Default\PurchaseOrder\PurchaseEnum.cs" />
     <Compile Include="Modules\Default\PurchaseOrder\PurchaseOrderBaseForm.cs" />

@@ -39,4 +39,13 @@ namespace BowenSerene.Default
         [Description("已入库")]
         WeightShare = 1
     }
+
+    [EnumKey("Purchase.OrderInspection")]
+    public enum PurchaseOrderInspection
+    {
+        [Description("未指派")]
+        UnAssign = 0,
+        [Description("已指派")]
+        Assigned = 1
+    }
 }

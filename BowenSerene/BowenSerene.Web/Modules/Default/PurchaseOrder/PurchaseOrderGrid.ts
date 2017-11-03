@@ -16,6 +16,54 @@ namespace BowenSerene.Default {
             super(container);
         }
 
+        protected getQuickFilters() {
+            var filters = super.getQuickFilters();
+            let fld = Default.PurchaseOrderDetailRow.Fields;
+
+            filters.push({
+                type: Serenity.LookupEditor,
+                options: {
+                    lookupKey: ProductsRow.lookupKey
+                },
+                field: 'ProductID',
+                title: '品目',
+                handler: w => {
+                    (this.view.params as PurchaseOrderListRequest).ProductId = Q.toId(w.value);
+                }
+            });
+
+            //            Q.first(filters, x => x.field == fld.Container).init = w => {
+            //                // enum editor has a string value, so need to call toString()
+            //                (w as Serenity.EnumEditor).value = Northwind.OrderShippingState.NotShipped.toString()
+            //            };
+
+            //            Q.first(filters, x => x.field == fld.Container).init = w => {
+            //                // enum editor has a string value, so need to call toString()
+            //                (w as Serenity.EnumEditor).value = Northwind.OrderShippingState.NotShipped.toString()
+            //            };
+
+            filters.push({
+                type: Serenity.StringEditor,
+                field: 'Container',
+                title: '货柜号',
+                handler: w => {
+                    (this.view.params as PurchaseOrderListRequest).Container = Q.toId(w.value);
+                }
+            });
+            return filters;
+        }
+
+        //        protected createQuickFilters(): void {
+        //
+        //            // let base class to create quick filters first
+        //            super.createQuickFilters();
+        //
+        //            // get a reference to order row field names
+        //            let fld = Default.PurchaseOrderDetailRow.Fields;
+        //
+        //            // find a quick filter widget by its field name
+        //            this.findQuickFilter(Serenity.LookupEditor, fld.IsAssign).values = ["0", "1"];
+        //        }
         protected getColumns(): Slick.Column[] {
             var columns = super.getColumns();
 
@@ -65,7 +113,7 @@ namespace BowenSerene.Default {
                     this.initDialog(dlg);
                     dlg.loadEntityAndOpenDialog(<PurchaseOrderRow>{
                         Type: Default.PurchaseType.Slab,
-                        ShareType:Default.PurchaseShareType.VolumeShare
+                        ShareType: Default.PurchaseShareType.VolumeShare
                     });
                 }
             });

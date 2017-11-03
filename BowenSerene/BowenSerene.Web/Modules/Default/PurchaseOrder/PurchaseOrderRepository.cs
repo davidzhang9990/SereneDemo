@@ -32,7 +32,7 @@ namespace BowenSerene.Default.Repositories
             return new MyRetrieveHandler().Process(connection, request);
         }
 
-        public ListResponse<MyRow> List(IDbConnection connection, ListRequest request)
+        public ListResponse<MyRow> List(IDbConnection connection, PurchaseOrderListRequest request)
         {
             return new MyListHandler().Process(connection, request);
         }
@@ -56,14 +56,14 @@ namespace BowenSerene.Default.Repositories
             protected override void AfterSave()
             {
                 base.AfterSave();
-//                if (Row.OrderStoneList != null)
-//                {
-//                    var mc = Entities.PurchaseOrderDetailRow.Fields;
-//                    var oldList = IsCreate ? null : Connection.List<Entities.PurchaseOrderDetailRow>(mc.ParentId == this.Row.PurchaseOrderId.Value);
-//
-//                    new Common.DetailListSaveHandler<Entities.PurchaseOrderDetailRow>(oldList, Row.OrderStoneList,
-//                              x => x.ParentId = Row.PurchaseOrderId.Value).Process(this.UnitOfWork);
-//                }
+                //                if (Row.OrderStoneList != null)
+                //                {
+                //                    var mc = Entities.PurchaseOrderDetailRow.Fields;
+                //                    var oldList = IsCreate ? null : Connection.List<Entities.PurchaseOrderDetailRow>(mc.ParentId == this.Row.PurchaseOrderId.Value);
+                //
+                //                    new Common.DetailListSaveHandler<Entities.PurchaseOrderDetailRow>(oldList, Row.OrderStoneList,
+                //                              x => x.ParentId = Row.PurchaseOrderId.Value).Process(this.UnitOfWork);
+                //                }
             }
             protected override void SetInternalFields()
             {
@@ -83,12 +83,61 @@ namespace BowenSerene.Default.Repositories
             protected override void OnReturn()
             {
                 base.OnReturn();
-//                var mc = Entities.PurchaseOrderDetailRow.Fields;
-//                Row.OrderStoneList = Connection.List<Entities.PurchaseOrderDetailRow>(q => q
-//                    .SelectTableFields()
-//                    .Where(mc.ParentId == Row.PurchaseOrderId.Value));
+                //                var mc = Entities.PurchaseOrderDetailRow.Fields;
+                //                Row.OrderStoneList = Connection.List<Entities.PurchaseOrderDetailRow>(q => q
+                //                    .SelectTableFields()
+                //                    .Where(mc.ParentId == Row.PurchaseOrderId.Value));
             }
         }
-        private class MyListHandler : ListRequestHandler<MyRow> { }
+
+        private class MyListHandler : ListRequestHandler<MyRow, PurchaseOrderListRequest>
+        {
+            protected override void ApplyFilters(SqlQuery query)
+            {
+                base.ApplyFilters(query);
+
+                if (Request.ProductId != null)
+                {
+                    var od = Entities.PurchaseOrderDetailRow.Fields.As("od");
+
+                    query.Where(Criteria.Exists(
+                        query.SubQuery()
+                            .Select("1")
+                            .From(od)
+                            .Where(
+                                od.ParentId == fld.PurchaseOrderId &
+                                od.ProductId == Request.ProductId.Value)
+                            .ToString()));
+                }
+
+                if (Request.Container != null)
+                {
+                    var od = Entities.PurchaseOrderDetailRow.Fields.As("od");
+
+                    query.Where(Criteria.Exists(
+                        query.SubQuery()
+                            .Select("1")
+                            .From(od)
+                            .Where(
+                                od.ParentId == fld.PurchaseOrderId &
+                                od.Container.Contains(Request.Container))
+                            .ToString()));
+                }
+
+                if (Request.IsAssign.HasValue)
+                {
+                    var od = Entities.PurchaseOrderDetailRow.Fields.As("od");
+
+                    query.Where(Criteria.Exists(
+                        query.SubQuery()
+                            .Select("1")
+                            .From(od)
+                            .Where(
+                                od.ParentId == fld.PurchaseOrderId &
+                                od.IsAssign == Request.IsAssign.Value)
+                            .ToString()));
+                }
+            }
+        }
     }
 }

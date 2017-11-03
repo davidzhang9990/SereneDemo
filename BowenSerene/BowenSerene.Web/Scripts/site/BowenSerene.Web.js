@@ -9366,6 +9366,50 @@ var BowenSerene;
             PurchaseOrderGrid.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
             PurchaseOrderGrid.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
             PurchaseOrderGrid.prototype.getDialogType = function () { return Default.PurchaseOrderStoneDialog; };
+            PurchaseOrderGrid.prototype.getQuickFilters = function () {
+                var _this = this;
+                var filters = _super.prototype.getQuickFilters.call(this);
+                var fld = Default.PurchaseOrderDetailRow.Fields;
+                filters.push({
+                    type: Serenity.LookupEditor,
+                    options: {
+                        lookupKey: Default.ProductsRow.lookupKey
+                    },
+                    field: 'ProductID',
+                    title: '品目',
+                    handler: function (w) {
+                        _this.view.params.ProductId = Q.toId(w.value);
+                    }
+                });
+                //            Q.first(filters, x => x.field == fld.Container).init = w => {
+                //                // enum editor has a string value, so need to call toString()
+                //                (w as Serenity.EnumEditor).value = Northwind.OrderShippingState.NotShipped.toString()
+                //            };
+                //            Q.first(filters, x => x.field == fld.Container).init = w => {
+                //                // enum editor has a string value, so need to call toString()
+                //                (w as Serenity.EnumEditor).value = Northwind.OrderShippingState.NotShipped.toString()
+                //            };
+                filters.push({
+                    type: Serenity.StringEditor,
+                    field: 'Container',
+                    title: '货柜号',
+                    handler: function (w) {
+                        _this.view.params.Container = Q.toId(w.value);
+                    }
+                });
+                return filters;
+            };
+            //        protected createQuickFilters(): void {
+            //
+            //            // let base class to create quick filters first
+            //            super.createQuickFilters();
+            //
+            //            // get a reference to order row field names
+            //            let fld = Default.PurchaseOrderDetailRow.Fields;
+            //
+            //            // find a quick filter widget by its field name
+            //            this.findQuickFilter(Serenity.LookupEditor, fld.IsAssign).values = ["0", "1"];
+            //        }
             PurchaseOrderGrid.prototype.getColumns = function () {
                 var columns = _super.prototype.getColumns.call(this);
                 var fld = Default.PurchaseOrderRow.Fields;
@@ -9464,6 +9508,24 @@ var BowenSerene;
                 return _this;
             }
             InspectionOrderGrid.prototype.getDialogType = function () { return Default.PurchaseOrderStoneDialog; };
+            InspectionOrderGrid.prototype.getQuickFilters = function () {
+                var _this = this;
+                var filters = _super.prototype.getQuickFilters.call(this);
+                filters.push({
+                    type: Serenity.BooleanEditor,
+                    field: 'IsAssign',
+                    title: '指派',
+                    handler: function (w) {
+                        w.active = !!w.value;
+                        var status = 0;
+                        if (w.active) {
+                            status = 1;
+                        }
+                        _this.view.params.IsAssign = status;
+                    }
+                });
+                return filters;
+            };
             return InspectionOrderGrid;
         }(Default.PurchaseOrderGrid));
         InspectionOrderGrid = __decorate([

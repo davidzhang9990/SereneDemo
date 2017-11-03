@@ -1,10 +1,4 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using Serenity.Reporting;
-using Serenity.Util.Offices;
-using Serenity.Web;
-
 namespace BowenSerene.Default.Endpoints
 {
     using Serenity;
@@ -12,6 +6,10 @@ namespace BowenSerene.Default.Endpoints
     using Serenity.Services;
     using System.Data;
     using System.Web.Mvc;
+    using System;
+    using Serenity.Util.Offices;
+    using Serenity.Web;
+
     using MyRepository = Repositories.PurchaseOrderRepository;
     using MyRow = Entities.PurchaseOrderRow;
 
@@ -44,7 +42,7 @@ namespace BowenSerene.Default.Endpoints
         }
 
         [HttpPost]
-        public ListResponse<MyRow> List(IDbConnection connection, ListRequest request)
+        public ListResponse<MyRow> List(IDbConnection connection, PurchaseOrderListRequest request)
         {
             return new MyRepository().List(connection, request);
         }

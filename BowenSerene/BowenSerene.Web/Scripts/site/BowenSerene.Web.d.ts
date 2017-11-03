@@ -1201,6 +1201,13 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
+    interface PurchaseOrderListRequest extends Serenity.ListRequest {
+        ProductId?: string;
+        Container?: string;
+        IsAssign?: number;
+    }
+}
+declare namespace BowenSerene.Default {
     interface PurchaseOrderRow {
         PurchaseOrderId?: string;
         Number?: string;
@@ -1272,7 +1279,7 @@ declare namespace BowenSerene.Default {
         function Update(request: Serenity.SaveRequest<PurchaseOrderRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<PurchaseOrderRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
-        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<PurchaseOrderRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
+        function List(request: PurchaseOrderListRequest, onSuccess?: (response: Serenity.ListResponse<PurchaseOrderRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
         namespace Methods {
             const Create: string;
             const Update: string;
@@ -4935,6 +4942,7 @@ declare namespace BowenSerene.Default {
         protected getService(): string;
         protected getDialogType(): typeof PurchaseOrderStoneDialog;
         constructor(container: JQuery);
+        protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[];
         protected getColumns(): Slick.Column[];
         protected getButtons(): Serenity.ToolButton[];
         protected onClick(e: JQueryEventObject, row: number, cell: number): void;
@@ -4944,6 +4952,7 @@ declare namespace BowenSerene.Default {
     class InspectionOrderGrid extends Default.PurchaseOrderGrid {
         protected getDialogType(): typeof PurchaseOrderStoneDialog;
         constructor(container: JQuery);
+        protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[];
     }
 }
 declare namespace BowenSerene.Default {
