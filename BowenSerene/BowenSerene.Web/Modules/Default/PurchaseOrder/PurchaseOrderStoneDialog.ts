@@ -11,11 +11,11 @@ namespace BowenSerene.Default {
         protected getNameProperty() { return PurchaseOrderRow.nameProperty; }
         protected getService() { return PurchaseOrderService.baseUrl; }
 
-        protected form = new PurchaseOrderStoneForm(this.idPrefix);
+        protected form: PurchaseOrderStoneForm;
 
         constructor() {
             super();
-            this.form.Type.value = Default.PurchaseType.Slab.toString();
+            this.form = new PurchaseOrderStoneForm(this.idPrefix);
             //供应商改变事件
             this.form.SupplierId.changeSelect2(e => {
                 this.supplierChange();
@@ -29,6 +29,7 @@ namespace BowenSerene.Default {
 
         //状态是已完成，关闭新增按钮
         protected updateInterface(): void {
+            this.form.Type.value = Default.PurchaseType.Stone.toString();
             if (this.entity.Status === 1) {
                 this.element.find('.add-button').hide();
             }
@@ -36,7 +37,6 @@ namespace BowenSerene.Default {
 
         //#david 加载实体完成事件
         loadEntity(entity: PurchaseOrderRow) {
-
             super.loadEntity(entity);
             var supplierId = Q.toId(this.form.SupplierId.value);
             if (supplierId != null) {

@@ -97,7 +97,7 @@ namespace BowenSerene.Default {
                 } else {
                     var slabdlg = new PurchaseOrderSlabDialog();
                     this.initDialog(slabdlg);
-                    slabdlg.loadByIdAndOpenDialog(slabdlg);
+                    slabdlg.loadByIdAndOpenDialog(item.PurchaseOrderId);
                 }
             }
         }

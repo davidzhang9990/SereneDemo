@@ -60,10 +60,9 @@ namespace BowenSerene.Default {
         //文本框改变事件
         private inputsChange(e: JQueryEventObject) {
 
-            var input = $(e.target);
             var key = e.which;
-            //next
             if (key === 13) {
+                //next
                 event.preventDefault();
                 var parent = input.parent().parent();
                 var nxtIdx = parent.find("input").index(input) + 1;
@@ -72,11 +71,11 @@ namespace BowenSerene.Default {
                 nextselector.select();
                 return;
             }
+            var input = $(e.target);
             var cell = this.slickGrid.getCellFromEvent(e);
             var item = this.itemAt(cell.row);
             var field = input.data('field');
             var text = Q.coalesce(Q.trimToNull(input.val()), '0');
-
             var effective = this.getEffectiveValue(item, field);
             var oldText: string;
             if (input.hasClass("numeric"))
@@ -119,6 +118,8 @@ namespace BowenSerene.Default {
 
             if (input.hasClass("numeric"))
                 value = Q.formatNumber(value, '0.##');
+            if (input.hasClass("decimal"))
+                value = Q.formatNumber(value, '0.00');
 
             input.val(value).addClass('dirty');
         }
@@ -149,8 +150,7 @@ namespace BowenSerene.Default {
                 klass += ' dirty';
             }
 
-            var value = this.getEffectiveValue(item, ctx.column.field) as number;
-
+            var value = this.getEffectiveValue(item, ctx.column.field);
             return "<input type='text' class='" + klass +
                 "' data-field='" + ctx.column.field +
                 "' value='" + Q.formatNumber(value, '0.00') + "'/>";

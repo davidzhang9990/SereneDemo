@@ -55,7 +55,6 @@ namespace BowenSerene.Default {
         }
         //文本框改变事件
         private inputsChange(e: JQueryEventObject) {
-            var input = $(e.target);
             var key = e.which;
             //next
             if (key === 13) {
@@ -67,7 +66,7 @@ namespace BowenSerene.Default {
                 nextselector.select();
                 return;
             }
-
+            var input = $(e.target);
             var cell = this.slickGrid.getCellFromEvent(e);
             var item = this.itemAt(cell.row);
             var field = input.data('field');
@@ -115,6 +114,8 @@ namespace BowenSerene.Default {
 
             if (input.hasClass("numeric"))
                 value = Q.formatNumber(value, '0.##');
+            if (input.hasClass("decimal"))
+                value = Q.formatNumber(value, '0.00');
 
             input.val(value).addClass('dirty');
         }
@@ -187,10 +188,11 @@ namespace BowenSerene.Default {
                 "' data-field='" + idField +
                 "' style='width: 100%; max-width: 100%'>"
                 + " <option value=''>请选择</option>";
-            for (var c of lookup.items) {
+            var itemJson = lookup.items.filter(x => x.Place == this.place);
+            for (var c of itemJson) {
                 let id = c[lookup.idField];
                 markup += "<option value='" + id + "'";
-                if (id == value) {
+                if (id == value) { //|| itemJson.length == 1
                     markup += " selected";
                 }
                 markup += ">" + Q.htmlEncode(c[lookup.textField]) + "</option>";
@@ -256,9 +258,8 @@ namespace BowenSerene.Default {
                     OrderDetailId: items.length + 100,
                     Length: 0,
                     Width: 0,
-                    Height: 0,
-                    Weight: 0.00,
-                    Volume: 0.00,
+                    Thick: 0,
+                    Size: 0.00,
                     Container: '',
                     BlockNumber: ''
                 },
@@ -350,8 +351,8 @@ namespace BowenSerene.Default {
             return opt;
         }
 
-       
 
-        
+
+
     }
 }

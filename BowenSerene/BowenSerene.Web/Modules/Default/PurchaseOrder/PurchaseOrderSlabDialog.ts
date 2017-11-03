@@ -11,11 +11,11 @@ namespace BowenSerene.Default {
         protected getNameProperty() { return PurchaseOrderRow.nameProperty; }
         protected getService() { return PurchaseOrderService.baseUrl; }
 
-        protected form = new PurchaseOrderSlabForm(this.idPrefix);
+        protected form: PurchaseOrderSlabForm;
 
         constructor() {
             super();
-            this.form.Type.value = Default.PurchaseType.Slab.toString();
+            this.form = new PurchaseOrderSlabForm(this.idPrefix);
             //供应商改变事件
             this.form.SupplierId.changeSelect2(e => {
                 this.supplierChange();
@@ -28,6 +28,16 @@ namespace BowenSerene.Default {
             this.form.OrderDetailsList.place = place;
         }
 
+        //状态是已完成，关闭新增按钮
+        protected updateInterface(): void {
+            this.form.Type.value = Default.PurchaseType.Slab.toString();
+            this.form.ShareType.value = Default.PurchaseShareType.VolumeShare.toString();
+            //#david#hide
+            this.form.ShareType.getGridField().toggle(false);
+            if (this.entity.Status === 1) {
+                this.element.find('.add-button').hide();
+            }
+        }
         //#david 加载实体完成事件
         loadEntity(entity: PurchaseOrderRow) {
             super.loadEntity(entity);
