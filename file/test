@@ -77,6 +77,9 @@ xxxForm.cs 属性前 加
 #DEMO
 TranslationGrid.ts
 
+update-package Serenity.Core
+update-package Serenity.Web
+
 Q.reloadLookup('Northwind.Customer');
 
 protected updateInterface() {
