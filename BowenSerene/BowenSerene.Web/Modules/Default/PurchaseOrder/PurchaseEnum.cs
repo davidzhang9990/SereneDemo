@@ -30,4 +30,13 @@ namespace BowenSerene.Default
         [Description("T/T")]
         WeightShare = 2
     }
+
+    [EnumKey("Purchase.OrderStatus")]
+    public enum PurchaseOrderStatus
+    {
+        [Description("已制单")]
+        VolumeShare = 0,
+        [Description("已入库")]
+        WeightShare = 1
+    }
 }

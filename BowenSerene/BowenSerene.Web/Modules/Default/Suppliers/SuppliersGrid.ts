@@ -12,5 +12,17 @@ namespace BowenSerene.Default {
         constructor(container: JQuery) {
             super(container);
         }
+
+        protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[] {
+
+            let filters = super.getQuickFilters();
+            let fld = Default.SuppliersRow.Fields;
+
+            Q.first(filters, x => x.field == fld.IsActive).init = w => {
+                (w as Serenity.EnumEditor).value = RowActive.Active.toString();
+            };
+
+            return filters;
+        }
     }
 }

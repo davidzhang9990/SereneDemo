@@ -63,22 +63,22 @@ namespace BowenSerene.Default.Entities
         [DisplayName("类别"), Size(50)]
         public String Category
         {
-            get { return Fields.BlockNumber[this]; }
-            set { Fields.BlockNumber[this] = value; }
+            get { return Fields.Category[this]; }
+            set { Fields.Category[this] = value; }
         }
 
         [DisplayName("矿口"), Size(50)]
         public String Mine
         {
-            get { return Fields.BlockNumber[this]; }
-            set { Fields.BlockNumber[this] = value; }
+            get { return Fields.Mine[this]; }
+            set { Fields.Mine[this] = value; }
         }
 
         [DisplayName("等级"), Size(50)]
         public String Grade
         {
-            get { return Fields.BlockNumber[this]; }
-            set { Fields.BlockNumber[this] = value; }
+            get { return Fields.Grade[this]; }
+            set { Fields.Grade[this] = value; }
         }
 
         [DisplayName("数量")]
