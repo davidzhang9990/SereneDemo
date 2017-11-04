@@ -89,6 +89,8 @@ namespace BowenSerene.BasicSamples {
                     "so i've opened a new Order Dialog from same customer " +
                     "with that employee prepopulated!");
 
+                
+
                 new Northwind.OrderDialog().loadEntityAndOpenDialog(<Northwind.OrderRow>{
                     CustomerID: item.CustomerID,
                     EmployeeID: item.EmployeeID
