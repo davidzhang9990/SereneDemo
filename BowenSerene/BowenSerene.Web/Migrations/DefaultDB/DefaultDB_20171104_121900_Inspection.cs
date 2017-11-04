@@ -19,8 +19,7 @@ namespace BowenSerene.Migrations.DefaultDB
                  );
 
             this.CreateTableWithId32("InspectionDetail", "InspectionDetailId", s => s
-                 .WithColumn("MovieId").AsInt32().NotNullable()
-                 .WithColumn("ParentId").AsGuid().NotNullable()
+                 .WithColumn("ParentId").AsInt32().NotNullable()
                  .ForeignKey("FK_Inspection_ParentId", "Inspection", "InspectId")
                  .WithColumn("OrderDetailId").AsInt32().NotNullable()
                  .ForeignKey("FK_Inspection_PurchaseOrderDetail_OrderDetailId", "PurchaseOrderDetail", "OrderDetailId"));

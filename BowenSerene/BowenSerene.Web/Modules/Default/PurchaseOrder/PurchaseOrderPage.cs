@@ -16,7 +16,7 @@ namespace BowenSerene.Default.Pages
 
         public ActionResult InspectionIndex()
         {
-            return View("~/Modules/Default/Inspection/InspectionOrderIndex.cshtml");
+            return View("~/Modules/Default/PurchaseOrder/CreateAssignOrderIndex.cshtml");
         }
     }
 }

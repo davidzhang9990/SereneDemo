@@ -299,11 +299,6 @@ namespace MVC
                 public const string GenreIndex = "~/Modules/Default/Genre/GenreIndex.cshtml";
             }
 
-            public static class Inspection
-            {
-                public const string InspectionOrderIndex = "~/Modules/Default/Inspection/InspectionOrderIndex.cshtml";
-            }
-
             public static class Movie
             {
                 public const string MovieIndex = "~/Modules/Default/Movie/MovieIndex.cshtml";
@@ -326,6 +321,7 @@ namespace MVC
 
             public static class PurchaseOrder
             {
+                public const string CreateAssignOrderIndex = "~/Modules/Default/PurchaseOrder/CreateAssignOrderIndex.cshtml";
                 public const string PurchaseOrderIndex = "~/Modules/Default/PurchaseOrder/PurchaseOrderIndex.cshtml";
             }
 

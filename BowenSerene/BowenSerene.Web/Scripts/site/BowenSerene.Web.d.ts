@@ -751,6 +751,18 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
+    class CreateAssignOrderGrid extends Default.PurchaseOrderGrid {
+        protected getDialogType(): typeof PurchaseOrderStoneDialog;
+        constructor(container: JQuery);
+        /**
+         * This method is called just before List request is sent to service.
+         * You have an opportunity here to cancel request or modify it.
+         * Here we'll add a custom criteria to list request.
+         */
+        protected onViewSubmit(): boolean;
+    }
+}
+declare namespace BowenSerene.Default {
     class PurchaseOrderSlabDialog extends Serenity.EntityDialog<PurchaseOrderRow, any> {
         protected getFormKey(): string;
         protected getIdProperty(): string;
@@ -909,18 +921,6 @@ declare namespace BowenSerene.Default {
         protected getService(): string;
         constructor(container: JQuery);
         protected getQuickSearchFields(): Serenity.QuickSearchField[];
-    }
-}
-declare namespace BowenSerene.Default {
-    class InspectionOrderGrid extends Default.PurchaseOrderGrid {
-        protected getDialogType(): typeof PurchaseOrderStoneDialog;
-        constructor(container: JQuery);
-        /**
-         * This method is called just before List request is sent to service.
-         * You have an opportunity here to cancel request or modify it.
-         * Here we'll add a custom criteria to list request.
-         */
-        protected onViewSubmit(): boolean;
     }
 }
 declare namespace BowenSerene.Default {

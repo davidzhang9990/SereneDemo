@@ -3460,6 +3460,42 @@ var BowenSerene;
         Default.PurchaseOrderGrid = PurchaseOrderGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
+/// <reference path="../PurchaseOrder/PurchaseOrderGrid.ts" />
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
+        var CreateAssignOrderGrid = /** @class */ (function (_super) {
+            __extends(CreateAssignOrderGrid, _super);
+            function CreateAssignOrderGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            CreateAssignOrderGrid.prototype.getDialogType = function () { return Default.PurchaseOrderStoneDialog; };
+            /**
+             * This method is called just before List request is sent to service.
+             * You have an opportunity here to cancel request or modify it.
+             * Here we'll add a custom criteria to list request.
+             */
+            CreateAssignOrderGrid.prototype.onViewSubmit = function () {
+                if (!_super.prototype.onViewSubmit.call(this)) {
+                    return false;
+                }
+                // this has no relation to our lookup editor but as we'll allow picking only 
+                // categories of Produce and Seafood in product dialog, it's better to show
+                // only products from these categories in grid too
+                var request = this.view.params;
+                request.IsAssign = 0;
+                // brackets used are important above, NOT ['CategoryName', 'in', ['Produce', 'Seafood']]
+                return true;
+            };
+            CreateAssignOrderGrid = __decorate([
+                Serenity.Decorators.registerClass()
+            ], CreateAssignOrderGrid);
+            return CreateAssignOrderGrid;
+        }(Default.PurchaseOrderGrid));
+        Default.CreateAssignOrderGrid = CreateAssignOrderGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
 (function (BowenSerene) {
     var Default;
@@ -4001,44 +4037,6 @@ var BowenSerene;
             return MovieGrid;
         }(Serenity.EntityGrid));
         Default.MovieGrid = MovieGrid;
-    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
-})(BowenSerene || (BowenSerene = {}));
-/// <reference path="../PurchaseOrder/PurchaseOrderGrid.ts" />
-var BowenSerene;
-(function (BowenSerene) {
-    var Default;
-    (function (Default) {
-        var InspectionOrderGrid = /** @class */ (function (_super) {
-            __extends(InspectionOrderGrid, _super);
-            function InspectionOrderGrid(container) {
-                var _this = _super.call(this, container) || this;
-                Q.log("customer grid..");
-                return _this;
-            }
-            InspectionOrderGrid.prototype.getDialogType = function () { return Default.PurchaseOrderStoneDialog; };
-            /**
-             * This method is called just before List request is sent to service.
-             * You have an opportunity here to cancel request or modify it.
-             * Here we'll add a custom criteria to list request.
-             */
-            InspectionOrderGrid.prototype.onViewSubmit = function () {
-                if (!_super.prototype.onViewSubmit.call(this)) {
-                    return false;
-                }
-                // this has no relation to our lookup editor but as we'll allow picking only 
-                // categories of Produce and Seafood in product dialog, it's better to show
-                // only products from these categories in grid too
-                var request = this.view.params;
-                request.IsAssign = 0;
-                // brackets used are important above, NOT ['CategoryName', 'in', ['Produce', 'Seafood']]
-                return true;
-            };
-            InspectionOrderGrid = __decorate([
-                Serenity.Decorators.registerClass()
-            ], InspectionOrderGrid);
-            return InspectionOrderGrid;
-        }(Default.PurchaseOrderGrid));
-        Default.InspectionOrderGrid = InspectionOrderGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;

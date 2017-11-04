@@ -1504,7 +1504,7 @@
     <TypeScriptCompile Include="Modules\Common\Reporting\ReportDialog.ts" />
     <TypeScriptCompile Include="Modules\Common\ScriptInitialization.ts" />
     <TypeScriptCompile Include="Modules\Common\UserPreference\UserPreferenceStorage.ts" />
-    <TypeScriptCompile Include="Modules\Default\Inspection\InspectionOrderGrid.ts" />
+    <TypeScriptCompile Include="Modules\Default\PurchaseOrder\CreateAssignOrderGrid.ts" />
     <TypeScriptCompile Include="Modules\Default\MovieCast\MovieCastEditDialog.ts" />
     <TypeScriptCompile Include="Modules\Default\MovieCast\MovieCastEditor.ts" />
     <TypeScriptCompile Include="Modules\Default\Movie\GenreListFormatter.ts" />
@@ -1551,7 +1551,7 @@
     <Content Include="Scripts\ckeditor\CHANGES.md" />
     <Content Include="Modules\Default\Person\Default.PersonDialog.Template.html" />
     <Content Include="Resource\ExcelTemplate\HLPurchaseOrder.xlsx" />
-    <Content Include="Modules\Default\Inspection\InspectionOrderIndex.cshtml" />
+    <Content Include="Modules\Default\PurchaseOrder\CreateAssignOrderIndex.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
