@@ -766,7 +766,7 @@ declare namespace BowenSerene.Default {
         UserDisplayName: Serenity.StringEditor;
         ParentPurchaseDate: Serenity.DateEditor;
         ParentNotes: Serenity.TextAreaEditor;
-        UserId: Serenity.IntegerEditor;
+        UserId: Serenity.LookupEditor;
         OrderDetailsList: InspectionStoneEditor;
     }
 }

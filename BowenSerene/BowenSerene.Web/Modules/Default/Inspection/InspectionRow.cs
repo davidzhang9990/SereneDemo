@@ -1,4 +1,5 @@
 ﻿
+using System.CodeDom;
 using System.Collections.Generic;
 using BowenSerene.Administration.Entities;
 
@@ -33,7 +34,7 @@ namespace BowenSerene.Default.Entities
         }
 
         [DisplayName("验货人"), NotNull, Updatable(false), ForeignKey("[dbo].[Users]", "UserId"), LeftJoin("jUser"), TextualField("UserUsername")]
-     
+        [LookupEditor(typeof(UserRow))]
         public Int32? UserId
         {
             get { return Fields.UserId[this]; }

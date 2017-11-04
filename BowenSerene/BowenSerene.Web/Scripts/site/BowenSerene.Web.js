@@ -813,7 +813,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         InspectionForm.formKey = 'Default.Inspection';
         Default.InspectionForm = InspectionForm;
-        [['ParentId', function () { return Serenity.StringEditor; }], ['ParentSupplierId', function () { return Serenity.LookupEditor; }], ['ParentNumber', function () { return Serenity.StringEditor; }], ['ParentType', function () { return Serenity.EnumEditor; }], ['ParentShareType', function () { return Serenity.EnumEditor; }], ['UserDisplayName', function () { return Serenity.StringEditor; }], ['ParentPurchaseDate', function () { return Serenity.DateEditor; }], ['ParentNotes', function () { return Serenity.TextAreaEditor; }], ['UserId', function () { return Serenity.IntegerEditor; }], ['OrderDetailsList', function () { return Default.InspectionStoneEditor; }]].forEach(function (x) { return Object.defineProperty(InspectionForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['ParentId', function () { return Serenity.StringEditor; }], ['ParentSupplierId', function () { return Serenity.LookupEditor; }], ['ParentNumber', function () { return Serenity.StringEditor; }], ['ParentType', function () { return Serenity.EnumEditor; }], ['ParentShareType', function () { return Serenity.EnumEditor; }], ['UserDisplayName', function () { return Serenity.StringEditor; }], ['ParentPurchaseDate', function () { return Serenity.DateEditor; }], ['ParentNotes', function () { return Serenity.TextAreaEditor; }], ['UserId', function () { return Serenity.LookupEditor; }], ['OrderDetailsList', function () { return Default.InspectionStoneEditor; }]].forEach(function (x) { return Object.defineProperty(InspectionForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -9930,7 +9930,7 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
-        //import UserRow = BowenSerene.Administration.UserRow;
+        var UserRow = BowenSerene.Administration.UserRow;
         var CreateAssignOrderGrid = (function (_super) {
             __extends(CreateAssignOrderGrid, _super);
             function CreateAssignOrderGrid(container) {
@@ -9969,7 +9969,7 @@ var BowenSerene;
                 var target = $(e.target);
                 if (target.hasClass("customer-link")) {
                     e.preventDefault();
-                    //var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
+                    var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
                     var detailList = item.OrderDetailsList.filter(function (x) { return x.IsAssign === 0; });
                     var newDetails = [];
                     if (detailList.length === 0) {
@@ -10009,7 +10009,7 @@ var BowenSerene;
                             ParentNumber: item.Number,
                             ParentType: item.Type,
                             ParentShareType: item.ShareType,
-                            UserDisplayName: '',
+                            UserDisplayName: userName,
                             ParentPurchaseDate: item.PurchaseDate,
                             ParentNotes: item.Notes,
                             OrderDetailsList: newDetails

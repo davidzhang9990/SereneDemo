@@ -1,6 +1,6 @@
 ﻿
 namespace BowenSerene.Default {
-    //import UserRow = BowenSerene.Administration.UserRow;
+    import UserRow = BowenSerene.Administration.UserRow;
 
     @Serenity.Decorators.registerClass()
     export class CreateAssignOrderGrid extends Serenity.EntityGrid<PurchaseOrderRow, any>  {
@@ -53,7 +53,7 @@ namespace BowenSerene.Default {
 
             if (target.hasClass("customer-link")) {
                 e.preventDefault();
-                //var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
+                var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
                 var detailList = item.OrderDetailsList.filter(x => x.IsAssign === 0);
                 var newDetails = [];
 
@@ -97,7 +97,7 @@ namespace BowenSerene.Default {
                         ParentNumber: item.Number,
                         ParentType: item.Type,
                         ParentShareType: item.ShareType,
-                        UserDisplayName: '',
+                        UserDisplayName: userName,
                         ParentPurchaseDate: item.PurchaseDate,
                         ParentNotes: item.Notes,
                         OrderDetailsList: newDetails
