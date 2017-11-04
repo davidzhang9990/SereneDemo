@@ -5,8 +5,15 @@ namespace BowenSerene.Default {
     @Serenity.Decorators.registerEditor()
     export class InspectionStoneEditor extends Common.GridEditorBase<InspectionDetailRow>{
 
+        private rowSelection: Serenity.GridRowSelectionMixin;
+
         protected getColumnsKey() {
              return "Default.InspectionStone";
+        }
+
+        protected createToolbarExtensions() {
+            super.createToolbarExtensions();
+            this.rowSelection = new Serenity.GridRowSelectionMixin(this);
         }
 
         protected getLocalTextPrefix() {
@@ -15,6 +22,12 @@ namespace BowenSerene.Default {
 
         constructor(container: JQuery) {
             super(container);
+        }
+
+        protected getColumns() {
+            var columns = super.getColumns();
+            columns.splice(0, 0, Serenity.GridRowSelectionMixin.createSelectColumn(() => this.rowSelection));
+            return columns;
         }
 
         protected getButtons() {
