@@ -1,6 +1,6 @@
 ﻿
 namespace BowenSerene.Default {
-    import UserRow = BowenSerene.Administration.UserRow;
+    //import UserRow = BowenSerene.Administration.UserRow;
 
     @Serenity.Decorators.registerClass()
     export class CreateAssignOrderGrid extends Serenity.EntityGrid<PurchaseOrderRow, any>  {
@@ -15,22 +15,12 @@ namespace BowenSerene.Default {
             super(container);
         }
 
-        /**
-         * This method is called just before List request is sent to service.
-         * You have an opportunity here to cancel request or modify it.
-         * Here we'll add a custom criteria to list request.
-         */
         protected onViewSubmit() {
             if (!super.onViewSubmit()) {
                 return false;
             }
-
-            // this has no relation to our lookup editor but as we'll allow picking only 
-            // categories of Produce and Seafood in product dialog, it's better to show
-            // only products from these categories in grid too
             let request = this.view.params as PurchaseOrderListRequest;
             request.IsAssign = 0;
-            // brackets used are important above, NOT ['CategoryName', 'in', ['Produce', 'Seafood']]
 
             return true;
         }
@@ -63,7 +53,7 @@ namespace BowenSerene.Default {
 
             if (target.hasClass("customer-link")) {
                 e.preventDefault();
-                var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
+                //var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
                 var detailList = item.OrderDetailsList.filter(x => x.IsAssign === 0);
                 var newDetails = [];
 
@@ -81,6 +71,7 @@ namespace BowenSerene.Default {
                             Category: p.Category,
                             Container: p.Container,
                             BlockNumber: p.BlockNumber,
+                            Length: p.Length,
                             Width: p.Width,
                             Height: p.Height,
                             Weight: p.Weight,
@@ -106,7 +97,7 @@ namespace BowenSerene.Default {
                         ParentNumber: item.Number,
                         ParentType: item.Type,
                         ParentShareType: item.ShareType,
-                        UserDisplayName: userName,
+                        UserDisplayName: '',
                         ParentPurchaseDate: item.PurchaseDate,
                         ParentNotes: item.Notes,
                         OrderDetailsList: newDetails

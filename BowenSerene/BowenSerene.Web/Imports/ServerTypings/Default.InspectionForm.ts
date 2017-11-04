@@ -13,10 +13,10 @@
         UserDisplayName: Serenity.StringEditor;
         ParentPurchaseDate: Serenity.DateEditor;
         ParentNotes: Serenity.TextAreaEditor;
-        UserId: Serenity.LookupEditor;
+        UserId: Serenity.IntegerEditor;
         OrderDetailsList: InspectionStoneEditor;
     }
 
-    [['ParentId', () => Serenity.StringEditor], ['ParentSupplierId', () => Serenity.LookupEditor], ['ParentNumber', () => Serenity.StringEditor], ['ParentType', () => Serenity.EnumEditor], ['ParentShareType', () => Serenity.EnumEditor], ['UserDisplayName', () => Serenity.StringEditor], ['ParentPurchaseDate', () => Serenity.DateEditor], ['ParentNotes', () => Serenity.TextAreaEditor], ['UserId', () => Serenity.LookupEditor], ['OrderDetailsList', () => InspectionStoneEditor]].forEach(x => Object.defineProperty(InspectionForm.prototype, <string>x[0], { get: function () { return this.w(x[0], (x[1] as any)()); }, enumerable: true, configurable: true }));
+    [['ParentId', () => Serenity.StringEditor], ['ParentSupplierId', () => Serenity.LookupEditor], ['ParentNumber', () => Serenity.StringEditor], ['ParentType', () => Serenity.EnumEditor], ['ParentShareType', () => Serenity.EnumEditor], ['UserDisplayName', () => Serenity.StringEditor], ['ParentPurchaseDate', () => Serenity.DateEditor], ['ParentNotes', () => Serenity.TextAreaEditor], ['UserId', () => Serenity.IntegerEditor], ['OrderDetailsList', () => InspectionStoneEditor]].forEach(x => Object.defineProperty(InspectionForm.prototype, <string>x[0], { get: function () { return this.w(x[0], (x[1] as any)()); }, enumerable: true, configurable: true }));
 }
 

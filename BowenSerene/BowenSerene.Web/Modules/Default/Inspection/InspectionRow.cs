@@ -32,8 +32,8 @@ namespace BowenSerene.Default.Entities
             set { Fields.ParentId[this] = value; }
         }
 
-        [DisplayName("验货人"), NotNull, ForeignKey("[dbo].[Users]", "UserId"), LeftJoin("jUser"), TextualField("UserUsername")]
-        [LookupEditor(typeof(UserRow))]
+        [DisplayName("验货人"), NotNull, Updatable(false), ForeignKey("[dbo].[Users]", "UserId"), LeftJoin("jUser"), TextualField("UserUsername")]
+     
         public Int32? UserId
         {
             get { return Fields.UserId[this]; }
@@ -65,7 +65,7 @@ namespace BowenSerene.Default.Entities
             set { Fields.ParentPurchaseDate[this] = value; }
         }
 
-        [MasterDetailRelation(foreignKey: "ParentId", IncludeColumns = "ProductId")]
+        [MasterDetailRelation(foreignKey: "ParentId", IncludeColumns = "ProductId,ProductName,Container,BlockNumber,Length,Width,Height,Weight,Volume,IsAssign,Notes,Category,Mine,Grade")]
         [DisplayName("明细"), NotMapped]
         public List<InspectionDetailRow> OrderDetailsList
         {

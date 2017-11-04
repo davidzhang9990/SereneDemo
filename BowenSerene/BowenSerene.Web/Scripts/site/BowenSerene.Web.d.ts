@@ -716,22 +716,10 @@ declare namespace BowenSerene.Default {
         Size?: number;
         Weight?: number;
         Volume?: number;
-        AutoQuantity?: number;
-        AutoLength?: number;
-        AutoWidth?: number;
-        AutoHeight?: number;
-        AutoSize?: number;
-        AutoWeight?: number;
-        AutoVolume?: number;
-        IsStock?: number;
-        StockDate?: string;
         IsAssign?: number;
         AssignDate?: string;
-        IsAssignOrder?: number;
-        AssignOrderDate?: string;
         IsFinishType?: number;
         Notes?: string;
-        SortCode?: number;
         Category?: string;
         Mine?: string;
         Grade?: string;
@@ -755,22 +743,10 @@ declare namespace BowenSerene.Default {
             const Size: string;
             const Weight: string;
             const Volume: string;
-            const AutoQuantity: string;
-            const AutoLength: string;
-            const AutoWidth: string;
-            const AutoHeight: string;
-            const AutoSize: string;
-            const AutoWeight: string;
-            const AutoVolume: string;
-            const IsStock: string;
-            const StockDate: string;
             const IsAssign: string;
             const AssignDate: string;
-            const IsAssignOrder: string;
-            const AssignOrderDate: string;
             const IsFinishType: string;
             const Notes: string;
-            const SortCode: string;
             const Category: string;
             const Mine: string;
             const Grade: string;
@@ -790,7 +766,7 @@ declare namespace BowenSerene.Default {
         UserDisplayName: Serenity.StringEditor;
         ParentPurchaseDate: Serenity.DateEditor;
         ParentNotes: Serenity.TextAreaEditor;
-        UserId: Serenity.LookupEditor;
+        UserId: Serenity.IntegerEditor;
         OrderDetailsList: InspectionStoneEditor;
     }
 }
@@ -5101,7 +5077,9 @@ declare namespace BowenSerene.Default {
         protected getLocalTextPrefix(): string;
         protected getService(): string;
         protected form: InspectionForm;
-        loadEntity(entity: InspectionRow): void;
+        constructor();
+        protected getToolbarButtons(): Serenity.ToolButton[];
+        protected updateInterface(): void;
     }
 }
 declare namespace BowenSerene.Default {
@@ -5259,11 +5237,6 @@ declare namespace BowenSerene.Default {
         protected getService(): string;
         protected getDialogType(): typeof InspectionDialog;
         constructor(container: JQuery);
-        /**
-         * This method is called just before List request is sent to service.
-         * You have an opportunity here to cancel request or modify it.
-         * Here we'll add a custom criteria to list request.
-         */
         protected onViewSubmit(): boolean;
         protected getColumns(): Slick.Column[];
         protected onClick(e: JQueryEventObject, row: number, cell: number): void;

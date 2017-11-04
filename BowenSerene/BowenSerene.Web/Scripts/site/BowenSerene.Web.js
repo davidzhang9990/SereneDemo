@@ -789,22 +789,10 @@ var BowenSerene;
                 'Size',
                 'Weight',
                 'Volume',
-                'AutoQuantity',
-                'AutoLength',
-                'AutoWidth',
-                'AutoHeight',
-                'AutoSize',
-                'AutoWeight',
-                'AutoVolume',
-                'IsStock',
-                'StockDate',
                 'IsAssign',
                 'AssignDate',
-                'IsAssignOrder',
-                'AssignOrderDate',
                 'IsFinishType',
                 'Notes',
-                'SortCode',
                 'Category',
                 'Mine',
                 'Grade'
@@ -825,7 +813,7 @@ var BowenSerene;
         }(Serenity.PrefixedContext));
         InspectionForm.formKey = 'Default.Inspection';
         Default.InspectionForm = InspectionForm;
-        [['ParentId', function () { return Serenity.StringEditor; }], ['ParentSupplierId', function () { return Serenity.LookupEditor; }], ['ParentNumber', function () { return Serenity.StringEditor; }], ['ParentType', function () { return Serenity.EnumEditor; }], ['ParentShareType', function () { return Serenity.EnumEditor; }], ['UserDisplayName', function () { return Serenity.StringEditor; }], ['ParentPurchaseDate', function () { return Serenity.DateEditor; }], ['ParentNotes', function () { return Serenity.TextAreaEditor; }], ['UserId', function () { return Serenity.LookupEditor; }], ['OrderDetailsList', function () { return Default.InspectionStoneEditor; }]].forEach(function (x) { return Object.defineProperty(InspectionForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
+        [['ParentId', function () { return Serenity.StringEditor; }], ['ParentSupplierId', function () { return Serenity.LookupEditor; }], ['ParentNumber', function () { return Serenity.StringEditor; }], ['ParentType', function () { return Serenity.EnumEditor; }], ['ParentShareType', function () { return Serenity.EnumEditor; }], ['UserDisplayName', function () { return Serenity.StringEditor; }], ['ParentPurchaseDate', function () { return Serenity.DateEditor; }], ['ParentNotes', function () { return Serenity.TextAreaEditor; }], ['UserId', function () { return Serenity.IntegerEditor; }], ['OrderDetailsList', function () { return Default.InspectionStoneEditor; }]].forEach(function (x) { return Object.defineProperty(InspectionForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -9483,33 +9471,36 @@ var BowenSerene;
         var InspectionDialog = (function (_super) {
             __extends(InspectionDialog, _super);
             function InspectionDialog() {
-                var _this = _super !== null && _super.apply(this, arguments) || this;
+                var _this = _super.call(this) || this;
                 _this.form = new Default.InspectionForm(_this.idPrefix);
                 return _this;
-                //        //状态是已完成，关闭新增按钮
-                //        protected updateInterface(): void {
-                //            Q.log("Inspertion");
-                //            this.form.Type.value = Default.PurchaseType.Slab.toString();
-                //            this.form.ShareType.value = Default.PurchaseShareType.VolumeShare.toString();
-                //            //#david#hide
-                //            this.form.ShareType.getGridField().toggle(false);
-                //            if (this.entity.Status === 1) {
-                //                this.element.find('.add-button').hide();
-                //            }
-                //        }
             }
             InspectionDialog.prototype.getFormKey = function () { return Default.InspectionForm.formKey; };
             InspectionDialog.prototype.getIdProperty = function () { return Default.InspectionRow.idProperty; };
             InspectionDialog.prototype.getLocalTextPrefix = function () { return Default.InspectionRow.localTextPrefix; };
             InspectionDialog.prototype.getService = function () { return Default.InspectionService.baseUrl; };
             //#david 加载实体完成事件
-            InspectionDialog.prototype.loadEntity = function (entity) {
-                _super.prototype.loadEntity.call(this, entity);
-                if (entity.InspectId == null && entity.ParentId == null) {
-                    Q.information('页面数据错误，请重新打开页面操作', function () {
-                        window.location.href = Q.resolveUrl('~/Account/Login');
-                    });
+            //        loadEntity(entity: InspectionRow) {
+            //            super.loadEntity(entity);
+            //            if (entity.InspectId == null && entity.ParentId == null) {
+            ////                Q.information('页面数据错误，请重新打开页面操作', () => {
+            ////                    window.location.href = Q.resolveUrl('~/Account/Login');
+            ////                });
+            //            }
+            //        }
+            InspectionDialog.prototype.getToolbarButtons = function () {
+                var buttons = _super.prototype.getToolbarButtons.call(this);
+                buttons.splice(Q.indexOf(buttons, function (x) { return x.cssClass == "apply-changes-button"; }), 1);
+                return buttons;
+            };
+            InspectionDialog.prototype.updateInterface = function () {
+                _super.prototype.updateInterface.call(this);
+                if (!this.isNew()) {
+                    this.applyChangesButton.hide();
+                    this.saveAndCloseButton.hide();
                 }
+                Q.log(this.form.UserId.value);
+                Q.log(this.form.ParentId.value);
             };
             return InspectionDialog;
         }(Serenity.EntityDialog));
@@ -9939,7 +9930,7 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
-        var UserRow = BowenSerene.Administration.UserRow;
+        //import UserRow = BowenSerene.Administration.UserRow;
         var CreateAssignOrderGrid = (function (_super) {
             __extends(CreateAssignOrderGrid, _super);
             function CreateAssignOrderGrid(container) {
@@ -9950,21 +9941,12 @@ var BowenSerene;
             CreateAssignOrderGrid.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
             CreateAssignOrderGrid.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
             CreateAssignOrderGrid.prototype.getDialogType = function () { return Default.InspectionDialog; };
-            /**
-             * This method is called just before List request is sent to service.
-             * You have an opportunity here to cancel request or modify it.
-             * Here we'll add a custom criteria to list request.
-             */
             CreateAssignOrderGrid.prototype.onViewSubmit = function () {
                 if (!_super.prototype.onViewSubmit.call(this)) {
                     return false;
                 }
-                // this has no relation to our lookup editor but as we'll allow picking only 
-                // categories of Produce and Seafood in product dialog, it's better to show
-                // only products from these categories in grid too
                 var request = this.view.params;
                 request.IsAssign = 0;
-                // brackets used are important above, NOT ['CategoryName', 'in', ['Produce', 'Seafood']]
                 return true;
             };
             CreateAssignOrderGrid.prototype.getColumns = function () {
@@ -9987,7 +9969,7 @@ var BowenSerene;
                 var target = $(e.target);
                 if (target.hasClass("customer-link")) {
                     e.preventDefault();
-                    var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
+                    //var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
                     var detailList = item.OrderDetailsList.filter(function (x) { return x.IsAssign === 0; });
                     var newDetails = [];
                     if (detailList.length === 0) {
@@ -10003,6 +9985,7 @@ var BowenSerene;
                             Category: p.Category,
                             Container: p.Container,
                             BlockNumber: p.BlockNumber,
+                            Length: p.Length,
                             Width: p.Width,
                             Height: p.Height,
                             Weight: p.Weight,
@@ -10026,7 +10009,7 @@ var BowenSerene;
                             ParentNumber: item.Number,
                             ParentType: item.Type,
                             ParentShareType: item.ShareType,
-                            UserDisplayName: userName,
+                            UserDisplayName: '',
                             ParentPurchaseDate: item.PurchaseDate,
                             ParentNotes: item.Notes,
                             OrderDetailsList: newDetails

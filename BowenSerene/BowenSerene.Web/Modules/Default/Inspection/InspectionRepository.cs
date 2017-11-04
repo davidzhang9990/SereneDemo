@@ -50,7 +50,6 @@ namespace BowenSerene.Default.Repositories
                         detail.ParentId = this.Row.InspectId;
                     }
                 }
-                Console.Write(Row);
             }
         }
         private class MyDeleteHandler : DeleteRequestHandler<MyRow> { }
