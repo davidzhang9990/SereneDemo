@@ -10,8 +10,8 @@ namespace BowenSerene.Administration.Entities
     using Modules.Common.BaseClass;
 
     [ConnectionKey("Default"), TableName("Users"), DisplayName("Users"), InstanceName("User"), TwoLevelCached]
-    [ReadPermission(PermissionKeys.Security)]
-    [ModifyPermission(PermissionKeys.Security)]
+    [ReadPermission("Administration:General")]
+    [ModifyPermission("Administration:General")]
     [LookupScript("Administration.User", Permission = PermissionKeys.Security)]
     public sealed class UserRow : LoggingRow, IIdRow, INameRow, IIsActiveRow, IAuditLog
     {

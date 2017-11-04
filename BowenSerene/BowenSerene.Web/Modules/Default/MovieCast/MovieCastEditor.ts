@@ -11,6 +11,7 @@ namespace BowenSerene.Default {
             row.PersonFullname = PersonRow.getLookup().itemById[row.PersonId].Fullname;
             return true;
         }
+
         protected getColumnsKey() {
             return "Default.MovieCast";
         }

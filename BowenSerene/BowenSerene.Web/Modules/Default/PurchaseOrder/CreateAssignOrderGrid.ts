@@ -65,7 +65,7 @@ namespace BowenSerene.Default {
                 e.preventDefault();
                 var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
                 var detailList = item.OrderDetailsList.filter(x => x.IsAssign === 0);
-                var newDetails = InspectionDetailRow[detailList.length];
+                var newDetails = [];
 
                 if (detailList.length === 0) {
                     Q.notifyError("数据错误，不能创建验收单！");
@@ -92,7 +92,7 @@ namespace BowenSerene.Default {
                     newDetails.push(single);
                 }
 
-                if (newDetails == null || newDetails.length === 0) {
+                if (newDetails.length === 0) {
                     Q.notifyError("数据错误，不能创建验收单！");
                     return;
                 }

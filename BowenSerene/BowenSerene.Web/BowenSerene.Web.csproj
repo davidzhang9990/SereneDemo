@@ -841,6 +841,7 @@
     <EmbeddedResource Include="Migrations\NorthwindDB\NorthwindDBScript_MySql.sql" />
     <Content Include="Imports\ClientTypes\ClientTypes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ClientTypes.log</LastGenOutput>
     </Content>
     <Content Include="Migrations\NorthwindDB\NorthwindDBScript_Oracle.sql" />
     <Content Include="Readme.CodeGenerator.txt" />
@@ -1170,9 +1171,6 @@
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionColumns.ts">
-      <DependentUpon>ServerTypings.tt</DependentUpon>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionDetailColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionStoneColumns.ts">
@@ -1551,6 +1549,16 @@
     <Content Include="Modules\Default\Person\Default.PersonDialog.Template.html" />
     <Content Include="Resource\ExcelTemplate\HLPurchaseOrder.xlsx" />
     <Content Include="Modules\Default\PurchaseOrder\CreateAssignOrderIndex.cshtml" />
+    <Content Include="Imports\ClientTypes\ClientTypes.log">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientTypes.tt</DependentUpon>
+    </Content>
+    <Content Include="Imports\ServerTypings\ServerTypings.log">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -1820,6 +1828,7 @@
     <Content Include="Scripts\timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Imports\ServerTypings\ServerTypings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ServerTypings.log</LastGenOutput>
     </Content>
     <Content Include="Welcome.htm" />
     <Content Include="Modules\Membership\Account\ChangePassword\AccountChangePassword.cshtml" />
@@ -2194,15 +2203,6 @@
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionDetailRow.ts">
-      <DependentUpon>ServerTypings.tt</DependentUpon>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionDetailService.ts">
-      <DependentUpon>ServerTypings.tt</DependentUpon>
-    </TypeScriptCompile>
-    <Content Include="Modules\Default\InspectionDetail\InspectionDetailIndex.cshtml" />
-    <TypeScriptCompile Include="Modules\Default\InspectionDetail\InspectionDetailDialog.ts" />
-    <TypeScriptCompile Include="Modules\Default\InspectionDetail\InspectionDetailGrid.ts" />
-    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionDetailForm.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
   </ItemGroup>
@@ -2723,10 +2723,6 @@
     <Compile Include="Modules\Default\Inspection\InspectionForm.cs" />
     <Compile Include="Modules\Default\InspectionDetail\InspectionDetailRow.cs" />
     <Compile Include="Modules\Default\InspectionDetail\InspectionDetailRepository.cs" />
-    <Compile Include="Modules\Default\InspectionDetail\InspectionDetailEndpoint.cs" />
-    <Compile Include="Modules\Default\InspectionDetail\InspectionDetailPage.cs" />
-    <Compile Include="Modules\Default\InspectionDetail\InspectionDetailColumns.cs" />
-    <Compile Include="Modules\Default\InspectionDetail\InspectionDetailForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

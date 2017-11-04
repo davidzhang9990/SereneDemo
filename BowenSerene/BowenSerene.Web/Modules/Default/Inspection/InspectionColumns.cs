@@ -13,11 +13,13 @@ namespace BowenSerene.Default.Columns
     [BasedOnRow(typeof(Entities.InspectionRow))]
     public class InspectionColumns
     {
-        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
+        [DisplayName("Db.Shared.RecordId"), AlignRight]
         public Int32 InspectId { get; set; }
+        [EditLink]
         public String ParentNumber { get; set; }
+        [DisplayName("验货员")]
         public String UserUsername { get; set; }
+        [DisplayName("创建日期")]
         public DateTime InsertDate { get; set; }
-        public Int32 InsertUserId { get; set; }
     }
 }

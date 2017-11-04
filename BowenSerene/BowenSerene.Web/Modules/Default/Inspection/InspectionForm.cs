@@ -1,5 +1,5 @@
 ﻿
-using Serenity.Data.Mapping;
+using BowenSerene.Default.Entities;
 
 namespace BowenSerene.Default.Forms
 {
@@ -37,6 +37,6 @@ namespace BowenSerene.Default.Forms
         [Tab("采购信息")]
         [Category("采购明细")]
         [InspectionStoneEditor]
-        public List<Entities.InspectionDetailRow> OrderDetailsList { get; set; }
+        public List<InspectionDetailRow> OrderDetailsList { get; set; }
     }
 }

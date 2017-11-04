@@ -766,22 +766,6 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
-        var InspectionDetailForm = (function (_super) {
-            __extends(InspectionDetailForm, _super);
-            function InspectionDetailForm() {
-                return _super !== null && _super.apply(this, arguments) || this;
-            }
-            return InspectionDetailForm;
-        }(Serenity.PrefixedContext));
-        InspectionDetailForm.formKey = 'Default.InspectionDetail';
-        Default.InspectionDetailForm = InspectionDetailForm;
-        [['ParentId', function () { return Serenity.IntegerEditor; }], ['OrderDetailId', function () { return Serenity.IntegerEditor; }]].forEach(function (x) { return Object.defineProperty(InspectionDetailForm.prototype, x[0], { get: function () { return this.w(x[0], x[1]()); }, enumerable: true, configurable: true }); });
-    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
-})(BowenSerene || (BowenSerene = {}));
-var BowenSerene;
-(function (BowenSerene) {
-    var Default;
-    (function (Default) {
         var InspectionDetailRow;
         (function (InspectionDetailRow) {
             InspectionDetailRow.idProperty = 'InspectionDetailId';
@@ -826,31 +810,6 @@ var BowenSerene;
                 'Grade'
             ].forEach(function (x) { return Fields[x] = x; });
         })(InspectionDetailRow = Default.InspectionDetailRow || (Default.InspectionDetailRow = {}));
-    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
-})(BowenSerene || (BowenSerene = {}));
-var BowenSerene;
-(function (BowenSerene) {
-    var Default;
-    (function (Default) {
-        var InspectionDetailService;
-        (function (InspectionDetailService) {
-            InspectionDetailService.baseUrl = 'Default/InspectionDetail';
-            var Methods;
-            (function (Methods) {
-            })(Methods = InspectionDetailService.Methods || (InspectionDetailService.Methods = {}));
-            [
-                'Create',
-                'Update',
-                'Delete',
-                'Retrieve',
-                'List'
-            ].forEach(function (x) {
-                InspectionDetailService[x] = function (r, s, o) {
-                    return Q.serviceRequest(InspectionDetailService.baseUrl + '/' + x, r, s, o);
-                };
-                Methods[x] = InspectionDetailService.baseUrl + '/' + x;
-            });
-        })(InspectionDetailService = Default.InspectionDetailService || (Default.InspectionDetailService = {}));
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;
@@ -9583,52 +9542,6 @@ var BowenSerene;
         Default.InspectionGrid = InspectionGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
-var BowenSerene;
-(function (BowenSerene) {
-    var Default;
-    (function (Default) {
-        var InspectionDetailDialog = (function (_super) {
-            __extends(InspectionDetailDialog, _super);
-            function InspectionDetailDialog() {
-                var _this = _super !== null && _super.apply(this, arguments) || this;
-                _this.form = new Default.InspectionDetailForm(_this.idPrefix);
-                return _this;
-            }
-            InspectionDetailDialog.prototype.getFormKey = function () { return Default.InspectionDetailForm.formKey; };
-            InspectionDetailDialog.prototype.getIdProperty = function () { return Default.InspectionDetailRow.idProperty; };
-            InspectionDetailDialog.prototype.getLocalTextPrefix = function () { return Default.InspectionDetailRow.localTextPrefix; };
-            InspectionDetailDialog.prototype.getService = function () { return Default.InspectionDetailService.baseUrl; };
-            return InspectionDetailDialog;
-        }(Serenity.EntityDialog));
-        InspectionDetailDialog = __decorate([
-            Serenity.Decorators.registerClass(),
-            Serenity.Decorators.responsive()
-        ], InspectionDetailDialog);
-        Default.InspectionDetailDialog = InspectionDetailDialog;
-    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
-})(BowenSerene || (BowenSerene = {}));
-var BowenSerene;
-(function (BowenSerene) {
-    var Default;
-    (function (Default) {
-        var InspectionDetailGrid = (function (_super) {
-            __extends(InspectionDetailGrid, _super);
-            function InspectionDetailGrid(container) {
-                return _super.call(this, container) || this;
-            }
-            InspectionDetailGrid.prototype.getColumnsKey = function () { return 'Default.InspectionDetail'; };
-            InspectionDetailGrid.prototype.getDialogType = function () { return Default.InspectionDetailDialog; };
-            InspectionDetailGrid.prototype.getIdProperty = function () { return Default.InspectionDetailRow.idProperty; };
-            InspectionDetailGrid.prototype.getLocalTextPrefix = function () { return Default.InspectionDetailRow.localTextPrefix; };
-            InspectionDetailGrid.prototype.getService = function () { return Default.InspectionDetailService.baseUrl; };
-            return InspectionDetailGrid;
-        }(Serenity.EntityGrid));
-        InspectionDetailGrid = __decorate([
-            Serenity.Decorators.registerClass()
-        ], InspectionDetailGrid);
-        Default.InspectionDetailGrid = InspectionDetailGrid;
-    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
-})(BowenSerene || (BowenSerene = {}));
 /// <reference path="../../Common/Helpers/GridEditorBase.ts" />
 var BowenSerene;
 (function (BowenSerene) {
@@ -9639,8 +9552,23 @@ var BowenSerene;
             function InspectionStoneEditor(container) {
                 return _super.call(this, container) || this;
             }
-            InspectionStoneEditor.prototype.getColumnsKey = function () { return "Default.InspectionStone"; };
-            InspectionStoneEditor.prototype.getLocalTextPrefix = function () { return Default.InspectionDetailRow.localTextPrefix; };
+            InspectionStoneEditor.prototype.getColumnsKey = function () {
+                return "Default.InspectionStone";
+            };
+            InspectionStoneEditor.prototype.getLocalTextPrefix = function () {
+                return Default.InspectionDetailRow.localTextPrefix;
+            };
+            InspectionStoneEditor.prototype.getButtons = function () {
+                return [
+                    {
+                        title: '新增',
+                        cssClass: 'add-button',
+                        onClick: function () {
+                            Q.log("test hide");
+                        }
+                    }
+                ];
+            };
             return InspectionStoneEditor;
         }(BowenSerene.Common.GridEditorBase));
         InspectionStoneEditor = __decorate([
@@ -10011,6 +9939,118 @@ var BowenSerene;
 (function (BowenSerene) {
     var Default;
     (function (Default) {
+        var UserRow = BowenSerene.Administration.UserRow;
+        var CreateAssignOrderGrid = (function (_super) {
+            __extends(CreateAssignOrderGrid, _super);
+            function CreateAssignOrderGrid(container) {
+                return _super.call(this, container) || this;
+            }
+            CreateAssignOrderGrid.prototype.getColumnsKey = function () { return 'Default.PurchaseOrder'; };
+            CreateAssignOrderGrid.prototype.getIdProperty = function () { return Default.PurchaseOrderRow.idProperty; };
+            CreateAssignOrderGrid.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
+            CreateAssignOrderGrid.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
+            CreateAssignOrderGrid.prototype.getDialogType = function () { return Default.InspectionDialog; };
+            /**
+             * This method is called just before List request is sent to service.
+             * You have an opportunity here to cancel request or modify it.
+             * Here we'll add a custom criteria to list request.
+             */
+            CreateAssignOrderGrid.prototype.onViewSubmit = function () {
+                if (!_super.prototype.onViewSubmit.call(this)) {
+                    return false;
+                }
+                // this has no relation to our lookup editor but as we'll allow picking only 
+                // categories of Produce and Seafood in product dialog, it's better to show
+                // only products from these categories in grid too
+                var request = this.view.params;
+                request.IsAssign = 0;
+                // brackets used are important above, NOT ['CategoryName', 'in', ['Produce', 'Seafood']]
+                return true;
+            };
+            CreateAssignOrderGrid.prototype.getColumns = function () {
+                var columns = _super.prototype.getColumns.call(this);
+                var fld = Default.PurchaseOrderRow.Fields;
+                Q.first(columns, function (x) { return x.field == fld.Number; }).format =
+                    function (ctx) { return "<a href=\"javascript:;\" class=\"customer-link\">" + Q.htmlEncode(ctx.value) + "</a>"; };
+                return columns;
+            };
+            CreateAssignOrderGrid.prototype.onClick = function (e, row, cell) {
+                // let base grid handle clicks for its edit links
+                _super.prototype.onClick.call(this, e, row, cell);
+                // if base grid already handled, we shouldn"t handle it again
+                if (e.isDefaultPrevented()) {
+                    return;
+                }
+                // get reference to current item
+                var item = this.itemAt(row);
+                // get reference to clicked element
+                var target = $(e.target);
+                if (target.hasClass("customer-link")) {
+                    e.preventDefault();
+                    var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
+                    var detailList = item.OrderDetailsList.filter(function (x) { return x.IsAssign === 0; });
+                    var newDetails = [];
+                    if (detailList.length === 0) {
+                        Q.notifyError("数据错误，不能创建验收单！");
+                        return;
+                    }
+                    for (var _i = 0, detailList_1 = detailList; _i < detailList_1.length; _i++) {
+                        var p = detailList_1[_i];
+                        var single = Q.deepClone({}, {
+                            InspectionDetailId: p.OrderDetailId,
+                            OrderDetailId: p.OrderDetailId,
+                            ProductName: p.ProductName,
+                            Category: p.Category,
+                            Container: p.Container,
+                            BlockNumber: p.BlockNumber,
+                            Width: p.Width,
+                            Height: p.Height,
+                            Weight: p.Weight,
+                            Volume: p.Volume,
+                            Mine: p.Mine,
+                            Grade: p.Grade,
+                            Notes: p.Notes
+                        });
+                        newDetails.push(single);
+                    }
+                    if (newDetails.length === 0) {
+                        Q.notifyError("数据错误，不能创建验收单！");
+                        return;
+                    }
+                    if (item.Type == Default.PurchaseType.Stone) {
+                        var stonedlg = new Default.InspectionDialog();
+                        this.initDialog(stonedlg);
+                        stonedlg.loadEntityAndOpenDialog({
+                            ParentId: item.PurchaseOrderId,
+                            ParentSupplierId: item.SupplierId,
+                            ParentNumber: item.Number,
+                            ParentType: item.Type,
+                            ParentShareType: item.ShareType,
+                            UserDisplayName: userName,
+                            ParentPurchaseDate: item.PurchaseDate,
+                            ParentNotes: item.Notes,
+                            OrderDetailsList: newDetails
+                        });
+                    }
+                    else {
+                        var slabdlg = new Default.PurchaseOrderSlabDialog();
+                        this.initDialog(slabdlg);
+                        slabdlg.loadByIdAndOpenDialog(item.PurchaseOrderId);
+                    }
+                }
+            };
+            return CreateAssignOrderGrid;
+        }(Serenity.EntityGrid));
+        CreateAssignOrderGrid = __decorate([
+            Serenity.Decorators.registerClass()
+        ], CreateAssignOrderGrid);
+        Default.CreateAssignOrderGrid = CreateAssignOrderGrid;
+    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
+})(BowenSerene || (BowenSerene = {}));
+var BowenSerene;
+(function (BowenSerene) {
+    var Default;
+    (function (Default) {
         var PurchaseOrderGrid = (function (_super) {
             __extends(PurchaseOrderGrid, _super);
             function PurchaseOrderGrid(container) {
@@ -10148,118 +10188,6 @@ var BowenSerene;
             Serenity.Decorators.registerClass()
         ], PurchaseOrderGrid);
         Default.PurchaseOrderGrid = PurchaseOrderGrid;
-    })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
-})(BowenSerene || (BowenSerene = {}));
-var BowenSerene;
-(function (BowenSerene) {
-    var Default;
-    (function (Default) {
-        var UserRow = BowenSerene.Administration.UserRow;
-        var CreateAssignOrderGrid = (function (_super) {
-            __extends(CreateAssignOrderGrid, _super);
-            function CreateAssignOrderGrid(container) {
-                return _super.call(this, container) || this;
-            }
-            CreateAssignOrderGrid.prototype.getColumnsKey = function () { return 'Default.PurchaseOrder'; };
-            CreateAssignOrderGrid.prototype.getIdProperty = function () { return Default.PurchaseOrderRow.idProperty; };
-            CreateAssignOrderGrid.prototype.getLocalTextPrefix = function () { return Default.PurchaseOrderRow.localTextPrefix; };
-            CreateAssignOrderGrid.prototype.getService = function () { return Default.PurchaseOrderService.baseUrl; };
-            CreateAssignOrderGrid.prototype.getDialogType = function () { return Default.InspectionDialog; };
-            /**
-             * This method is called just before List request is sent to service.
-             * You have an opportunity here to cancel request or modify it.
-             * Here we'll add a custom criteria to list request.
-             */
-            CreateAssignOrderGrid.prototype.onViewSubmit = function () {
-                if (!_super.prototype.onViewSubmit.call(this)) {
-                    return false;
-                }
-                // this has no relation to our lookup editor but as we'll allow picking only 
-                // categories of Produce and Seafood in product dialog, it's better to show
-                // only products from these categories in grid too
-                var request = this.view.params;
-                request.IsAssign = 0;
-                // brackets used are important above, NOT ['CategoryName', 'in', ['Produce', 'Seafood']]
-                return true;
-            };
-            CreateAssignOrderGrid.prototype.getColumns = function () {
-                var columns = _super.prototype.getColumns.call(this);
-                var fld = Default.PurchaseOrderRow.Fields;
-                Q.first(columns, function (x) { return x.field == fld.Number; }).format =
-                    function (ctx) { return "<a href=\"javascript:;\" class=\"customer-link\">" + Q.htmlEncode(ctx.value) + "</a>"; };
-                return columns;
-            };
-            CreateAssignOrderGrid.prototype.onClick = function (e, row, cell) {
-                // let base grid handle clicks for its edit links
-                _super.prototype.onClick.call(this, e, row, cell);
-                // if base grid already handled, we shouldn"t handle it again
-                if (e.isDefaultPrevented()) {
-                    return;
-                }
-                // get reference to current item
-                var item = this.itemAt(row);
-                // get reference to clicked element
-                var target = $(e.target);
-                if (target.hasClass("customer-link")) {
-                    e.preventDefault();
-                    var userName = UserRow.getLookup().itemById[item.InsertUserId].DisplayName;
-                    var detailList = item.OrderDetailsList.filter(function (x) { return x.IsAssign === 0; });
-                    var newDetails = Default.InspectionDetailRow[detailList.length];
-                    if (detailList.length === 0) {
-                        Q.notifyError("数据错误，不能创建验收单！");
-                        return;
-                    }
-                    for (var _i = 0, detailList_1 = detailList; _i < detailList_1.length; _i++) {
-                        var p = detailList_1[_i];
-                        var single = Q.deepClone({}, {
-                            InspectionDetailId: p.OrderDetailId,
-                            OrderDetailId: p.OrderDetailId,
-                            ProductName: p.ProductName,
-                            Category: p.Category,
-                            Container: p.Container,
-                            BlockNumber: p.BlockNumber,
-                            Width: p.Width,
-                            Height: p.Height,
-                            Weight: p.Weight,
-                            Volume: p.Volume,
-                            Mine: p.Mine,
-                            Grade: p.Grade,
-                            Notes: p.Notes
-                        });
-                        newDetails.push(single);
-                    }
-                    if (newDetails == null || newDetails.length === 0) {
-                        Q.notifyError("数据错误，不能创建验收单！");
-                        return;
-                    }
-                    if (item.Type == Default.PurchaseType.Stone) {
-                        var stonedlg = new Default.InspectionDialog();
-                        this.initDialog(stonedlg);
-                        stonedlg.loadEntityAndOpenDialog({
-                            ParentId: item.PurchaseOrderId,
-                            ParentSupplierId: item.SupplierId,
-                            ParentNumber: item.Number,
-                            ParentType: item.Type,
-                            ParentShareType: item.ShareType,
-                            UserDisplayName: userName,
-                            ParentPurchaseDate: item.PurchaseDate,
-                            ParentNotes: item.Notes,
-                            OrderDetailsList: newDetails
-                        });
-                    }
-                    else {
-                        var slabdlg = new Default.PurchaseOrderSlabDialog();
-                        this.initDialog(slabdlg);
-                        slabdlg.loadByIdAndOpenDialog(item.PurchaseOrderId);
-                    }
-                }
-            };
-            return CreateAssignOrderGrid;
-        }(Serenity.EntityGrid));
-        CreateAssignOrderGrid = __decorate([
-            Serenity.Decorators.registerClass()
-        ], CreateAssignOrderGrid);
-        Default.CreateAssignOrderGrid = CreateAssignOrderGrid;
     })(Default = BowenSerene.Default || (BowenSerene.Default = {}));
 })(BowenSerene || (BowenSerene = {}));
 var BowenSerene;

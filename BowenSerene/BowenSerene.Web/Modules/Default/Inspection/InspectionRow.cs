@@ -65,7 +65,7 @@ namespace BowenSerene.Default.Entities
             set { Fields.ParentPurchaseDate[this] = value; }
         }
 
-        [MasterDetailRelation(foreignKey: "ParentId", IncludeColumns = "ProductName")]
+        [MasterDetailRelation(foreignKey: "ParentId", IncludeColumns = "ProductId")]
         [DisplayName("明细"), NotMapped]
         public List<InspectionDetailRow> OrderDetailsList
         {

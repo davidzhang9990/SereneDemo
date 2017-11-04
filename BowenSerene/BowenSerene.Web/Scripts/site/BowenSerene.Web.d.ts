@@ -700,17 +700,6 @@ declare namespace BowenSerene.Default {
 declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
-}
-declare namespace BowenSerene.Default {
-    class InspectionDetailForm extends Serenity.PrefixedContext {
-        static formKey: string;
-    }
-    interface InspectionDetailForm {
-        ParentId: Serenity.IntegerEditor;
-        OrderDetailId: Serenity.IntegerEditor;
-    }
-}
-declare namespace BowenSerene.Default {
     interface InspectionDetailRow {
         InspectionDetailId?: number;
         ParentId?: number;
@@ -785,23 +774,6 @@ declare namespace BowenSerene.Default {
             const Category: string;
             const Mine: string;
             const Grade: string;
-        }
-    }
-}
-declare namespace BowenSerene.Default {
-    namespace InspectionDetailService {
-        const baseUrl = "Default/InspectionDetail";
-        function Create(request: Serenity.SaveRequest<InspectionDetailRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
-        function Update(request: Serenity.SaveRequest<InspectionDetailRow>, onSuccess?: (response: Serenity.SaveResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
-        function Delete(request: Serenity.DeleteRequest, onSuccess?: (response: Serenity.DeleteResponse) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
-        function Retrieve(request: Serenity.RetrieveRequest, onSuccess?: (response: Serenity.RetrieveResponse<InspectionDetailRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
-        function List(request: Serenity.ListRequest, onSuccess?: (response: Serenity.ListResponse<InspectionDetailRow>) => void, opt?: Q.ServiceOptions<any>): JQueryXHR;
-        namespace Methods {
-            const Create: string;
-            const Update: string;
-            const Delete: string;
-            const Retrieve: string;
-            const List: string;
         }
     }
 }
@@ -5143,29 +5115,15 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
-    class InspectionDetailDialog extends Serenity.EntityDialog<InspectionDetailRow, any> {
-        protected getFormKey(): string;
-        protected getIdProperty(): string;
-        protected getLocalTextPrefix(): string;
-        protected getService(): string;
-        protected form: InspectionDetailForm;
-    }
-}
-declare namespace BowenSerene.Default {
-    class InspectionDetailGrid extends Serenity.EntityGrid<InspectionDetailRow, any> {
-        protected getColumnsKey(): string;
-        protected getDialogType(): typeof InspectionDetailDialog;
-        protected getIdProperty(): string;
-        protected getLocalTextPrefix(): string;
-        protected getService(): string;
-        constructor(container: JQuery);
-    }
-}
-declare namespace BowenSerene.Default {
     class InspectionStoneEditor extends Common.GridEditorBase<InspectionDetailRow> {
         protected getColumnsKey(): string;
         protected getLocalTextPrefix(): string;
         constructor(container: JQuery);
+        protected getButtons(): {
+            title: string;
+            cssClass: string;
+            onClick: () => void;
+        }[];
     }
 }
 declare namespace BowenSerene.Default {
@@ -5294,20 +5252,6 @@ declare namespace BowenSerene.Default {
     }
 }
 declare namespace BowenSerene.Default {
-    class PurchaseOrderGrid extends Serenity.EntityGrid<PurchaseOrderRow, any> {
-        protected getColumnsKey(): string;
-        protected getIdProperty(): string;
-        protected getLocalTextPrefix(): string;
-        protected getService(): string;
-        protected getDialogType(): typeof PurchaseOrderStoneDialog;
-        constructor(container: JQuery);
-        protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[];
-        protected getColumns(): Slick.Column[];
-        protected getButtons(): Serenity.ToolButton[];
-        protected onClick(e: JQueryEventObject, row: number, cell: number): void;
-    }
-}
-declare namespace BowenSerene.Default {
     class CreateAssignOrderGrid extends Serenity.EntityGrid<PurchaseOrderRow, any> {
         protected getColumnsKey(): string;
         protected getIdProperty(): string;
@@ -5322,6 +5266,20 @@ declare namespace BowenSerene.Default {
          */
         protected onViewSubmit(): boolean;
         protected getColumns(): Slick.Column[];
+        protected onClick(e: JQueryEventObject, row: number, cell: number): void;
+    }
+}
+declare namespace BowenSerene.Default {
+    class PurchaseOrderGrid extends Serenity.EntityGrid<PurchaseOrderRow, any> {
+        protected getColumnsKey(): string;
+        protected getIdProperty(): string;
+        protected getLocalTextPrefix(): string;
+        protected getService(): string;
+        protected getDialogType(): typeof PurchaseOrderStoneDialog;
+        constructor(container: JQuery);
+        protected getQuickFilters(): Serenity.QuickFilter<Serenity.Widget<any>, any>[];
+        protected getColumns(): Slick.Column[];
+        protected getButtons(): Serenity.ToolButton[];
         protected onClick(e: JQueryEventObject, row: number, cell: number): void;
     }
 }
