@@ -33,6 +33,9 @@ namespace BowenSerene.Default {
             if (this.entity.Status === 1) {
                 this.element.find('.add-button').hide();
             }
+
+            this.toolbar.findButton('apply-changes-button').hide();
+            this.toolbar.findButton('save-and-close-button').hide();
         }
 
         //#david 加载实体完成事件

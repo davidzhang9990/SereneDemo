@@ -50,7 +50,6 @@ namespace BowenSerene.Default.Repositories
                         detail.ParentId = this.Row.PurchaseOrderId.Value;
                     }
                 }
-                Console.Write(Row);
             }
 
             protected override void AfterSave()

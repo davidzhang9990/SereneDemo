@@ -841,7 +841,6 @@
     <EmbeddedResource Include="Migrations\NorthwindDB\NorthwindDBScript_MySql.sql" />
     <Content Include="Imports\ClientTypes\ClientTypes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ClientTypes.log</LastGenOutput>
     </Content>
     <Content Include="Migrations\NorthwindDB\NorthwindDBScript_Oracle.sql" />
     <Content Include="Readme.CodeGenerator.txt" />
@@ -1164,15 +1163,19 @@
     <Content Include="Modules\BasicSamples\Editors\FilteredLookupInDetail\Index.cshtml" />
     <Content Include="Modules\BasicSamples\Grids\GroupingAndSummariesInGrid\Index.cshtml" />
     <Content Include="Imports\CodeGenerationHelpers.ttinclude" />
-    <Content Include="Imports\ClientTypes\ClientTypes.log">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClientTypes.tt</DependentUpon>
-    </Content>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.Gender.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.GenreColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionDetailColumns.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionStoneColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.MovieCastColumns.ts">
@@ -1328,11 +1331,6 @@
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <Content Include="Content\site\site.default.less" />
-    <None Include="Imports\ServerTypings\ServerTypings.log">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServerTypings.tt</DependentUpon>
-    </None>
     <Content Include="Modules\BasicSamples\Dialogs\OtherFormInTab\OtherFormInTabDialog.Template.html" />
     <TypeScriptCompile Include="Modules\BasicSamples\Dialogs\EntityDialogAsPanel\EntityDialogAsPanel.ts" />
     <TypeScriptCompile Include="Modules\BasicSamples\Dialogs\OtherFormInTabOneBar\OtherFormOneBarDialog.ts" />
@@ -1504,6 +1502,7 @@
     <TypeScriptCompile Include="Modules\Common\Reporting\ReportDialog.ts" />
     <TypeScriptCompile Include="Modules\Common\ScriptInitialization.ts" />
     <TypeScriptCompile Include="Modules\Common\UserPreference\UserPreferenceStorage.ts" />
+    <TypeScriptCompile Include="Modules\Default\InspectionDetail\InspectionStoneEditor.ts" />
     <TypeScriptCompile Include="Modules\Default\PurchaseOrder\CreateAssignOrderGrid.ts" />
     <TypeScriptCompile Include="Modules\Default\MovieCast\MovieCastEditDialog.ts" />
     <TypeScriptCompile Include="Modules\Default\MovieCast\MovieCastEditor.ts" />
@@ -1821,7 +1820,6 @@
     <Content Include="Scripts\timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Imports\ServerTypings\ServerTypings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ServerTypings.log</LastGenOutput>
     </Content>
     <Content Include="Welcome.htm" />
     <Content Include="Modules\Membership\Account\ChangePassword\AccountChangePassword.cshtml" />
@@ -2183,6 +2181,30 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.ProductFinishTypeForm.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\Inspection\InspectionIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\Inspection\InspectionDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\Inspection\InspectionGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionDetailRow.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionDetailService.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
+    <Content Include="Modules\Default\InspectionDetail\InspectionDetailIndex.cshtml" />
+    <TypeScriptCompile Include="Modules\Default\InspectionDetail\InspectionDetailDialog.ts" />
+    <TypeScriptCompile Include="Modules\Default\InspectionDetail\InspectionDetailGrid.ts" />
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionDetailForm.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -2201,6 +2223,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Imports\ClientTypes\Default.GenreListFormatterAttribute.cs">
+      <DependentUpon>ClientTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Imports\ClientTypes\Default.InspectionStoneEditorAttribute.cs">
       <DependentUpon>ClientTypes.tt</DependentUpon>
     </Compile>
     <Compile Include="Imports\ClientTypes\Default.MovieCastEditorAttribute.cs">
@@ -2295,6 +2320,7 @@
     <Compile Include="Modules\Common\NPOIExcel\Model\ExcelTemplate.cs" />
     <Compile Include="Modules\Common\NPOIExcel\Model\TemplateMode.cs" />
     <Compile Include="Modules\Common\RowActive.cs" />
+    <Compile Include="Modules\Default\InspectionDetail\InspectionStoneColumns.cs" />
     <Compile Include="Modules\Default\Products\ProductsLookup.cs" />
     <Compile Include="Modules\Default\Products\ProductListRequest.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\ProductImportForm.cs" />
@@ -2689,6 +2715,18 @@
     <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypePage.cs" />
     <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypeColumns.cs" />
     <Compile Include="Modules\Default\ProductFinishType\ProductFinishTypeForm.cs" />
+    <Compile Include="Modules\Default\Inspection\InspectionRow.cs" />
+    <Compile Include="Modules\Default\Inspection\InspectionRepository.cs" />
+    <Compile Include="Modules\Default\Inspection\InspectionEndpoint.cs" />
+    <Compile Include="Modules\Default\Inspection\InspectionPage.cs" />
+    <Compile Include="Modules\Default\Inspection\InspectionColumns.cs" />
+    <Compile Include="Modules\Default\Inspection\InspectionForm.cs" />
+    <Compile Include="Modules\Default\InspectionDetail\InspectionDetailRow.cs" />
+    <Compile Include="Modules\Default\InspectionDetail\InspectionDetailRepository.cs" />
+    <Compile Include="Modules\Default\InspectionDetail\InspectionDetailEndpoint.cs" />
+    <Compile Include="Modules\Default\InspectionDetail\InspectionDetailPage.cs" />
+    <Compile Include="Modules\Default\InspectionDetail\InspectionDetailColumns.cs" />
+    <Compile Include="Modules\Default\InspectionDetail\InspectionDetailForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

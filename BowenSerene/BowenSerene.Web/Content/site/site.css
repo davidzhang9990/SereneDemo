@@ -8336,6 +8336,30 @@ section.content > .s-DataGrid {
     width: 100%;
   }
 }
+.s-Default-InspectionDialog > .size {
+  width: 650px;
+}
+.s-Default-InspectionDialog .caption {
+  width: 150px;
+}
+@media (min-width: 768px) {
+  .s-Default-InspectionDialog .field.ParentNumber,
+  .s-Default-InspectionDialog .field.ParentSupplierId,
+  .s-Default-InspectionDialog .field.ParentType,
+  .s-Default-InspectionDialog .field.ParentShareType,
+  .s-Default-InspectionDialog .field.InputUserName,
+  .s-Default-InspectionDialog .field.ParentPurchaseDate {
+    flex: auto;
+    min-width: 50%;
+  }
+  .s-Default-InspectionDialog .field.OrderDetailsList > .caption {
+    display: none;
+  }
+  .s-Default-InspectionDialog .grid-container {
+    height: 500px;
+    width: 100%;
+  }
+}
 .s-Default-PurchaseOrderDetailDialog > .size {
   width: 650px;
 }

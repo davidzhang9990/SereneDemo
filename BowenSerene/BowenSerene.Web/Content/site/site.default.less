@@ -117,6 +117,32 @@
     }
 }
 
+.s-Default-InspectionDialog {
+    > .size {
+        width: 650px;
+    }
+
+    .caption {
+        width: 150px;
+    }
+
+    @media (min-width: 768px) {
+        .field.ParentNumber, .field.ParentSupplierId, .field.ParentType, .field.ParentShareType, .field.InputUserName, .field.ParentPurchaseDate {
+            flex: auto;
+            min-width: 50%;
+        }
+
+        .field.OrderDetailsList > .caption {
+            display: none;
+        }
+
+        .grid-container {
+            height: 500px;
+            width: 100%;
+        }
+    }
+}
+
 .s-Default-PurchaseOrderDetailDialog {
     > .size {
         width: 650px;
