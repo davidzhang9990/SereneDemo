@@ -12,7 +12,7 @@ namespace BowenSerene.Administration.Entities
     [ConnectionKey("Default"), TableName("Users"), DisplayName("Users"), InstanceName("User"), TwoLevelCached]
     [ReadPermission("Administration:General")]
     [ModifyPermission("Administration:General")]
-    [LookupScript("Administration.User")]
+    [LookupScript("Administration.User", Permission = PermissionKeys.Security)]
     public sealed class UserRow : LoggingRow, IIdRow, INameRow, IIsActiveRow, IAuditLog
     {
         [DisplayName("User Id"), Identity]
