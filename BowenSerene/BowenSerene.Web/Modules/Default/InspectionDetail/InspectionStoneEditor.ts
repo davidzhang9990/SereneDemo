@@ -6,7 +6,7 @@ namespace BowenSerene.Default {
     @Serenity.Decorators.registerEditor()
     export class InspectionStoneEditor extends Common.GridEditorBase<InspectionDetailRow>{
 
-        private rowSelection: Serenity.GridRowSelectionMixin;
+        public rowSelection: Serenity.GridRowSelectionMixin;
 
         protected getColumnsKey() {
             return "Default.InspectionStone";
@@ -23,12 +23,6 @@ namespace BowenSerene.Default {
 
         constructor(container: JQuery) {
             super(container);
-            this.slickGrid.onSelectedRowsChanged.subscribe(
-                (p1, selecion: { grid: Slick.Grid, rows: number[] }) => {
-                    Q.log(selecion.rows[0]);
-                    //this.EnableDisableControls(selecion.rows[0]);
-                }
-            );
         }
 
         protected getColumns() {
@@ -37,30 +31,30 @@ namespace BowenSerene.Default {
             return columns;
         }
 
-        protected getButtons() {
-            return [
-            {
-                title: '明细确认',
-                cssClass: 'send-button',
-                onClick: () => {
+        protected getIdProperty() { return "__id"; }
 
-                    Q.log(this.rowSelection.getSelectedKeys());
-                    this.rowSelection.resetCheckedAndRefresh();
-
-                    //                    if (!this.onViewSubmit()) {
-                    //                        return;
-                    //                    }
-                    //                    var action = new BowenSerene.BasicSamples.OrderBulkAction();
-                    //                    action.done = () => this.rowSelection.resetCheckedAndRefresh();
-                    //                    action.execute(this.rowSelection.getSelectedKeys());
+        //保存前设置选中的行 IsAssign=1
+        public setViewDataSelect() {
+            var items = this.view.getItems().slice();
+            var selectItems = this.rowSelection.getSelectedKeys();
+            for (var p of items) {
+                let id = (p as any)[this.getIdProperty()];
+                if (selectItems.indexOf(id) > -1) {
+                    p.IsAssign = 1;
                 }
-            }];
+            }
+            //set entitys
+            this.setEntities(items);
+        }
+
+        protected getButtons() {
+            return [];
         }
 
         //状态是已完成，关闭新增按钮
-        //        protected updateInterface(): void {
-        //           this.element.find('.add-button').hide();
-        //            //this.toolbar.findButton('add-button').hide();
-        //        }
+//        protected updateInterface(): void {
+//            //this.element.find('.add-button').hide();
+//            //this.toolbar.findButton('add-button').hide();
+//        }
     }
 }

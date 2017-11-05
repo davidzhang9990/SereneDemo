@@ -39,5 +39,7 @@ namespace BowenSerene.Default.Columns
         public String Grade { get; set; }
 
         public String Notes { get; set; }
+        [Hidden]
+        public Int32? IsAssign { get; set; }
     }
 }

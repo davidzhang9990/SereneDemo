@@ -1173,6 +1173,9 @@
     <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionDeleteRequest.ts">
+      <DependentUpon>ServerTypings.tt</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Imports\ServerTypings\Default.InspectionStoneColumns.ts">
       <DependentUpon>ServerTypings.tt</DependentUpon>
     </TypeScriptCompile>
@@ -2321,6 +2324,7 @@
     <Compile Include="Modules\Common\NPOIExcel\Model\TemplateMode.cs" />
     <Compile Include="Modules\Common\RowActive.cs" />
     <Compile Include="Modules\Default\InspectionDetail\InspectionStoneColumns.cs" />
+    <Compile Include="Modules\Default\Inspection\InspectionDeleteRequest.cs" />
     <Compile Include="Modules\Default\Products\ProductsLookup.cs" />
     <Compile Include="Modules\Default\Products\ProductListRequest.cs" />
     <Compile Include="Modules\Default\PurchaseOrderDetail\ProductImportForm.cs" />

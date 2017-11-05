@@ -77,7 +77,8 @@ namespace BowenSerene.Default {
                             Volume: p.Volume,
                             Mine: p.Mine,
                             Grade: p.Grade,
-                            Notes: p.Notes
+                            Notes: p.Notes,
+                            IsAssign: 0
                         });
                     newDetails.push(single);
                 }

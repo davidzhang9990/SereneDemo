@@ -32,6 +32,12 @@ namespace BowenSerene.Default.Endpoints
         }
 
         [HttpPost]
+        public DeleteResponse MyCustomDelete(IUnitOfWork uow, InspectionDeleteRequest request)
+        {
+            return new MyRepository().CustomDelete(uow, request);
+        }
+
+        [HttpPost]
         public RetrieveResponse<MyRow> Retrieve(IDbConnection connection, RetrieveRequest request)
         {
             return new MyRepository().Retrieve(connection, request);
