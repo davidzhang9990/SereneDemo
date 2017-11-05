@@ -46,11 +46,17 @@ namespace BowenSerene.Default {
             var scell = this.slickGrid.getCellFromEvent(e);
             var single = this.itemAt(scell.row);
             var field = select.data('field');
-            var productId = Q.coalesce(Q.trimToNull(select.val()), '0');
-            var proName = ProductsRow.getLookup().items.filter(x => x.ProductId == productId)[0].Name;
+            var fld = PurchaseOrderDetailRow.Fields;
+            var selectorId = Q.coalesce(Q.trimToNull(select.val()), '0');
 
-            single[field] = productId;
-            single.ProductName = proName;
+            if (field == fld.ProductId) {
+                var proName = ProductsRow.getLookup().items.filter(x => x.ProductId == selectorId)[0].Name;
+                single[field] = selectorId;
+                single.ProductName = proName;
+            } else {
+                var finishName = ProductFinishTypeRow.getLookup().items.filter(x => x.FinishTypeId == selectorId)[0].Name;
+                single[field] = selectorId;
+            }
             this.view.refresh();
         }
         //文本框改变事件
@@ -169,6 +175,33 @@ namespace BowenSerene.Default {
                 "' value='" + Q.htmlEncode(value) +
                 "' maxlength='" + column.sourceItem.maxLength + "'/>";
         }
+
+        private selectFinishFormatter(ctx: Slick.FormatterContext, idField: string, lookup: Q.Lookup<any>) {
+            var fld = PurchaseOrderDetailRow.Fields;
+            var klass = 'edit';
+            var item = ctx.item as PurchaseOrderDetailRow;
+            var pending = this.pendingChanges[item.OrderDetailId];
+            var column = ctx.column as Slick.Column;
+
+            if (pending && pending[idField] !== undefined) {
+                klass += ' dirty';
+            }
+
+            var value = this.getEffectiveValue(item, idField);
+            var markup = "<select class='" + klass +
+                "' data-field='" + idField +
+                "' style='width: 100%; max-width: 100%'>"
+                + " <option value=''>请选择</option>";
+            for (var c of lookup.items) {
+                let id = c[lookup.idField];
+                markup += "<option value='" + id + "'";
+                if (id == value) {
+                    markup += " selected";
+                }
+                markup += ">" + Q.htmlEncode(c[lookup.textField]) + "</option>";
+            }
+            return markup + "</select>";
+        }
         /**
         * Sorry but you cannot use LookupEditor, e.g. Select2 here, only possible is a SELECT element
         */
@@ -233,7 +266,7 @@ namespace BowenSerene.Default {
 
             var finishType = Q.first(columns, x => x.field === fld.IsFinishType);
             finishType.referencedFields = [fld.IsFinishType];
-            finishType.format = ctx => this.selectFormatter(ctx, fld.IsFinishType, ProductFinishTypeRow.getLookup());
+            finishType.format = ctx => this.selectFinishFormatter(ctx, fld.IsFinishType, ProductFinishTypeRow.getLookup());
 
             Q.first(columns, x => x.field === fld.Size)
                 .groupTotalsFormatter = (totals, col) => (totals.sum ? ('面积: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');

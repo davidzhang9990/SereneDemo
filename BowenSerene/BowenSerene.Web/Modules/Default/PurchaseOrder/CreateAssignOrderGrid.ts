@@ -24,6 +24,14 @@ namespace BowenSerene.Default {
             return true;
         }
 
+        //david 设置页面按钮
+        protected getButtons() {
+            var buttons = super.getButtons();
+            //删除添加按钮
+            buttons.splice(Q.indexOf(buttons, x => x.cssClass == "add-button"), 1);
+            return buttons;
+        }
+
         protected getColumns(): Slick.Column[] {
             var columns = super.getColumns();
 

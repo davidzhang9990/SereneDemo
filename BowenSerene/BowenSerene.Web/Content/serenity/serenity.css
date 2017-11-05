@@ -2613,6 +2613,9 @@ a.quick-search-field {
 .delete-button span.button-inner {
   background-image: url(images/cross-script.png);
 }
+.delete-button-custom span.button-inner {
+  background-image: url(images/cross-script.png);
+}
 .undo-delete-button span.button-inner {
   background-image: url(images/bin-minus.png);
 }

@@ -236,6 +236,13 @@ namespace BowenSerene.Default.Entities
             set { Fields.ProductId[this] = value; }
         }
 
+        [DisplayName("完成面"), Expression("jFinishType.[Name]")]
+        public String FinishTypeName
+        {
+            get { return Fields.ProductName[this]; }
+            set { Fields.ProductName[this] = value; }
+        }
+
         [DisplayName("备注"), Size(1000)]
         public String Notes
         {

@@ -12,5 +12,13 @@ namespace BowenSerene.Default {
         constructor(container: JQuery) {
             super(container);
         }
+
+        //david 设置页面按钮
+        protected getButtons() {
+            var buttons = super.getButtons();
+            //删除添加按钮
+            buttons.splice(Q.indexOf(buttons, x => x.cssClass == "add-button"), 1);
+            return buttons;
+        }
     }
 }
