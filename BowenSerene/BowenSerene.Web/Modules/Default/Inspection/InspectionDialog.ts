@@ -29,20 +29,23 @@ namespace BowenSerene.Default {
         protected getToolbarButtons(): Serenity.ToolButton[] {
             let buttons = super.getToolbarButtons();
             buttons.splice(Q.indexOf(buttons, x => x.cssClass == "apply-changes-button"), 1);
-
+           
             buttons.push({
                 title: '自定义删除',
                 cssClass: 'delete-button',
                 onClick: () => {
-                    Q.log(this.form.OrderDetailsList.value);
-                    InspectionService.MyCustomDelete({
-                        EntityId: this.get_entityId(),
-                        InspectionDetails: this.form.OrderDetailsList.value
-                    }, response => {
-                        this.dialogClose();
-                        this.
-                        window.setTimeout(() => Q.notifySuccess("删除成功"), 0);
-                    });
+
+                    let done = () => {
+                        InspectionService.MyCustomDelete({
+                            EntityId: this.get_entityId(),
+                            InspectionDetails: this.form.OrderDetailsList.value
+                        }, response => {
+                            this.element.triggerHandler('ondatachange', [{ entityId: this.get_entityId(), entity: this.entity, type: 'delete' }]);
+                            this.dialogClose();
+                            window.setTimeout(() => Q.notifySuccess("删除成功"), 0);
+                        });
+                    };
+                    Q.confirm("确定要删除该验收单吗？", done);
                 }
             });
             return buttons;
@@ -64,7 +67,7 @@ namespace BowenSerene.Default {
                 this.applyChangesButton.hide();
                 this.saveAndCloseButton.hide();
             }
-            this.deleteButton.hide();
+            //this.deleteButton.hide();
             //            Q.log(this.form.UserId.value);
             //            Q.log(this.form.ParentId.value);
         }
