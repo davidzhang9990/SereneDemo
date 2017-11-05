@@ -8352,8 +8352,7 @@ section.content > .s-DataGrid {
     flex: auto;
     min-width: 50%;
   }
-  .s-Default-InspectionDialog .field.OrderDetailsList > .caption,
-  .s-Default-InspectionDialog .grid-toolbar {
+  .s-Default-InspectionDialog .field.OrderDetailsList > .caption {
     display: none;
   }
   .s-Default-InspectionDialog .grid-container {
