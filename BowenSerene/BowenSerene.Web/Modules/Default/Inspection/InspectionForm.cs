@@ -34,8 +34,8 @@ namespace BowenSerene.Default.Forms
         [TextAreaEditor(Rows = 3), ReadOnly(true)]
         public String ParentNotes { get; set; }
         public Int32 UserId { get; set; }
-        [Tab("采购信息")]
-        [Category("采购明细")]
+        [Tab("指派信息")]
+        [Category("指派明细")]
         [InspectionStoneEditor]
         public List<InspectionDetailRow> OrderDetailsList { get; set; }
     }

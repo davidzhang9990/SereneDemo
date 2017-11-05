@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../Common/Helpers/GridEditorBase.ts" />
+/// <reference path="../../BasicSamples/Grids/CancellableBulkAction/OrderBulkAction.ts" />
 
 namespace BowenSerene.Default {
 
@@ -8,7 +9,7 @@ namespace BowenSerene.Default {
         private rowSelection: Serenity.GridRowSelectionMixin;
 
         protected getColumnsKey() {
-             return "Default.InspectionStone";
+            return "Default.InspectionStone";
         }
 
         protected createToolbarExtensions() {
@@ -17,11 +18,17 @@ namespace BowenSerene.Default {
         }
 
         protected getLocalTextPrefix() {
-             return InspectionDetailRow.localTextPrefix;
+            return InspectionDetailRow.localTextPrefix;
         }
 
         constructor(container: JQuery) {
             super(container);
+            this.slickGrid.onSelectedRowsChanged.subscribe(
+                (p1, selecion: { grid: Slick.Grid, rows: number[] }) => {
+                    Q.log(selecion.rows[0]);
+                    //this.EnableDisableControls(selecion.rows[0]);
+                }
+            );
         }
 
         protected getColumns() {
@@ -32,20 +39,28 @@ namespace BowenSerene.Default {
 
         protected getButtons() {
             return [
-                {
-                    title: '新增',
-                    cssClass: 'add-button',
-                    onClick: () => {
-                        Q.log("test hide");
-                    }
+            {
+                title: '明细确认',
+                cssClass: 'send-button',
+                onClick: () => {
+
+                    Q.log(this.rowSelection.getSelectedKeys());
+                    this.rowSelection.resetCheckedAndRefresh();
+
+                    //                    if (!this.onViewSubmit()) {
+                    //                        return;
+                    //                    }
+                    //                    var action = new BowenSerene.BasicSamples.OrderBulkAction();
+                    //                    action.done = () => this.rowSelection.resetCheckedAndRefresh();
+                    //                    action.execute(this.rowSelection.getSelectedKeys());
                 }
-            ];
+            }];
         }
 
         //状态是已完成，关闭新增按钮
-//        protected updateInterface(): void {
-//           this.element.find('.add-button').hide();
-//            //this.toolbar.findButton('add-button').hide();
-//        }
+        //        protected updateInterface(): void {
+        //           this.element.find('.add-button').hide();
+        //            //this.toolbar.findButton('add-button').hide();
+        //        }
     }
 }

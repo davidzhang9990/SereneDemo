@@ -1,6 +1,5 @@
 ﻿
 namespace BowenSerene.Default {
-    //import UserRow = BowenSerene.Administration.UserRow;
 
     @Serenity.Decorators.registerClass()
     export class CreateAssignOrderGrid extends Serenity.EntityGrid<PurchaseOrderRow, any>  {
