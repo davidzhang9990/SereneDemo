@@ -7,9 +7,14 @@ namespace BowenSerene.Migrations.DefaultDB
     {
         public override void Up()
         {
-            Alter.Table("PurchaseOrderDetail")
-                .AddColumn("IsFinishType").AsGuid().Nullable()
-                .ForeignKey("FK_PurchaseOrderDetail_FinishTypeId", "ProductFinishType", "FinishTypeId");
+            this.CreateTableWithId32("ProductFinishType", "FinishTypeId", s => s
+              .WithColumn("Name").AsString(100).NotNullable()
+               .WithColumn("SortCode").AsInt32().Nullable().WithDefaultValue(0)
+               .WithColumn("IsActive").AsInt16().NotNullable()
+               .WithColumn("InsertDate").AsDateTime().Nullable()
+               .WithColumn("InsertUserId").AsInt32().Nullable()
+               .WithColumn("UpdateDate").AsDateTime().Nullable()
+               .WithColumn("UpdateUserId").AsInt32().Nullable());
         }
     }
 

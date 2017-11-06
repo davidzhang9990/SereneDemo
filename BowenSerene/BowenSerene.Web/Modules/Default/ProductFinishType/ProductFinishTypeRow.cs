@@ -18,8 +18,8 @@ namespace BowenSerene.Default.Entities
     [LookupScript("Default.ProductFinishType")]
     public sealed class ProductFinishTypeRow : LoggingRow, IIdRow, INameRow
     {
-        [DisplayName("Finish Type Id"), PrimaryKey]
-        public Guid? FinishTypeId
+        [DisplayName("Finish Type Id"), Identity]
+        public Int32? FinishTypeId
         {
             get { return Fields.FinishTypeId[this]; }
             set { Fields.FinishTypeId[this] = value; }
@@ -64,7 +64,7 @@ namespace BowenSerene.Default.Entities
 
         public class RowFields : LoggingRowFields
         {
-            public GuidField FinishTypeId;
+            public Int32Field FinishTypeId;
             public StringField Name;
             public Int32Field SortCode;
             public Int16Field IsActive;

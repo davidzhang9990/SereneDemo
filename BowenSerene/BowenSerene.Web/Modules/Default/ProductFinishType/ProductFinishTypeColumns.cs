@@ -13,6 +13,8 @@ namespace BowenSerene.Default.Columns
     [BasedOnRow(typeof(Entities.ProductFinishTypeRow))]
     public class ProductFinishTypeColumns
     {
+        [EditLink, DisplayName("Db.Shared.RecordId"), AlignRight]
+        public Int32 MovieId { get; set; }
         [EditLink]
         public String Name { get; set; }
         public Int32 SortCode { get; set; }

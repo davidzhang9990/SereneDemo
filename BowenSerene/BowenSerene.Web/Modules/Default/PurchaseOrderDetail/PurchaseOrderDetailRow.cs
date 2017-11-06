@@ -17,7 +17,7 @@ namespace BowenSerene.Default.Entities
     [ModifyPermission("Administration:General")]
     public sealed class PurchaseOrderDetailRow : LoggingRow, IIdRow, INameRow
     {
-        [DisplayName("明细Key"), Identity]
+        [DisplayName("明细Key"), Identity, SortOrder(1)]
         public Int32? OrderDetailId
         {
             get { return Fields.OrderDetailId[this]; }

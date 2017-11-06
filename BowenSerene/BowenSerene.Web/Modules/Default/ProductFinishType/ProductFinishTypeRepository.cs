@@ -43,10 +43,10 @@ namespace BowenSerene.Default.Repositories
             {
                 base.SetInternalFields();
 
-                if (IsCreate)
-                {
-                    Row.FinishTypeId = Guid.NewGuid();
-                }
+                //if (IsCreate)
+                //{
+                //    Row.FinishTypeId = Guid.NewGuid();
+                //}
             }
         }
         private class MyDeleteHandler : DeleteRequestHandler<MyRow> { }
