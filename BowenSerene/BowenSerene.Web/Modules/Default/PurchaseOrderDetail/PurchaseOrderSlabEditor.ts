@@ -269,7 +269,7 @@ namespace BowenSerene.Default {
             finishType.format = ctx => this.selectFinishFormatter(ctx, fld.IsFinishType, ProductFinishTypeRow.getLookup());
 
             Q.first(columns, x => x.field === fld.Size)
-                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('面积: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : '');
+                .groupTotalsFormatter = (totals, col) => (totals.sum ? ('面积: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.00'), '')) : '');
 
             Q.first(columns, x => x.field === fld.Length).format = num;
             Q.first(columns, x => x.field === fld.Width).format = num;

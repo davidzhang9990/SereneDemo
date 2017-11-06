@@ -10718,7 +10718,7 @@ var BowenSerene;
                 finishType.referencedFields = [fld.IsFinishType];
                 finishType.format = function (ctx) { return _this.selectFinishFormatter(ctx, fld.IsFinishType, Default.ProductFinishTypeRow.getLookup()); };
                 Q.first(columns, function (x) { return x.field === fld.Size; })
-                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('面积: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.'), '')) : ''); };
+                    .groupTotalsFormatter = function (totals, col) { return (totals.sum ? ('面积: ' + Q.coalesce(Q.formatNumber(totals.sum[col.field], '0.00'), '')) : ''); };
                 Q.first(columns, function (x) { return x.field === fld.Length; }).format = num;
                 Q.first(columns, function (x) { return x.field === fld.Width; }).format = num;
                 Q.first(columns, function (x) { return x.field === fld.Thick; }).format = decimal;
