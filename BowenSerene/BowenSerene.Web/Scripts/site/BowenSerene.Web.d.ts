@@ -1110,7 +1110,7 @@ declare namespace BowenSerene.Default {
 }
 declare namespace BowenSerene.Default {
     interface ProductFinishTypeRow {
-        FinishTypeId?: string;
+        FinishTypeId?: number;
         Name?: string;
         SortCode?: number;
         IsActive?: RowActive;

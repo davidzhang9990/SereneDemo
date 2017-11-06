@@ -1,6 +1,6 @@
 ﻿namespace BowenSerene.Default {
     export interface ProductFinishTypeRow {
-        FinishTypeId?: string;
+        FinishTypeId?: number;
         Name?: string;
         SortCode?: number;
         IsActive?: RowActive;

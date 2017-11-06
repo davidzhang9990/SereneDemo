@@ -9492,6 +9492,12 @@ var BowenSerene;
             InspectionDialog.prototype.getToolbarButtons = function () {
                 var _this = this;
                 var buttons = _super.prototype.getToolbarButtons.call(this);
+                var deleteEvent = buttons[0].onClick;
+                buttons[0].onClick = function (e) {
+                    Q.confirm("This WO is approved. Making any changes will make this status Pending and All challan loading will be stopped for this WO. \n Do you want to continue??", function () {
+                        deleteEvent(e);
+                    });
+                };
                 buttons.splice(Q.indexOf(buttons, function (x) { return x.cssClass == "apply-changes-button"; }), 1);
                 buttons.push({
                     title: '自定义删除',

@@ -28,6 +28,12 @@ namespace BowenSerene.Default {
 
         protected getToolbarButtons(): Serenity.ToolButton[] {
             let buttons = super.getToolbarButtons();
+            let deleteEvent = buttons[0].onClick;
+            buttons[0].onClick = e => {
+                Q.confirm("This WO is approved. Making any changes will make this status Pending and All challan loading will be stopped for this WO. \n Do you want to continue??", () => {
+                    deleteEvent(e);
+                });
+            };
             buttons.splice(Q.indexOf(buttons, x => x.cssClass == "apply-changes-button"), 1);
 
             buttons.push({
