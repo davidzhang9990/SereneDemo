@@ -28,15 +28,15 @@ namespace BowenSerene.Default {
         }
 
         //状态是已完成，关闭新增按钮
-        protected updateInterface(): void {
-            this.form.Type.value = Default.PurchaseType.Stone.toString();
-            if (this.entity.Status === 1) {
-                this.element.find('.add-button').hide();
-            }
-
-            this.toolbar.findButton('apply-changes-button').hide();
-            this.toolbar.findButton('save-and-close-button').hide();
-        }
+//        protected updateInterface(): void {
+//            this.form.Type.value = Default.PurchaseType.Stone.toString();
+//            if (this.entity.Status === 1) {
+//                this.element.find('.add-button').hide();
+//            }
+//
+//            this.toolbar.findButton('apply-changes-button').hide();
+//            this.toolbar.findButton('save-and-close-button').hide();
+//        }
 
         //#david 加载实体完成事件
         loadEntity(entity: PurchaseOrderRow) {

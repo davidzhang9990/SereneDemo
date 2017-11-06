@@ -5277,7 +5277,6 @@ declare namespace BowenSerene.Default {
         protected form: PurchaseOrderSlabForm;
         constructor();
         private supplierChange();
-        protected updateInterface(): void;
         loadEntity(entity: PurchaseOrderRow): void;
     }
 }
@@ -5291,7 +5290,6 @@ declare namespace BowenSerene.Default {
         protected form: PurchaseOrderStoneForm;
         constructor();
         private supplierChange();
-        protected updateInterface(): void;
         loadEntity(entity: PurchaseOrderRow): void;
     }
 }
