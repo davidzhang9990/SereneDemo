@@ -2,6 +2,10 @@
 cmd# sqllocaldb info
 cmd# sqllocaldb v
 
+#更改默认数据库
+sqlcmd -S"180.76.149.153\sqlexpress,1455" -U"sa" -P"Bowen.123" -d"master" -Q"exec sp_defaultdb N'sa', N'master'"
+
+
 #Microsoft SQL Server 2014 (12.0.2000.8)
 #Microsoft SQL Server 2016 (13.0.1601.5)
 
