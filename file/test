@@ -2,6 +2,17 @@
 cmd# sqllocaldb info
 cmd# sqllocaldb v
 
+Q.serviceCall({
+    service: 'Administration/User/Update', 
+    request: {
+        EntityId: 2,
+        Entity: {
+            UserId: 2,
+            TenantId: 1
+        }
+    }
+});
+
 #更改默认数据库
 sqlcmd -S"180.76.149.153\sqlexpress,1455" -U"sa" -P"Bowen.123" -d"master" -Q"exec sp_defaultdb N'sa', N'master'"
 
